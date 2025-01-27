@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { Highlight, themes } from "prism-react-renderer";
 import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 interface CodeBlockProps {
   code: string;
@@ -21,12 +22,13 @@ export function CodeBlock({ code, language }: CodeBlockProps) {
 
   return (
     <div className="relative">
-      <button
+      <Button
+        size={"sm"}
         onClick={copyToClipboard}
-        className="absolute right-2 top-2 p-2 rounded bg-primary/10 hover:bg-primary/20 transition-colors"
+        className="absolute right-2 top-2 p-2  transition-colors"
       >
         {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-      </button>
+      </Button>
       <Highlight theme={themes.nightOwl} code={code.trim()} language={language}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre

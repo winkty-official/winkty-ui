@@ -1,5 +1,9 @@
 # generate a registry of components
 
+# target folder to create registry file
+
+public/registry
+
 ## example of a registry
 
 ```json

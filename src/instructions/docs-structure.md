@@ -11,7 +11,7 @@ Component Documentation Structure
 3. Installation
    Manual Installation
 
-# add a tabs where you can choose the installation method tans headign with package manager and their respective icons. a copy button icon should be on the right side of the code block
+# add a tabs where you can choose the installation method tabs heading with package manager and their respective icons. a copy button icon should be on the right side of the code block file instruction in manual install give user ability to copy full code if it needed multile file add then in proper manner , if cntent is more length then use shadcn scroll area to show code in manual install.
 
 ```sh
 pnpm add @yourlibrary/component-name
