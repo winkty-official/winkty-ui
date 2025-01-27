@@ -1,10 +1,21 @@
 import { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AreaRadioGroup from "@/components/base/radio/area-radio-group";
-import { Terminal, Package, FileCode2 } from "lucide-react";
+import {
+  Terminal,
+  Package,
+  FileCode2,
+  CreditCard,
+  Palette,
+  Layout,
+} from "lucide-react";
 import { CodeBlock } from "@/components/home/code-block";
 import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
 import { ManualInstall } from "@/components/base/radio/manual-install";
+import { Card } from "@/components/ui/card";
+import { ColorPicker } from "@/components/base/radio/color-picker";
+import { LayoutSelector } from "@/components/base/radio/layout-selector";
+import { CardSelector } from "@/components/base/radio/card-selector";
+import AreaRadioGroup from "@/components/base/radio/area-radio-group";
 
 export const metadata: Metadata = {
   title: "Area Radio Group - UI Components",
@@ -19,8 +30,6 @@ const installCode = {
 };
 
 const cliInstallCode = `npx shadcn-ui@latest add https://your-domain.com/components/area-radio-group.json`;
-
-// ... previous imports and code ...
 
 const fullComponentCode = `"use client";
 
@@ -177,8 +186,6 @@ AreaRadioGroup.displayName = "AreaRadioGroup";
 
 export default AreaRadioGroup;`;
 
-// ... rest of the page code ...
-
 const usageExamples = {
   basic: `import AreaRadioGroup from "@/components/base/radio/area-radio-group";
 
@@ -328,6 +335,196 @@ const propDefinitions = [
   },
 ];
 
+// Add type for the advanced examples
+interface AdvancedExample {
+  title: string;
+  description: string;
+  code: string;
+  demo: Array<{
+    id: string;
+    value: string;
+    label: string;
+    description: string;
+    imageUrl?: string;
+    color?: string;
+  }>;
+}
+
+interface AdvancedExamples {
+  cardSelect: AdvancedExample;
+  colorSelect: AdvancedExample;
+  layoutSelect: AdvancedExample;
+}
+
+const advancedExamples: AdvancedExamples = {
+  cardSelect: {
+    title: "Card Selection",
+    description: "Select between different card types with animations",
+    code: `const cards = [
+      {
+        id: "personal",
+        value: "personal",
+        label: "Personal",
+        description: "Perfect for individual use",
+        imageUrl: "/icons/personal-card.svg"
+      },
+      {
+        id: "business",
+        value: "business",
+        label: "Business",
+        description: "For small to large companies",
+        imageUrl: "/icons/business-card.svg"
+      }
+    ];
+
+    export function CardSelector() {
+      return (
+        <motion.div layout>
+          <AreaRadioGroup
+            items={cards}
+            defaultValue="personal"
+            orientation="horizontal"
+          />
+        </motion.div>
+      );
+    }`,
+    demo: [
+      {
+        id: "personal",
+        value: "personal",
+        label: "Personal Card",
+        description: "Perfect for individual use",
+        imageUrl: "https://via.placeholder.com/32x24",
+      },
+      {
+        id: "business",
+        value: "business",
+        label: "Business Card",
+        description: "For small to large companies",
+        imageUrl: "https://via.placeholder.com/32x24",
+      },
+    ],
+  },
+
+  colorSelect: {
+    title: "Color Selection",
+    description: "Interactive color picker with preview",
+    code: `const colors = [
+      {
+        id: "red",
+        value: "red",
+        label: "Ruby Red",
+        description: "Vibrant red shade",
+        color: "#EF4444"
+      },
+      {
+        id: "blue",
+        value: "blue",
+        label: "Ocean Blue",
+        description: "Deep blue color",
+        color: "#3B82F6"
+      }
+    ];
+
+    export function ColorPicker() {
+      const [selectedColor, setSelectedColor] = useState(colors[0]);
+
+      return (
+        <div className="space-y-4">
+          <motion.div 
+            className="h-20 rounded-lg"
+            animate={{ backgroundColor: selectedColor.color }}
+            transition={{ duration: 0.2 }}
+          />
+          <AreaRadioGroup
+            items={colors}
+            defaultValue={colors[0].value}
+            onValueChange={(value) => {
+              const color = colors.find(c => c.value === value);
+              setSelectedColor(color);
+            }}
+          />
+        </div>
+      );
+    }`,
+    demo: [
+      {
+        id: "red",
+        value: "red",
+        label: "Ruby Red",
+        description: "Vibrant red shade",
+        color: "#EF4444",
+      },
+      {
+        id: "blue",
+        value: "blue",
+        label: "Ocean Blue",
+        description: "Deep blue color",
+        color: "#3B82F6",
+      },
+      {
+        id: "green",
+        value: "green",
+        label: "Forest Green",
+        description: "Natural green tone",
+        color: "#22C55E",
+      },
+    ],
+  },
+
+  layoutSelect: {
+    title: "Layout Selection",
+    description: "Choose between different layout options with live preview",
+    code: `const layouts = [
+      {
+        id: "grid",
+        value: "grid",
+        label: "Grid Layout",
+        description: "Items arranged in a grid"
+      },
+      {
+        id: "list",
+        value: "list",
+        label: "List Layout",
+        description: "Items stacked vertically"
+      }
+    ];
+
+    export function LayoutSelector() {
+      const [layout, setLayout] = useState("grid");
+      
+      return (
+        <div className="space-y-4">
+          <motion.div layout className="border rounded-lg p-4">
+            <div className={layout === "grid" ? "grid grid-cols-2 gap-4" : "space-y-4"}>
+              {/* Preview items */}
+            </div>
+          </motion.div>
+          <AreaRadioGroup
+            items={layouts}
+            defaultValue="grid"
+            onValueChange={setLayout}
+          />
+        </div>
+      );
+    }`,
+    demo: [
+      {
+        id: "grid",
+        value: "grid",
+        label: "Grid Layout",
+        description: "Items arranged in a grid",
+      },
+      {
+        id: "list",
+        value: "list",
+        label: "List Layout",
+        description: "Items stacked vertically",
+      },
+    ],
+  },
+};
+
 export default function RadioGroupPage() {
   return (
     <div className="container max-w-4xl py-10">
@@ -454,6 +651,79 @@ export default function RadioGroupPage() {
           <li>Includes proper ARIA labels and descriptions</li>
           <li>Visual indicators for focus and selection states</li>
         </ul>
+      </div>
+
+      {/* Advanced Examples */}
+      <div className="mb-10">
+        <h2 className="text-2xl font-semibold mb-6">Advanced Examples</h2>
+
+        {/* Card Selection */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-xl font-medium">
+                {advancedExamples.cardSelect.title}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                {advancedExamples.cardSelect.description}
+              </p>
+            </div>
+            <CreditCard className="h-6 w-6 text-muted-foreground" />
+          </div>
+          <Card className="p-6">
+            <CardSelector items={advancedExamples.cardSelect.demo} />
+            <CodeBlock code={advancedExamples.cardSelect.code} language="tsx" />
+          </Card>
+        </div>
+
+        {/* Color Selection */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-xl font-medium">
+                {advancedExamples.colorSelect.title}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                {advancedExamples.colorSelect.description}
+              </p>
+            </div>
+            <Palette className="h-6 w-6 text-muted-foreground" />
+          </div>
+          <Card className="p-6">
+            <ColorPicker
+              colors={advancedExamples.colorSelect.demo.map((item) => ({
+                ...item,
+                color: item.color || "#000000", // Provide default color if undefined
+              }))}
+            />
+            <CodeBlock
+              code={advancedExamples.colorSelect.code}
+              language="tsx"
+            />
+          </Card>
+        </div>
+
+        {/* Layout Selection */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-xl font-medium">
+                {advancedExamples.layoutSelect.title}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                {advancedExamples.layoutSelect.description}
+              </p>
+            </div>
+            <Layout className="h-6 w-6 text-muted-foreground" />
+          </div>
+          <Card className="p-6">
+            <LayoutSelector items={advancedExamples.layoutSelect.demo} />
+            <CodeBlock
+              code={advancedExamples.layoutSelect.code}
+              language="tsx"
+            />
+          </Card>
+        </div>
       </div>
     </div>
   );
