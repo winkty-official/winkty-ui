@@ -63,6 +63,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
+    "@types/payment": "^2.1.7",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

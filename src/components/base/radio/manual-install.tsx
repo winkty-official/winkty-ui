@@ -7,12 +7,15 @@ import { CodeBlock } from "@/components/home/code-block";
 import { Copy } from "lucide-react";
 
 interface ManualInstallProps {
-  code: string;
+  files: Array<{
+    name: string;
+    code: string;
+  }>;
 }
 
-export function ManualInstall({ code }: ManualInstallProps) {
+export function ManualInstall({ files }: ManualInstallProps) {
   const handleCopy = () => {
-    navigator.clipboard.writeText(code);
+    navigator.clipboard.writeText(files[0].code);
   };
 
   return (
@@ -22,7 +25,7 @@ export function ManualInstall({ code }: ManualInstallProps) {
       </p>
       <div className="relative">
         <ScrollArea className="h-[400px] w-full rounded-md border">
-          <CodeBlock code={code} language="tsx" />
+          <CodeBlock code={files[0].code} language="tsx" />
         </ScrollArea>
         <Button
           size="sm"

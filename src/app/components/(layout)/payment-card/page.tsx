@@ -1,13 +1,13 @@
 "use client";
-import { PaymentForm } from "@/components/payment/payment-form";
 import React, { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CodeBlock } from "@/components/code-block";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { CodeBlock } from "@/components/home/code-block";
+import { PaymentForm } from "@/components/layout/payment/payment-form";
 
 const PaymentCardPage = () => {
   const [code, setCode] = useState<string | null>(null);
-  const [filePath, setFilePath] = useState("");
+  const [filePath] = useState("");
 
   async function fetchCode(filePath: string) {
     try {

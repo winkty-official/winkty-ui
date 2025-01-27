@@ -2,10 +2,10 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import type { RadioItem } from "./area-radio-group";
 import AreaRadioGroup from "./area-radio-group";
+import type { RadioItem } from "./area-radio-group";
 
-export function CardSelector({ items }: { items: RadioItem[] }) {
+const CardSelector = ({ items }: { items: RadioItem[] }) => {
   return (
     <motion.div layout>
       <AreaRadioGroup
@@ -15,4 +15,6 @@ export function CardSelector({ items }: { items: RadioItem[] }) {
       />
     </motion.div>
   );
-}
+};
+
+export default CardSelector;

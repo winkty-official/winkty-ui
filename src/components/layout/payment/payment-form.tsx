@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import payment from "payment";
 import { Button } from "@/components/ui/button";
-import { visa, FaCcAmex } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -25,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CardPreview } from "./card-preview";
+import { VisaIcon, AmexIcon } from "@/components/icons/payment-icons";
 
 const formSchema = z.object({
   cardNumber: z
@@ -82,21 +82,6 @@ const MasterCardIcon = () => {
         d="M27.3178 12C27.3178 15.8693 24.1871 19 20.3178 19C18.6845 19 17.1871 18.4359 16 17.5026C17.6333 16.2181 18.6641 14.2359 18.6641 12C18.6641 9.76408 17.6129 7.77961 16 6.49741C17.1848 5.56408 18.6822 5 20.3155 5C24.1871 5 27.3178 8.15113 27.3178 12Z"
         fill="#F79E1B"
       />
-    </svg>
-  );
-};
-
-const VisaIcon = () => {
-  return (
-    <svg
-      className="shrink-0"
-      width={32}
-      height={24}
-      viewBox="0 0 32 24"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path d="M16 5C10.477 5 6 9.477 6 15C6 20.523 10.477 25 16 25C21.523 25 26 20.523 26 15C26 9.477 21.523 5 16 5ZM16 23C11.582 23 8 19.418 8 15C8 10.582 11.582 7 16 7C20.418 7 24 10.582 24 15C24 19.418 20.418 23 16 23Z" />
     </svg>
   );
 };
@@ -204,18 +189,8 @@ export function PaymentForm() {
                           {cardType && (
                             <div className="absolute top-1/2 right-2 transform -translate-y-1/2">
                               {cardType === "visa" && <VisaIcon />}
-                              {cardType === "mastercard" && (
-                                <MasterCardIcon
-                                // className="text-blue-500"
-                                // size={34}
-                                />
-                              )}
-                              {cardType === "amex" && (
-                                <FaCcAmex
-                                  className="text-green-500"
-                                  size={34}
-                                />
-                              )}
+                              {cardType === "mastercard" && <MasterCardIcon />}
+                              {cardType === "amex" && <AmexIcon />}
                               {/* Add more card types and icons as needed */}
                             </div>
                           )}
