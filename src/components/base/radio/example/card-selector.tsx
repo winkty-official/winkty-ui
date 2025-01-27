@@ -2,8 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import AreaRadioGroup from "./area-radio-group";
-import type { RadioItem } from "./area-radio-group";
+import AreaRadioGroup, { RadioItem } from "../area-radio-group";
 
 const CardSelector = ({ items }: { items: RadioItem[] }) => {
   return (

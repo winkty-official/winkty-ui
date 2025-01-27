@@ -7,39 +7,42 @@ import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
 import { propDefinitions } from "./data/props";
 import { packageInfo } from "./data/package";
 import { accessibilityFeatures } from "./data/accessibility";
-import { usageExamples } from "@/components/base/radio/examples";
+import { usageExamples } from "@/components/base/radio/example/examples";
+import Header from "@/components/docs/header";
+import RadioPageMetadata from "./data/metadata";
 
-export const metadata: Metadata = {
-  title: "Area Radio Group - UI Components",
-  description:
-    "A flexible and accessible radio group component with rich content support.",
-};
+export const metadata: Metadata = RadioPageMetadata.meta;
 
 export default function RadioGroupPage() {
   return (
-    <div className="container max-w-4xl py-10">
+    <div className="container max-w-4xl py-10 space-y-10">
       <DynamicBreadcrumb />
 
+      <Header
+        title={RadioPageMetadata.title}
+        description={RadioPageMetadata.description}
+      />
+
       {/* Installation */}
-      <section className="mb-10">
+      <section className="">
         <h2 className="text-2xl font-semibold mb-4">Installation</h2>
         <Installation {...packageInfo} />
       </section>
 
       {/* Usage Examples */}
-      <section className="mb-10">
+      <section className="">
         <h2 className="text-2xl font-semibold mb-6">Usage</h2>
         <CodeExamples examples={usageExamples} />
       </section>
 
       {/* Props */}
-      <section className="mb-10">
+      <section className="">
         <h2 className="text-2xl font-semibold mb-4">Props</h2>
         <PropsTable definitions={propDefinitions} />
       </section>
 
       {/* Accessibility */}
-      <section className="mb-10">
+      <section className="">
         <h2 className="text-2xl font-semibold mb-4">Accessibility</h2>
         <Accessibility features={accessibilityFeatures} />
       </section>

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import AreaRadioGroup from "./area-radio-group";
+import AreaRadioGroup from "../area-radio-group";
 
 export interface ColorPickerProps {
   colors: Array<{
