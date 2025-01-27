@@ -115,7 +115,7 @@ You are building a component library on top of shadcn/ui and Next.js, where user
 ### 1. Using shadcn CLI
 
 ```sh
-npx shadcn-ui@latest add component-name
+npx shadcn-ui@latest add https://your-domain.com/components/auth-form.json
 ```
 
 ### 2. Manual Installation
@@ -135,6 +135,204 @@ export default function Example() {
 ```
 
 ---
+
+## code exampel
+
+```tsx
+import React, { forwardRef, useRef } from "react";
+import { Switch } from "@/components/ui/switch";
+import * as SwitchPrimitives from "@radix-ui/react-switch";
+import { cn } from "@/lib/utils";
+
+interface AreaSwitchProps
+  extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {
+  id: string;
+  children?: React.ReactNode;
+  description?: string;
+  SwitchContainerProps?: React.HTMLAttributes<HTMLDivElement>;
+}
+
+const AreaSwitch = forwardRef<HTMLDivElement, AreaSwitchProps>(
+  (
+    {
+      id,
+      children,
+      description,
+      SwitchContainerProps,
+      className,
+      ...switchProps
+    },
+    ref
+  ) => {
+    // Create a ref for the entire component
+    const componentRef = useRef<HTMLDivElement>(null);
+
+    // If a ref is passed to the component, use it, otherwise fall back to componentRef
+    const combinedRef = ref || componentRef;
+
+    return (
+      <div
+        ref={combinedRef} // Attach the ref here
+        {...SwitchContainerProps}
+        className={cn(
+          "relative flex w-full items-start gap-2 rounded-lg border border-input p-4 shadow-sm shadow-black/5 has-[[data-state=checked]]:border-ring",
+          SwitchContainerProps?.className
+        )}
+        aria-describedby={
+          componentRef.current
+            ? `${componentRef.current.id}-description`
+            : undefined
+        }
+      >
+        <Switch
+          id={id}
+          {...switchProps} // Spread switchProps to pass down all switch-related attributes
+          className={cn(
+            "order-1 h-5 w-10 after:absolute after:inset-0 [&_span]:size-4 [&_span]:data-[state=checked]:translate-x-5 rtl:[&_span]:data-[state=checked]:-translate-x-5",
+            className
+          )}
+        />
+        <div className="flex grow items-start gap-3">{children}</div>
+      </div>
+    );
+  }
+);
+
+AreaSwitch.displayName = "AreaSwitch"; // For better debugging in DevTools
+
+export default AreaSwitch;
+```
+
+```tsx
+<AreaSwitch id="area-switch" description="This is a description">
+  <p>This is a description</p>
+</AreaSwitch>
+```
+
+```tsx
+"use client";
+
+import * as React from "react";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { X } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
+const Dialog = DialogPrimitive.Root;
+
+const DialogTrigger = DialogPrimitive.Trigger;
+
+const DialogPortal = DialogPrimitive.Portal;
+
+const DialogClose = DialogPrimitive.Close;
+
+const DialogOverlay = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Overlay
+    ref={ref}
+    className={cn(
+      "fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      className
+    )}
+    {...props}
+  />
+));
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
+
+const DialogContent = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DialogPortal>
+    <DialogOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <X className="h-4 w-4" />
+        <span className="sr-only">Close</span>
+      </DialogPrimitive.Close>
+    </DialogPrimitive.Content>
+  </DialogPortal>
+));
+DialogContent.displayName = DialogPrimitive.Content.displayName;
+
+const DialogHeader = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col space-y-1.5 text-center sm:text-left",
+      className
+    )}
+    {...props}
+  />
+);
+DialogHeader.displayName = "DialogHeader";
+
+const DialogFooter = ({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+  <div
+    className={cn(
+      "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+      className
+    )}
+    {...props}
+  />
+);
+DialogFooter.displayName = "DialogFooter";
+
+const DialogTitle = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Title
+    ref={ref}
+    className={cn(
+      "text-lg font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+));
+DialogTitle.displayName = DialogPrimitive.Title.displayName;
+
+const DialogDescription = React.forwardRef<
+  React.ElementRef<typeof DialogPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DialogPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+));
+DialogDescription.displayName = DialogPrimitive.Description.displayName;
+
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+};
+```
 
 # File Structure
 
@@ -182,62 +380,96 @@ This project is licensed under the MIT License.
 
 # Current file structure
 
-.
 ├── README.md
+├── components.json
 ├── eslint.config.mjs
-├── instructions
-│ └── instruction.md
 ├── next-env.d.ts
 ├── next.config.ts
 ├── package-lock.json
 ├── package.json
 ├── postcss.config.mjs
 ├── public
-│ ├── components
-│ │ └── button.json
-│ ├── file.svg
-│ ├── globe.svg
-│ ├── next.svg
-│ ├── vercel.svg
-│ └── window.svg
+│ └── registry
+│ └── auth-form.json
 ├── src
 │ ├── app
-│ │ ├── api
 │ │ ├── components
+│ │ │ ├── (layout)
+│ │ │ ├── layout.tsx
+│ │ │ └── page.tsx
+│ │ ├── favicon.ico
 │ │ ├── globals.css
 │ │ ├── layout.tsx
 │ │ └── page.tsx
-│ ├── component-usage
-│ │ ├── autocomplate
-│ │ └── input
 │ ├── components
-│ │ ├── auth-form
-│ │ ├── autocomplete
-│ │ ├── buttons
-│ │ ├── checkbox
-│ │ ├── code-block.tsx
-│ │ ├── features-grid.tsx
-│ │ ├── floating-feature.tsx
-│ │ ├── footer.tsx
-│ │ ├── hero-section.tsx
-│ │ ├── input
-│ │ ├── live-editor-section.tsx
-│ │ ├── payment
-│ │ ├── select
-│ │ ├── sliders
-│ │ ├── tabs
-│ │ ├── theme-provider.tsx
-│ │ ├── theme-toggle.tsx
-│ │ ├── toggle
+│ │ ├── base
+│ │ │ ├── buttons
+│ │ │ └── inputs
+│ │ ├── home
+│ │ │ ├── code-block.tsx
+│ │ │ ├── features-grid.tsx
+│ │ │ ├── floating-feature.tsx
+│ │ │ ├── footer.tsx
+│ │ │ ├── hero-section.tsx
+│ │ │ ├── index.tsx
+│ │ │ ├── live-editor-section.tsx
+│ │ │ └── theme-toggle.tsx
+│ │ ├── layout
+│ │ │ ├── auth-form
+│ │ │ └── hero
+│ │ ├── my-ui
 │ │ └── ui
+│ │ ├── accordion.tsx
+│ │ ├── alert-dialog.tsx
+│ │ ├── aspect-ratio.tsx
+│ │ ├── avatar.tsx
+│ │ ├── badge.tsx
+│ │ ├── breadcrumb.tsx
+│ │ ├── button.tsx
+│ │ ├── calendar.tsx
+│ │ ├── card.tsx
+│ │ ├── carousel.tsx
+│ │ ├── checkbox.tsx
+│ │ ├── collapsible.tsx
+│ │ ├── command.tsx
+│ │ ├── context-menu.tsx
+│ │ ├── dialog.tsx
+│ │ ├── drawer.tsx
+│ │ ├── dropdown-menu.tsx
+│ │ ├── form.tsx
+│ │ ├── hover-card.tsx
+│ │ ├── input-otp.tsx
+│ │ ├── input.tsx
+│ │ ├── label.tsx
+│ │ ├── menubar.tsx
+│ │ ├── navigation-menu.tsx
+│ │ ├── pagination.tsx
+│ │ ├── popover.tsx
+│ │ ├── progress.tsx
+│ │ ├── radio-group.tsx
+│ │ ├── resizable.tsx
+│ │ ├── scroll-area.tsx
+│ │ ├── select.tsx
+│ │ ├── separator.tsx
+│ │ ├── sheet.tsx
+│ │ ├── sidebar.tsx
+│ │ ├── skeleton.tsx
+│ │ ├── slider.tsx
+│ │ ├── switch.tsx
+│ │ ├── table.tsx
+│ │ ├── tabs.tsx
+│ │ ├── textarea.tsx
+│ │ ├── toast.tsx
+│ │ ├── toggle-group.tsx
+│ │ ├── toggle.tsx
+│ │ └── tooltip.tsx
 │ ├── hooks
-│ │ ├── use-debounce.ts
-│ │ └── use-toast.ts
+│ │ └── use-mobile.tsx
+│ ├── instructions
+│ │ └── instruction.md
 │ ├── lib
 │ │ └── utils.ts
-│ └── registry
-│ ├── components
-│ ├── index.json
-│ └── schema.json
+│ └── provider
+│ └── theme-provider.tsx
 ├── tailwind.config.ts
 └── tsconfig.json
