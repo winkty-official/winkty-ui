@@ -1,39 +1,46 @@
 "use client";
-
-import React from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/home/code-block";
-import { Copy } from "lucide-react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface ManualInstallProps {
-  files: Array<{
-    name: string;
-    code: string;
-  }>;
+  name: string;
+  type: string;
+  dependencies: string[];
+  files: { name: string; content: string; dir: string }[];
+  author: string;
+  title: string;
+  description: string;
 }
 
-export function ManualInstall({ files }: ManualInstallProps) {
-  const handleCopy = () => {
-    navigator.clipboard.writeText(files[0].code);
-  };
-
+export function ManualInstall({ dependencies, files }: ManualInstallProps) {
   return (
-    <div className="mb-4">
+    <div className="mb-4 space-y-5">
       <p className="text-sm text-muted-foreground mb-2">
         Copy and paste the following code into your project.
       </p>
-      <div className="relative">
-        <ScrollArea className="h-[400px] w-full rounded-md border">
-          <CodeBlock code={files[0].code} language="tsx" />
-        </ScrollArea>
-        <Button
-          size="sm"
-          className="absolute top-2 right-2"
-          onClick={handleCopy}
-        >
-          <Copy className="h-4 w-4" />
-        </Button>
+
+      {dependencies && (
+        <div>
+          <h4 className="mb-4">Install dependencies</h4>
+          <CodeBlock
+            code={`npm i ${dependencies.join(" ")}`}
+            language="bash"
+            packageUrl={dependencies.join(" ")}
+          />
+        </div>
+      )}
+
+      <div className="relative space-y-2">
+        <h4>Copy the source code</h4>
+        {files.map((file, index) => (
+          <div key={index}>
+            <h5 className="text-sm mb-2 p-1 px-2 bg-primary/20 rounded-md w-fit text-white/80">{file.dir}</h5>
+            <ScrollArea className="h-[400px] w-full rounded-md border relative overflow-x-auto">
+              <CodeBlock code={file.content} language="tsx" />
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
+          </div>
+        ))}
       </div>
     </div>
   );

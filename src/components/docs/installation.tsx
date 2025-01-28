@@ -1,31 +1,24 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Terminal, Package, FileCode2 } from "lucide-react";
-import { CodeBlock } from "@/components/home/code-block";
 import { ManualInstall } from "@/components/base/radio/manual-install";
+import { CodeBlock } from "@/components/home/code-block";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileCode2, Terminal } from "lucide-react";
 
 interface InstallationProps {
-  pkg: {
+  cli?: { command: string };
+  manual: {
     name: string;
-    dependencies?: string[];
-  };
-  cli?: {
-    command: string;
-  };
-  manual?: {
-    files: Array<{
-      name: string;
-      code: string;
-    }>;
+    type: string;
+    dependencies: string[];
+    files: { name: string; content: string; dir: string }[];
+    author: string;
+    title: string;
+    description: string;
   };
 }
 
-export function Installation({ pkg, cli, manual }: InstallationProps) {
-  const npmCommand = `npm install ${pkg.name}${
-    pkg.dependencies ? ` ${pkg.dependencies.join(" ")}` : ""
-  }`;
-
+export function Installation({ cli, manual }: InstallationProps) {
   return (
     <Tabs defaultValue="cli">
       <TabsList className="mb-4">
@@ -39,24 +32,16 @@ export function Installation({ pkg, cli, manual }: InstallationProps) {
             Manual
           </TabsTrigger>
         )}
-        <TabsTrigger value="npm">
-          <Package className="h-4 w-4 mr-2" />
-          npm
-        </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="cli">
-        <CodeBlock code={cli?.command || ""} language="bash" />
-      </TabsContent>
-
-      {manual && (
-        <TabsContent value="manual">
-          <ManualInstall files={manual.files} />
+      {cli && (
+        <TabsContent value="cli">
+          <CodeBlock code={cli.command || ""} language="bash" />
         </TabsContent>
       )}
 
-      <TabsContent value="npm">
-        <CodeBlock code={npmCommand} language="bash" />
+      <TabsContent value="manual">
+        <ManualInstall {...manual} />
       </TabsContent>
     </Tabs>
   );

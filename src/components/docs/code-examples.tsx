@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/home/code-block";
 
 export interface CodeExample {
@@ -27,12 +27,32 @@ export function CodeExamples({ examples = [] }: CodeExamplesProps) {
               {example.description}
             </p>
           </div>
-          <Card className="p-6">
-            <div className="mb-4">{example.preview}</div>
-            <CodeBlock code={example.code} language="tsx" />
-          </Card>
+          <ExampleWrapper preview={example.preview} code={example.code} />
         </div>
       ))}
     </div>
+  );
+}
+
+function ExampleWrapper({
+  preview,
+  code,
+}: {
+  preview: React.ReactNode;
+  code: string;
+}) {
+  return (
+    <Tabs defaultValue="preview" className="relative w-full">
+      <TabsList className="w-fit justify-start">
+        <TabsTrigger value="preview">Preview</TabsTrigger>
+        <TabsTrigger value="code">Code</TabsTrigger>
+      </TabsList>
+      <TabsContent value="preview" className="rounded-md border p-4">
+        {preview}
+      </TabsContent>
+      <TabsContent value="code" className="border-none">
+        <CodeBlock code={code} language="tsx" />
+      </TabsContent>
+    </Tabs>
   );
 }
