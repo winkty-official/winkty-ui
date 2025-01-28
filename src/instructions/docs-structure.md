@@ -11,7 +11,7 @@ Component Documentation Structure
 3. Installation
    Manual Installation
 
-# add a tabs where you can choose the installation method tabs heading with package manager and their respective icons. a copy button icon should be on the right side of the code block file instruction in manual install give user ability to copy full code if it needed multile file add then in proper manner , if cntent is more length then use shadcn scroll area to show code in manual install.
+# add two tabs for cli and manual installation. tabs where you can choose the installation method tabs heading with package manager and their respective icons. a copy button icon should be on the right side of the code block file instruction in manual install give user ability to copy full code if it needed multile file add then in proper manner , if cntent is more length then use shadcn scroll area to show code in manual install.
 
 ```sh
 pnpm add @yourlibrary/component-name
@@ -26,6 +26,8 @@ shadcn CLI Installation
 ```sh
 npx shadcn-ui@latest add https://your-domain.com/components/auth-form.json
 ```
+
+# give more code example in stack. in usage component nae and short description is there . Two tabs are there preview and code.
 
 # add a code example for the usage of the component in tabs with the code block and the code example
 

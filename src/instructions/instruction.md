@@ -380,6 +380,7 @@ This project is licensed under the MIT License.
 
 # Current file structure
 
+.
 ├── README.md
 ├── components.json
 ├── eslint.config.mjs
@@ -390,10 +391,13 @@ This project is licensed under the MIT License.
 ├── postcss.config.mjs
 ├── public
 │ └── registry
-│ └── auth-form.json
+│ ├── area-radio-group.json
+│ ├── auth-form.json
+│ └── simple-input.json
 ├── src
 │ ├── app
 │ │ ├── components
+│ │ │ ├── (basic)
 │ │ │ ├── (layout)
 │ │ │ ├── layout.tsx
 │ │ │ └── page.tsx
@@ -403,8 +407,16 @@ This project is licensed under the MIT License.
 │ │ └── page.tsx
 │ ├── components
 │ │ ├── base
+│ │ │ ├── breadcrumb.tsx
 │ │ │ ├── buttons
-│ │ │ └── inputs
+│ │ │ ├── inputs
+│ │ │ └── radio
+│ │ ├── docs
+│ │ │ ├── accessibility.tsx
+│ │ │ ├── code-examples.tsx
+│ │ │ ├── header.tsx
+│ │ │ ├── installation.tsx
+│ │ │ └── props-table.tsx
 │ │ ├── home
 │ │ │ ├── code-block.tsx
 │ │ │ ├── features-grid.tsx
@@ -414,9 +426,12 @@ This project is licensed under the MIT License.
 │ │ │ ├── index.tsx
 │ │ │ ├── live-editor-section.tsx
 │ │ │ └── theme-toggle.tsx
+│ │ ├── icons
+│ │ │ └── payment-icons.tsx
 │ │ ├── layout
 │ │ │ ├── auth-form
-│ │ │ └── hero
+│ │ │ ├── hero
+│ │ │ └── payment
 │ │ ├── my-ui
 │ │ └── ui
 │ │ ├── accordion.tsx
@@ -431,7 +446,6 @@ This project is licensed under the MIT License.
 │ │ ├── carousel.tsx
 │ │ ├── checkbox.tsx
 │ │ ├── collapsible.tsx
-│ │ ├── command.tsx
 │ │ ├── context-menu.tsx
 │ │ ├── dialog.tsx
 │ │ ├── drawer.tsx
@@ -466,10 +480,15 @@ This project is licensed under the MIT License.
 │ ├── hooks
 │ │ └── use-mobile.tsx
 │ ├── instructions
-│ │ └── instruction.md
+│ │ ├── docs-structure.md
+│ │ ├── instruction.md
+│ │ └── registry.md
 │ ├── lib
 │ │ └── utils.ts
-│ └── provider
-│ └── theme-provider.tsx
+│ ├── provider
+│ │ └── theme-provider.tsx
+│ └── registry
+│ └── area-radio-group
+│ └── index.tsx
 ├── tailwind.config.ts
 └── tsconfig.json
