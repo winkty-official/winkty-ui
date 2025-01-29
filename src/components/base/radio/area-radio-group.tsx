@@ -102,6 +102,8 @@ const RadioItem = React.forwardRef<HTMLDivElement, RadioItemProps>(
   }
 );
 
+RadioItem.displayName = "RadioItem";
+
 const AreaRadioGroup = React.forwardRef<HTMLDivElement, AreaRadioGroupProps>(
   (
     {
