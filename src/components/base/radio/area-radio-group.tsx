@@ -1,69 +1,103 @@
 "use client";
-import React from "react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
-import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-import Image from "next/image";
+import * as RadioGroup from "@radix-ui/react-radio-group";
+import React from "react";
 import { Label } from "@/components/ui/label";
+import { Check } from "lucide-react";
 
 // Define types for radio items
 export interface RadioItem {
   id: string | number;
   value: string;
-  label: string;
-  description?: string;
-  imageUrl?: string;
   disabled?: boolean;
+  children: React.ReactNode;
 }
 
 export interface AreaRadioGroupProps
-  extends React.ComponentPropsWithoutRef<typeof RadioGroup> {
-  items: RadioItem[];
-  defaultValue?: string;
-  name?: string;
-  orientation?: "horizontal" | "vertical";
-  onValueChange?: (value: string) => void;
+  extends React.ComponentPropsWithoutRef<typeof RadioGroup.Root> {
   error?: boolean;
   helperText?: string;
-  required?: boolean;
   className?: string;
 }
 
 export interface RadioItemProps
-  extends React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> {
+  extends React.ComponentPropsWithoutRef<typeof RadioGroup.Item> {
   value: string;
   RadioGroupContainerProps?: React.HTMLProps<HTMLDivElement>;
   children: React.ReactNode;
+  indicatorType?: 'border' | 'check' | 'radio';
+  radioPosition?: 'left' | 'right';
 }
 
 const RadioItem = React.forwardRef<HTMLDivElement, RadioItemProps>(
   (
-    { value, RadioGroupContainerProps, children, className, ...itemProps },
+    { 
+      value, 
+      RadioGroupContainerProps, 
+      children, 
+      className, 
+      indicatorType = 'radio',
+      radioPosition = 'left',
+      ...itemProps 
+    },
     ref
   ) => {
     const { className: containerClassName, ...containerProps } =
       RadioGroupContainerProps || {};
 
+    const showRadio = indicatorType === 'radio';
+    const showCheck = indicatorType === 'check';
+
     return (
-      <div
-        ref={ref}
-        className={cn(
-          "relative flex w-full items-start gap-2 rounded-lg border border-input p-4 shadow-sm shadow-black/5 transition-colors",
-          "has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-primary/5",
-          "hover:bg-muted/50",
-          containerClassName
-        )}
-        {...containerProps}
+      <RadioGroup.Item
+        value={value}
+        className={cn("group peer w-full", className)}
+        {...itemProps}
       >
-        <RadioGroupItem
-          value={value}
-          id={value}
-          aria-describedby={`${value}-description`}
-          className={cn("after:absolute after:inset-0", className)}
-          {...itemProps}
-        />
-        <div className="flex grow items-start gap-3">{children}</div>
-      </div>
+        <div
+          ref={ref}
+          className={cn(
+            "relative rounded-lg border border-input bg-background shadow-sm transition-all duration-150",
+            "hover:bg-muted/50",
+            "group-data-[state=checked]:border-primary group-data-[state=checked]:bg-primary/5",
+            indicatorType !== 'border' && "group-data-[state=checked]:ring-2 group-data-[state=checked]:ring-primary/10",
+            containerClassName
+          )}
+          {...containerProps}
+        >
+          <Label
+            htmlFor={value}
+            className="flex w-full cursor-pointer items-start p-4"
+          >
+            {showRadio && radioPosition === 'left' && (
+              <div className="flex h-full items-center pr-2">
+                <div className="h-4 w-4 rounded-full border border-primary bg-background transition-colors group-data-[state=checked]:bg-primary">
+                  <RadioGroup.Indicator className="flex h-full w-full items-center justify-center">
+                    <div className="h-2 w-2 rounded-full bg-white" />
+                  </RadioGroup.Indicator>
+                </div>
+              </div>
+            )}
+            <div className="flex grow">
+              {children}
+            </div>
+            {showRadio && radioPosition === 'right' && (
+              <div className="flex h-full items-center pl-2">
+                <div className="h-4 w-4 rounded-full border border-primary bg-background transition-colors group-data-[state=checked]:bg-primary">
+                  <RadioGroup.Indicator className="flex h-full w-full items-center justify-center">
+                    <div className="h-2 w-2 rounded-full bg-white" />
+                  </RadioGroup.Indicator>
+                </div>
+              </div>
+            )}
+            {showCheck && (
+              <div className="ml-auto pl-2 text-primary opacity-0 transition-opacity duration-150 group-data-[state=checked]:opacity-100">
+                <Check className="h-4 w-4" />
+              </div>
+            )}
+          </Label>
+        </div>
+      </RadioGroup.Item>
     );
   }
 );
@@ -73,90 +107,47 @@ RadioItem.displayName = "RadioItem";
 const AreaRadioGroup = React.forwardRef<HTMLDivElement, AreaRadioGroupProps>(
   (
     {
-      items,
       defaultValue,
       name,
-      orientation = "vertical",
       onValueChange,
       error,
       helperText,
       required,
       className,
+      children,
       ...props
     },
     ref
   ) => {
     return (
-      <div ref={ref} className={cn("space-y-2", className)}>
-        <RadioGroup
+      <>
+        <RadioGroup.Root
+          ref={ref}
           defaultValue={defaultValue}
           name={name}
           onValueChange={onValueChange}
-          className={cn(
-            "space-y-2",
-            orientation === "horizontal" && "flex space-x-2 space-y-0"
-          )}
+          className={cn("flex flex-col gap-2", className)}
           required={required}
           {...props}
         >
-          {items?.map((item) => (
-            <RadioItem
-              key={item.id}
-              value={item.value}
-              disabled={item.disabled}
-              className={cn(error && "border-destructive")}
-            >
-              <div className="flex items-center space-x-3">
-                {item.imageUrl && (
-                  <Image
-                    src={item.imageUrl}
-                    alt={item.label}
-                    width={32}
-                    height={24}
-                    className="shrink-0 rounded object-cover"
-                  />
-                )}
-                <div className="flex flex-col">
-                  <Label
-                    htmlFor={item.value}
-                    className={cn(
-                      item.disabled && "opacity-50",
-                      error && "text-destructive"
-                    )}
-                  >
-                    {item.label}
-                  </Label>
-                  {item.description && (
-                    <p
-                      id={`${item.value}-description`}
-                      className={cn(
-                        "text-sm text-muted-foreground",
-                        item.disabled && "opacity-50"
-                      )}
-                    >
-                      {item.description}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </RadioItem>
-          ))}
-        </RadioGroup>
+          {children}
+        </RadioGroup.Root>
         {helperText && (
           <p
             className={cn(
-              "text-sm",
+              "text-sm mt-2",
               error ? "text-destructive" : "text-muted-foreground"
             )}
           >
             {helperText}
           </p>
         )}
-      </div>
+      </>
     );
   }
 );
 
 AreaRadioGroup.displayName = "AreaRadioGroup";
 
+export { RadioItem };
 export default AreaRadioGroup;

@@ -1,15 +1,15 @@
-import { Metadata } from "next";
+import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
+import { usageExamples } from "@/components/base/radio/example/examples";
+import { Accessibility } from "@/components/docs/accessibility";
+import { CodeExamples } from "@/components/docs/code-examples";
+import Header from "@/components/docs/header";
 import { Installation } from "@/components/docs/installation";
 import { PropsTable } from "@/components/docs/props-table";
-import { CodeExamples } from "@/components/docs/code-examples";
-import { Accessibility } from "@/components/docs/accessibility";
-import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
-import { propDefinitions } from "./data/props";
-import { packageInfo } from "./data/package";
+import { Metadata } from "next";
 import { accessibilityFeatures } from "./data/accessibility";
-import { usageExamples } from "@/components/base/radio/example/examples";
-import Header from "@/components/docs/header";
 import RadioPageMetadata from "./data/metadata";
+import { packageInfo } from "./data/package";
+import { radioGroupProps, radioItemProps } from "./data/props";
 
 export const metadata: Metadata = RadioPageMetadata.meta;
 
@@ -36,9 +36,34 @@ export default function RadioGroupPage() {
       </section>
 
       {/* Props */}
-      <section className="">
-        <h2 className="text-2xl font-semibold mb-4">Props</h2>
-        <PropsTable definitions={propDefinitions} />
+      <section className="space-y-8">
+        <h2 className="text-2xl font-semibold">Props</h2>
+        
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl font-medium">AreaRadioGroup</h3>
+            <code className="text-sm text-muted-foreground">AreaRadioGroupProps</code>
+          </div>
+          <div className="rounded-lg border">
+            <PropsTable definitions={radioGroupProps} />
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Extends <code>React.ComponentPropsWithoutRef&lt;typeof RadioGroup.Root&gt;</code>
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl font-medium">RadioItem</h3>
+            <code className="text-sm text-muted-foreground">RadioItemProps</code>
+          </div>
+          <div className="rounded-lg border">
+            <PropsTable definitions={radioItemProps} />
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Extends <code>React.ComponentPropsWithoutRef&lt;typeof RadioGroup.Item&gt;</code>
+          </p>
+        </div>
       </section>
 
       {/* Accessibility */}
