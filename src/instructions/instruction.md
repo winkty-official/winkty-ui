@@ -393,6 +393,7 @@ This project is licensed under the MIT License.
 │ └── registry
 │ ├── area-radio-group.json
 │ ├── auth-form.json
+│ ├── highlighted-article.json
 │ ├── particle-field.json
 │ └── simple-input.json
 ├── src
@@ -400,6 +401,7 @@ This project is licensed under the MIT License.
 │ │ ├── components
 │ │ │ ├── (basic)
 │ │ │ │ ├── input
+│ │ │ │ │ ├── data
 │ │ │ │ │ └── page.tsx
 │ │ │ │ └── radio
 │ │ │ │ ├── data
@@ -408,6 +410,7 @@ This project is licensed under the MIT License.
 │ │ │ │ ├── chromatic-ripple-effect
 │ │ │ │ │ └── page.tsx
 │ │ │ │ ├── highlighted-article
+│ │ │ │ │ ├── data
 │ │ │ │ │ └── page.tsx
 │ │ │ │ ├── neon-pulse
 │ │ │ │ │ └── page.tsx
@@ -425,7 +428,15 @@ This project is licensed under the MIT License.
 │ │ ├── favicon.ico
 │ │ ├── globals.css
 │ │ ├── layout.tsx
+│ │ ├── page.tsx
+│ │ └── test
 │ │ └── page.tsx
+│ ├── assets
+│ │ └── icons
+│ │ └── payment
+│ │ ├── amex.svg
+│ │ ├── mastercard.svg
+│ │ └── visa.svg
 │ ├── components
 │ │ ├── base
 │ │ │ ├── breadcrumb.tsx
@@ -446,7 +457,8 @@ This project is licensed under the MIT License.
 │ │ │ ├── header.tsx
 │ │ │ ├── installation.tsx
 │ │ │ ├── props-table.tsx
-│ │ │ └── sidebar.tsx
+│ │ │ ├── sidebar.tsx
+│ │ │ └── types.ts
 │ │ ├── fancy
 │ │ │ ├── chromatic-ripple-effect
 │ │ │ │ └── chromatic-ripple-effect.tsx
@@ -468,6 +480,9 @@ This project is licensed under the MIT License.
 │ │ │ ├── live-editor-section.tsx
 │ │ │ └── theme-toggle.tsx
 │ │ ├── icons
+│ │ │ ├── payment
+│ │ │ │ ├── amex-icon.tsx
+│ │ │ │ └── mastercard-icon.tsx
 │ │ │ └── payment-icons.tsx
 │ │ ├── layout
 │ │ │ ├── auth-form

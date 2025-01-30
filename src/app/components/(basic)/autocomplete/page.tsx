@@ -1,29 +1,30 @@
 import { Metadata } from "next";
 import { Installation } from "@/components/docs/installation";
 import { PropsTable } from "@/components/docs/props-table";
-import { CodeExamples } from "@/components/docs/code-examples";
 import { Accessibility } from "@/components/docs/accessibility";
 import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
-import { propDefinitions } from "./data/props";
+import { asyncAutocompleteProps } from "./data/props";
 import { packageInfo } from "./data/package";
 import { accessibilityFeatures } from "./data/accessibility";
-import { usageExamples } from "./data/examples";
+
 import Header from "@/components/docs/header";
 
+import AutoCompleteCodeExample from "@/components/base/autocomplete/examples";
+
 export const metadata: Metadata = {
-  title: "Highlighted Article - UI Components",
+  title: "Async Autocomplete - UI Components",
   description:
-    "An interactive article card component with 3D hover effects and dynamic lighting.",
+    "An asynchronous autocomplete component with search functionality and keyboard navigation.",
 };
 
-export default function HighlightedArticlePage() {
+export default function AutocompletePage() {
   return (
     <div className="container max-w-4xl py-10 space-y-10">
       <DynamicBreadcrumb />
 
       <Header
-        title="Highlighted Article"
-        description="A beautiful article card component with 3D hover effects, dynamic lighting, and smooth animations."
+        title="Async Autocomplete"
+        description="A flexible autocomplete component that supports asynchronous data loading, search functionality, and keyboard navigation."
       />
 
       {/* Installation */}
@@ -35,13 +36,13 @@ export default function HighlightedArticlePage() {
       {/* Usage */}
       <section>
         <h2 className="text-2xl font-semibold mb-6">Usage</h2>
-        <CodeExamples examples={usageExamples} />
+        <AutoCompleteCodeExample />
       </section>
 
       {/* Props */}
       <section>
         <h2 className="text-2xl font-semibold mb-4">Props</h2>
-        <PropsTable definitions={propDefinitions} />
+        <PropsTable definitions={asyncAutocompleteProps} />
       </section>
 
       {/* Accessibility */}
