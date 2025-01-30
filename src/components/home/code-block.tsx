@@ -52,7 +52,7 @@ export function CodeBlock({ code, packageUrl, language }: CodeBlockProps) {
   };
 
   return (
-    <div className="relative border rounded-lg overflow-hidden">
+    <div className=" border rounded-lg overflow-hidden">
       {/* Dropdown menu with Copy button */}
       {packageUrl ? (
         <PackageMangerSelectButton

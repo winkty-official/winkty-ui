@@ -20,13 +20,15 @@ export function ManualInstall({ dependencies, files }: ManualInstallProps) {
       </p>
 
       {dependencies && (
-        <div>
+        <div className="">
           <h4 className="mb-4">Install dependencies</h4>
-          <CodeBlock
-            code={`npm i ${dependencies.join(" ")}`}
-            language="bash"
-            packageUrl={dependencies.join(" ")}
-          />
+          <div className="relative">
+            <CodeBlock
+              code={`npm i ${dependencies.join(" ")}`}
+              language="bash"
+              packageUrl={dependencies.join(" ")}
+            />
+          </div>
         </div>
       )}
 
@@ -34,7 +36,9 @@ export function ManualInstall({ dependencies, files }: ManualInstallProps) {
         <h4>Copy the source code</h4>
         {files.map((file, index) => (
           <div key={index}>
-            <h5 className="text-sm mb-2 p-1 px-2 bg-primary/20 rounded-md w-fit text-white/80">{file.dir}</h5>
+            <h5 className="text-sm mb-2 p-1 px-2 bg-primary/20 rounded-md w-fit text-white/80">
+              {file.dir}
+            </h5>
             <ScrollArea className="h-[400px] w-full rounded-md border relative overflow-x-auto">
               <CodeBlock code={file.content} language="tsx" />
               <ScrollBar orientation="horizontal" />

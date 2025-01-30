@@ -1,0 +1,16 @@
+export const accessibilityFeatures = [
+  "Proper ARIA roles for tree structure (role='tree', role='treeitem')",
+  "Keyboard navigation support (Arrow keys, Enter, Space)",
+  "Focus management for selected items",
+  "Proper tab order for interactive elements",
+  "ARIA expanded state for folders",
+  "ARIA selected state for active items",
+  "Screen reader announcements for loading states",
+  "High contrast visual indicators for selection",
+  "Proper heading hierarchy for nested levels",
+  "Support for reduced motion preferences",
+  "Clear focus indicators for keyboard navigation",
+  "Semantic HTML structure",
+  "Proper color contrast for text and icons",
+  "Clear visual feedback for interactive states",
+];

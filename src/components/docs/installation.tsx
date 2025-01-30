@@ -1,6 +1,6 @@
 "use client";
 
-import { ManualInstall } from "@/components/base/radio/manual-install";
+import { ManualInstall } from "@/components/docs/manual-install";
 import { CodeBlock } from "@/components/home/code-block";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileCode2, Terminal } from "lucide-react";
@@ -35,7 +35,7 @@ export function Installation({ cli, manual }: InstallationProps) {
       </TabsList>
 
       {cli && (
-        <TabsContent value="cli">
+        <TabsContent value="cli" className="relative">
           <CodeBlock code={cli.command || ""} language="bash" />
         </TabsContent>
       )}
