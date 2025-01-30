@@ -393,30 +393,83 @@ This project is licensed under the MIT License.
 │ └── registry
 │ ├── area-radio-group.json
 │ ├── auth-form.json
+│ ├── highlighted-article.json
+│ ├── particle-field.json
 │ └── simple-input.json
 ├── src
 │ ├── app
 │ │ ├── components
 │ │ │ ├── (basic)
+│ │ │ │ ├── input
+│ │ │ │ │ ├── data
+│ │ │ │ │ └── page.tsx
+│ │ │ │ └── radio
+│ │ │ │ ├── data
+│ │ │ │ └── page.tsx
+│ │ │ ├── (fancy)
+│ │ │ │ ├── chromatic-ripple-effect
+│ │ │ │ │ └── page.tsx
+│ │ │ │ ├── highlighted-article
+│ │ │ │ │ ├── data
+│ │ │ │ │ └── page.tsx
+│ │ │ │ ├── neon-pulse
+│ │ │ │ │ └── page.tsx
+│ │ │ │ └── particle-field
+│ │ │ │ ├── data
+│ │ │ │ └── page.tsx
 │ │ │ ├── (layout)
+│ │ │ │ ├── auth-form
+│ │ │ │ │ ├── docs.tsx
+│ │ │ │ │ └── page.tsx
+│ │ │ │ └── payment-card
+│ │ │ │ └── page.tsx
 │ │ │ ├── layout.tsx
 │ │ │ └── page.tsx
 │ │ ├── favicon.ico
 │ │ ├── globals.css
 │ │ ├── layout.tsx
+│ │ ├── page.tsx
+│ │ └── test
 │ │ └── page.tsx
+│ ├── assets
+│ │ └── icons
+│ │ └── payment
+│ │ ├── amex.svg
+│ │ ├── mastercard.svg
+│ │ └── visa.svg
 │ ├── components
 │ │ ├── base
 │ │ │ ├── breadcrumb.tsx
 │ │ │ ├── buttons
 │ │ │ ├── inputs
+│ │ │ │ └── simple-input.tsx
 │ │ │ └── radio
+│ │ │ ├── area-radio-group.tsx
+│ │ │ ├── example
+│ │ │ │ ├── card-selector.tsx
+│ │ │ │ ├── color-picker.tsx
+│ │ │ │ ├── examples.tsx
+│ │ │ │ └── layout-selector.tsx
+│ │ │ └── manual-install.tsx
 │ │ ├── docs
 │ │ │ ├── accessibility.tsx
 │ │ │ ├── code-examples.tsx
 │ │ │ ├── header.tsx
 │ │ │ ├── installation.tsx
-│ │ │ └── props-table.tsx
+│ │ │ ├── props-table.tsx
+│ │ │ ├── sidebar.tsx
+│ │ │ └── types.ts
+│ │ ├── fancy
+│ │ │ ├── chromatic-ripple-effect
+│ │ │ │ └── chromatic-ripple-effect.tsx
+│ │ │ ├── highlighted-article.tsx
+│ │ │ ├── mouse-ripple-effect.tsx
+│ │ │ ├── neon-pulse
+│ │ │ │ └── neon-pulse.tsx
+│ │ │ ├── particle-field
+│ │ │ │ ├── examples.tsx
+│ │ │ │ └── particle-field.tsx
+│ │ │ └── text-hover-effect.tsx
 │ │ ├── home
 │ │ │ ├── code-block.tsx
 │ │ │ ├── features-grid.tsx
@@ -427,11 +480,20 @@ This project is licensed under the MIT License.
 │ │ │ ├── live-editor-section.tsx
 │ │ │ └── theme-toggle.tsx
 │ │ ├── icons
+│ │ │ ├── payment
+│ │ │ │ ├── amex-icon.tsx
+│ │ │ │ └── mastercard-icon.tsx
 │ │ │ └── payment-icons.tsx
 │ │ ├── layout
 │ │ │ ├── auth-form
+│ │ │ │ ├── auth-card.tsx
+│ │ │ │ ├── forgot-password.tsx
+│ │ │ │ ├── sign-in.tsx
+│ │ │ │ └── sign-up.tsx
 │ │ │ ├── hero
 │ │ │ └── payment
+│ │ │ ├── card-preview.tsx
+│ │ │ └── payment-form.tsx
 │ │ ├── my-ui
 │ │ └── ui
 │ │ ├── accordion.tsx
@@ -485,6 +547,7 @@ This project is licensed under the MIT License.
 │ │ └── registry.md
 │ ├── lib
 │ │ └── utils.ts
+│ ├── pages
 │ ├── provider
 │ │ └── theme-provider.tsx
 │ └── registry

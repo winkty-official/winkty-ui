@@ -13,6 +13,7 @@ interface CodeExamplesProps {
 }
 
 export function CodeExamples({ examples = [] }: CodeExamplesProps) {
+  console.log("🚀 ~ CodeExamples ~ examples:", examples);
   if (!Array.isArray(examples)) {
     return null;
   }

@@ -1,0 +1,30 @@
+{
+  "name": "highlighted-article",
+  "type": "registry:ui",
+  "dependencies": ["framer-motion"],
+  "files": [
+    {
+      "name": "highlighted-article.tsx",
+      "content": "\"use client\";\n\nimport { cn } from \"@/lib/utils\";\nimport { motion, useMotionValue, useSpring, useTransform } from \"framer-motion\";\nimport { MouseEvent, useRef } from \"react\";\n\ninterface HighlightedArticleProps {\n  title: string;\n  description: string;\n  color?: string;\n  glowColor?: string;\n  className?: string;\n}\n\nexport const HighlightedArticle = ({\n  title,\n  description,\n  color = \"#4f46e5\",\n  glowColor = \"#818cf8\",\n  className,\n}: HighlightedArticleProps) => {\n  const ref = useRef<HTMLDivElement>(null);\n\n  const x = useMotionValue(0);\n  const y = useMotionValue(0);\n\n  const mouseX = useSpring(x, { stiffness: 500, damping: 50 });\n  const mouseY = useSpring(y, { stiffness: 500, damping: 50 });\n\n  const rotateX = useTransform(mouseY, [-100, 100], [2, -2]);\n  const rotateY = useTransform(mouseX, [-100, 100], [-2, 2]);\n\n  function handleMouseMove({ clientX, clientY }: MouseEvent) {\n    if (!ref.current) return;\n\n    const rect = ref.current.getBoundingClientRect();\n    const centerX = rect.x + rect.width / 2;\n    const centerY = rect.y + rect.height / 2;\n\n    x.set(clientX - centerX);\n    y.set(clientY - centerY);\n  }\n\n  function handleMouseLeave() {\n    x.set(0);\n    y.set(0);\n  }\n\n  return (\n    <motion.div\n      ref={ref}\n      className={cn(\n        \"relative overflow-hidden rounded-xl p-8\",\n        \"border border-white/10\",\n        \"transition-colors duration-500\",\n        \"cursor-pointer\",\n        className\n      )}\n      style={{\n        rotateX,\n        rotateY,\n        transformStyle: \"preserve-3d\",\n      }}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n    >\n      <div\n        className=\"absolute inset-0 opacity-20 transition-opacity duration-500\"\n        style={{\n          background: `radial-gradient(circle at center, ${color}, transparent 70%)`\n        }}\n      />\n\n      <div className=\"relative\" style={{ transform: \"translateZ(50px)\" }}>\n        <h3 className=\"text-xl font-bold mb-2\" style={{ color }}>\n          {title}\n        </h3>\n        <p className=\"text-sm text-white/70\">{description}</p>\n      </div>\n\n      <motion.div\n        className=\"absolute inset-0 opacity-0 pointer-events-none\"\n        style={{\n          background: `linear-gradient(45deg, ${color}20, transparent)`,\n        }}\n        whileHover={{ opacity: 0.1 }}\n      />\n    </motion.div>\n  );\n};",
+      "dir": "components/fancy/highlighted-article"
+    },
+    {
+      "name": "index.ts",
+      "content": "export { HighlightedArticle } from \"./highlighted-article\";\nexport type { HighlightedArticleProps } from \"./highlighted-article\";",
+      "dir": "components/fancy/highlighted-article"
+    }
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "title": "Highlighted Article",
+  "description": "A beautiful article card component with 3D hover effects and dynamic lighting.",
+  "features": [
+    "Interactive 3D hover effects",
+    "Dynamic lighting and glow effects",
+    "Smooth animations with Framer Motion",
+    "Customizable colors and styling",
+    "Responsive design",
+    "Accessible interactions"
+  ],
+  "version": "1.0.0",
+  "license": "MIT"
+}
