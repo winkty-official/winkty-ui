@@ -79,7 +79,7 @@ export const TextRippleEffect: React.FC<TextRippleEffectProps> = ({
           ? children?.split("").map((char, index) => (
               <motion.span
                 key={index}
-                className="inline-block"
+                className="inline-block text-primary"
                 initial={{ y: 0 }}
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 500, damping: 10 }}

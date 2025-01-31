@@ -18,34 +18,19 @@ interface CodeBlockProps {
   code: string;
   packageUrl?: string; // Add packageUrl prop
   language: string;
+  isExecutableCommand?: boolean;
 }
 
-export function CodeBlock({ code, packageUrl, language }: CodeBlockProps) {
+export function CodeBlock({
+  code,
+  packageUrl,
+  language,
+  isExecutableCommand,
+}: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = async (packageManger?: PackageManager) => {
+  const copyToClipboard = async () => {
     let textToCopy = code;
-
-    if (packageUrl) {
-      switch (packageManger) {
-        case "npm":
-          textToCopy = `npm install ${packageUrl}`;
-          break;
-        case "yarn":
-          textToCopy = `yarn add ${packageUrl}`;
-          break;
-        case "pnpm":
-          textToCopy = `pnpm add ${packageUrl}`;
-          break;
-        case "bun":
-          textToCopy = `bun add ${packageUrl}`;
-          break;
-        default:
-          textToCopy = packageUrl;
-          break;
-      }
-    }
-
     await navigator.clipboard.writeText(textToCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -59,6 +44,7 @@ export function CodeBlock({ code, packageUrl, language }: CodeBlockProps) {
           packageUrl={packageUrl}
           copied={copied}
           setCopied={setCopied}
+          isExecutableCommand={isExecutableCommand}
         />
       ) : (
         <Button
@@ -103,26 +89,34 @@ const PackageMangerSelectButton = ({
   packageUrl,
   copied,
   setCopied,
+  isExecutableCommand,
 }: {
   packageUrl: string;
   copied: boolean;
   setCopied: (value: boolean) => void;
+  isExecutableCommand?: boolean;
 }) => {
   const copyToClipboard = async (packageManger: PackageManager) => {
     let textToCopy = packageUrl;
 
     switch (packageManger) {
       case "npm":
-        textToCopy = `npm install ${packageUrl}`;
+        textToCopy = isExecutableCommand
+          ? `npx shadcn@latest add ${packageUrl}`
+          : `npm install ${packageUrl}`;
         break;
       case "yarn":
         textToCopy = `yarn add ${packageUrl}`;
         break;
       case "pnpm":
-        textToCopy = `pnpm add ${packageUrl}`;
+        textToCopy = isExecutableCommand
+          ? `pnpm dlx shadcn@latest add ${packageUrl}`
+          : `pnpm add ${packageUrl}`;
         break;
       case "bun":
-        textToCopy = `bun add ${packageUrl}`;
+        textToCopy = isExecutableCommand
+          ? `bunx shadcn@latest add ${packageUrl}`
+          : `bun add ${packageUrl}`;
         break;
       default:
         textToCopy = packageUrl;

@@ -1,10 +1,4 @@
 "use client";
-
-import { useState, useCallback, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Check, ChevronsUpDown, Loader2, X } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { AsyncAutocompleteProps, Option } from "./types";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -19,6 +13,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useDebounce } from "@/hooks/use-debounce";
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import { Check, ChevronsUpDown, Loader2, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { AsyncAutocompleteProps, Option } from "./types";
 
 export function AsyncAutocomplete({
   loadOptions,

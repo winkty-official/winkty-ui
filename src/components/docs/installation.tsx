@@ -36,7 +36,12 @@ export function Installation({ cli, manual }: InstallationProps) {
 
       {cli && (
         <TabsContent value="cli" className="relative">
-          <CodeBlock code={cli.command || ""} language="bash" />
+          <CodeBlock
+            code={`npx shadcn@latest add ${cli.command}` || ""}
+            language="bash"
+            isExecutableCommand
+            packageUrl={cli.command}
+          />
         </TabsContent>
       )}
 

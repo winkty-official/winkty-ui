@@ -21,6 +21,7 @@ import {
 
 export function CustomAutocomplete({
   options = [], // Provide default empty array
+  // value,
   onChange,
   placeholder = "Select...",
   disabled = false,
@@ -28,6 +29,7 @@ export function CustomAutocomplete({
   error,
   className,
   size = "md",
+  // clearable = true,
   renderOption,
   filterOption,
 }: CustomAutocompleteProps) {

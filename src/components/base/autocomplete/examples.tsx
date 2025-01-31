@@ -1,18 +1,14 @@
 "use client";
 
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
 import {
   CodeExamples,
   type CodeExample,
 } from "@/components/docs/code-examples";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import * as z from "zod";
 // import { AsyncAutocomplete } from "./async-autocomplete";
-import { SearchableAutocomplete } from "./searchable-autocomplete";
-import { MultiSelectAutocomplete } from "./multi-select-autocomplete";
-import { useState } from "react";
-import { Option } from "./types";
 import { AsyncAutocomplete } from "./async-autocomplete";
 import {
   AsyncAutocompleteExample,
@@ -37,16 +33,6 @@ const mockFetchUsers = async (query: string) => {
     user.label.toLowerCase().includes(query.toLowerCase())
   );
 };
-
-// Static options for examples
-const countries = [
-  { value: "us", label: "United States" },
-  { value: "uk", label: "United Kingdom" },
-  { value: "ca", label: "Canada" },
-  { value: "au", label: "Australia" },
-  { value: "de", label: "Germany" },
-  { value: "fr", label: "France" },
-];
 
 // Form component for the example
 function FormExample() {
@@ -89,100 +75,102 @@ function FormExample() {
   );
 }
 
-// Searchable Example
-function SearchableExample() {
-  const [value, setValue] = useState<Option | null>(null);
-
-  const handleChange = (newValue: Option | Option[] | null) => {
-    setValue(newValue as Option | null);
-  };
-
-  return (
-    <div className="w-full max-w-sm mx-auto">
-      <SearchableAutocomplete
-        options={countries}
-        value={value}
-        onChange={handleChange}
-        placeholder="Select a country"
-      />
-    </div>
-  );
-}
-
-// Multi-Select Example
-function MultiSelectExample() {
-  const [value, setValue] = useState<Option[]>([]);
-
-  const handleChange = (newValue: Option | Option[] | null) => {
-    setValue(newValue as Option[]);
-  };
-
-  return (
-    <div className="w-full max-w-sm mx-auto">
-      <MultiSelectAutocomplete
-        options={countries}
-        value={value}
-        onChange={handleChange}
-        placeholder="Select countries"
-      />
-    </div>
-  );
-}
-
 const usageExamples: CodeExample[] = [
   {
-    title: "Async Autocomplete",
-    description: "Asynchronous autocomplete with search functionality",
-    preview: (
-      <div className="space-y-10">
-        <AsyncAutocompleteExample />
-        <BasicAutocompleteExample />
-        <CustomAutocompleteExample />
-        <AutocompleteFormExample />
-      </div>
-    ),
+    title: "Asynchronous Search",
+    description:
+      "Fetch and display search results as you type with built-in debouncing and loading states",
+    preview: <AsyncAutocompleteExample />,
     code: `import { AsyncAutocomplete } from "@/components/ui/async-autocomplete";
 import { useState } from "react";
-import { Option } from "./types";
 
-export function AsyncAutocompleteDemo() {
-  const [value, setValue] = useState<Option | null>(null);
+type User = { value: string; label: string };
 
-  const loadOptions = async (query: string): Promise<Option[]> => {
-    const response = await fetch(\`/api/search?q=\${query}\`);
-    return response.json();
+export function UserSearch() {
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+  const searchUsers = async (query: string): Promise<User[]> => {
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 500));
+    const users = [
+      { value: "1", label: "John Doe" },
+      { value: "2", label: "Jane Smith" },
+      { value: "3", label: "Bob Johnson" }
+    ];
+    return users.filter(user => 
+      user.label.toLowerCase().includes(query.toLowerCase())
+    );
   };
 
   return (
     <AsyncAutocomplete
-      loadOptions={loadOptions}
-      value={value}
-      onChange={setValue}
-      placeholder="Search..."
+      loadOptions={searchUsers}
+      value={selectedUser}
+      onChange={setSelectedUser}
+      placeholder="Search users..."
     />
   );
 }`,
   },
   {
-    title: "Searchable Autocomplete",
-    description: "Static options with search functionality",
-    preview: <SearchableExample />,
+    title: "Basic Search",
+    description:
+      "Simple searchable dropdown with static options and keyboard navigation",
+    preview: <BasicAutocompleteExample />,
     code: `import { SearchableAutocomplete } from "@/components/ui/searchable-autocomplete";
+import { useState } from "react";
 
-const countries = [
-  { value: "us", label: "United States" },
-  { value: "uk", label: "United Kingdom" },
-  { value: "ca", label: "Canada" },
+const fruits = [
+  { value: "apple", label: "Apple" },
+  { value: "banana", label: "Banana" },
+  { value: "orange", label: "Orange" },
+  { value: "grape", label: "Grape" }
 ];
 
-export function CountrySelect() {
-  const [value, setValue] = useState(null);
+export function FruitSelect() {
+  const [selected, setSelected] = useState(null);
+
   return (
     <SearchableAutocomplete
-      options={countries}
-      value={value}
-      onChange={setValue}
-      placeholder="Select a country"
+      options={fruits}
+      value={selected}
+      onChange={setSelected}
+      placeholder="Select a fruit"
+    />
+  );
+}`,
+  },
+  {
+    title: "Custom Rendering",
+    description:
+      "Customize the appearance of options with custom rendering functions",
+    preview: <CustomAutocompleteExample />,
+    code: `import { SearchableAutocomplete } from "@/components/ui/searchable-autocomplete";
+import { useState } from "react";
+
+const users = [
+  { value: "1", label: "John Doe", role: "Admin", avatar: "/avatars/john.png" },
+  { value: "2", label: "Jane Smith", role: "User", avatar: "/avatars/jane.png" }
+];
+
+export function CustomUserSelect() {
+  const [selected, setSelected] = useState(null);
+
+  return (
+    <SearchableAutocomplete
+      options={users}
+      value={selected}
+      onChange={setSelected}
+      placeholder="Select a user"
+      renderOption={(option) => (
+        <div className="flex items-center gap-2">
+          <img src={option.avatar} className="w-6 h-6 rounded-full" />
+          <div>
+            <div>{option.label}</div>
+            <div className="text-sm text-gray-500">{option.role}</div>
+          </div>
+        </div>
+      )}
     />
   );
 }`,
@@ -190,7 +178,7 @@ export function CountrySelect() {
   {
     title: "Multi-Select Autocomplete",
     description: "Select multiple options with search",
-    preview: <MultiSelectExample />,
+    preview: <AutocompleteFormExample />,
     code: `import { MultiSelectAutocomplete } from "@/components/ui/multi-select-autocomplete";
 
 const countries = [
