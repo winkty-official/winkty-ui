@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 export function DynamicBreadcrumb() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
   const paths = pathname.split("/").filter((path) => path);
 
   return (

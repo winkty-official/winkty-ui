@@ -39,7 +39,7 @@ export function ManualInstall({ dependencies, files }: ManualInstallProps) {
             <h5 className="text-sm mb-2 p-1 px-2 bg-primary/20 rounded-md w-fit text-white/80">
               {file.dir}
             </h5>
-            <ScrollArea className="h-[400px] w-full rounded-md border relative overflow-x-auto">
+            <ScrollArea className=" h-[400px]  w-full rounded-md border relative overflow-x-auto">
               <CodeBlock code={file.content} language="tsx" />
               <ScrollBar orientation="horizontal" />
             </ScrollArea>

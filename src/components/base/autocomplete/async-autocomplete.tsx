@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Check, ChevronsUpDown, Loader2, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AsyncAutocompleteProps, Option } from "./types";

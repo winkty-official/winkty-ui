@@ -116,7 +116,9 @@ export function AsyncAutocompleteExample() {
       <NormalAutocomplete
         loadOptions={searchCountries}
         value={selectedCountry}
-        onChange={setSelectedCountry}
+        onChange={
+          setSelectedCountry as (value: Option | Option[] | null) => void
+        }
         placeholder="Search for a country..."
       />
       <p>Selected country: {selectedCountry?.label || "None"}</p>

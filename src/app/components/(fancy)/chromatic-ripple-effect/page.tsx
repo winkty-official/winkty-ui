@@ -1,36 +1,62 @@
-import {
-  // ChromaticRipple,
-  TextRippleEffect,
-} from "@/components/fancy/chromatic-ripple-effect/chromatic-ripple-effect";
+import { Metadata } from "next";
+import { Installation } from "@/components/docs/installation";
+import { PropsTable } from "@/components/docs/props-table";
+import { CodeExamples } from "@/components/docs/code-examples";
+import { Accessibility } from "@/components/docs/accessibility";
+import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
+import { propDefinitions } from "./data/props";
+import { packageInfo } from "./data/package";
+import { accessibilityFeatures } from "./data/accessibility";
+import { usageExamples } from "./data/examples";
+import Header from "@/components/docs/header";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Chromatic Ripple Effect - UI Components",
+  description:
+    "An interactive text component that creates smooth ripple animations on mouse movement.",
+};
+
+export default function ChromaticRipplePage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-8 text-gray-800">
-        Chromatic Ripple Effect
-      </h1>
-      {/* <ChromaticRipple
-        className="text-7xl font-bold text-gray-800 h-40"
-        rippleColors={[
-          "rgba(255, 105, 180, 0.3)", // Hot pink
-          "rgba(64, 224, 208, 0.3)", // Turquoise
-          "rgba(255, 215, 0, 0.3)", // Gold
-          "rgba(138, 43, 226, 0.3)", // Blue violet
-          "rgba(50, 205, 50, 0.3)", // Lime green
-        ]}
-        rippleSize={150}
-        rippleDuration={0.7}
-      >
-        Hover over me! to see the effect
-      </ChromaticRipple> */}
-      <TextRippleEffect
-        className="text-7xl h-40 font-bold text-gray-800"
-        rippleColor="rgba(59, 130, 246, 0.2)"
-        rippleSize={150}
-        rippleDuration={0.7}
-      >
-        Hover over me to see the ripple effect!
-      </TextRippleEffect>
+    <div className="container max-w-4xl py-10 space-y-10">
+      <DynamicBreadcrumb />
+
+      <Header
+        title="Chromatic Ripple Effect"
+        description="Create engaging interactive text with smooth ripple animations that follow mouse movement."
+      />
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">Installation</h2>
+        <Installation {...packageInfo} />
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-6">Usage</h2>
+        <CodeExamples examples={usageExamples} />
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">Props</h2>
+        <PropsTable definitions={propDefinitions} />
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">Accessibility</h2>
+        <Accessibility features={accessibilityFeatures} />
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">Features</h2>
+        <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
+          <li>Smooth ripple animations on mouse movement</li>
+          <li>Customizable ripple colors and sizes</li>
+          <li>Adjustable animation timing</li>
+          <li>Per-character hover animations</li>
+          <li>Responsive and mobile-friendly</li>
+          <li>Optimized performance with Framer Motion</li>
+        </ul>
+      </section>
     </div>
   );
 }

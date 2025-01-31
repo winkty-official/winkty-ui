@@ -1,27 +1,26 @@
-"use client"
+"use client";
 
-import { useState, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { CustomAutocompleteProps, Option } from "./types"
-import { Button } from "@/components/ui/button"
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { CustomAutocompleteProps, Option } from "./types";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 export function CustomAutocomplete({
   options = [], // Provide default empty array
-  value,
   onChange,
   placeholder = "Select...",
   disabled = false,
@@ -29,26 +28,28 @@ export function CustomAutocomplete({
   error,
   className,
   size = "md",
-  clearable = true,
   renderOption,
   filterOption,
 }: CustomAutocompleteProps) {
-  const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState<Option | null>(null)
-  const [query, setQuery] = useState("")
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Option | null>(null);
+  const [query, setQuery] = useState("");
 
   const filteredOptions = filterOption
     ? options.filter((option) => filterOption(option, query))
     : options.filter((option) =>
         // Safely handle potentially undefined labels
         (option.label || "").toLowerCase().includes((query || "").toLowerCase())
-      )
+      );
 
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option)
-    setOpen(false)
-    onChange?.(option)
-  }, [onChange])
+  const handleSelect = useCallback(
+    (option: Option) => {
+      setSelected(option);
+      setOpen(false);
+      onChange?.(option);
+    },
+    [onChange]
+  );
 
   return (
     <div className="space-y-2">
@@ -131,5 +132,5 @@ export function CustomAutocomplete({
         </motion.p>
       )}
     </div>
-  )
+  );
 }

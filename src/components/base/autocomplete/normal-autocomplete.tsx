@@ -242,7 +242,7 @@ import { Badge } from "@/components/ui/badge";
 export type Option = {
   value: string;
   label: string;
-  [key: string]: any; // Allow additional properties
+  [key: string]: unknown; // Allow additional properties
 };
 
 type AutocompleteProps = {
@@ -279,7 +279,6 @@ export function NormalAutocomplete({
   renderOption,
   filterOption,
   name,
-  onBlur,
   multiSelect = false,
 }: AutocompleteProps) {
   const [open, setOpen] = useState(false);

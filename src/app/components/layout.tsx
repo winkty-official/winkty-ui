@@ -20,41 +20,26 @@ const componentGroups: ComponentGroup[] = [
   {
     name: "Layout",
     components: [
-      { name: "Card", path: "card" },
-      { name: "Container", path: "container" },
-      { name: "AspectRatio", path: "aspect-ratio" },
+      { name: "Auth Form", path: "auth-form" },
+      { name: "Payment Card", path: "payment-card" },
     ],
   },
   {
-    name: "Forms",
-    components: [
-      { name: "Button", path: "buttons" },
-      { name: "Select", path: "select" },
-      { name: "Checkbox", path: "checkbox" },
-      { name: "payment", path: "payment-card" },
-    ],
-  },
-  {
-    name: "Inputs",
+    name: "Basic",
     components: [
       { name: "Autocomplete", path: "autocomplete" },
       { name: "Input", path: "input" },
+      { name: "Radio", path: "radio" },
+      { name: "File Tree", path: "file-tree" },
     ],
   },
   {
-    name: "Navigation",
+    name: "Fancy",
     components: [
-      { name: "Tabs", path: "tabs" },
-      { name: "Breadcrumb", path: "breadcrumb" },
-      { name: "Menu", path: "menu" },
-    ],
-  },
-  {
-    name: "Feedback",
-    components: [
-      { name: "Alert", path: "alert" },
-      { name: "Toast", path: "toast" },
-      { name: "Progress", path: "progress" },
+      { name: "Chromatic Ripple Effect", path: "chromatic-ripple-effect" },
+      { name: "HighLight Article", path: "highlighted-article" },
+      { name: "Neon Pulse", path: "neon-pulse" },
+      { name: "Particle Field", path: "particle-field" },
     ],
   },
 ];

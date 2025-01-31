@@ -1,27 +1,26 @@
-"use client"
+"use client";
 
-import { useState, useRef, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { BaseAutocompleteProps, Option } from "./types"
-import { Button } from "@/components/ui/button"
+import { useState, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { BaseAutocompleteProps, Option } from "./types";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 export function BasicAutocomplete({
   options,
-  value,
   onChange,
   placeholder = "Select...",
   disabled = false,
@@ -29,23 +28,19 @@ export function BasicAutocomplete({
   error,
   className,
   size = "md",
-  clearable = true,
 }: BaseAutocompleteProps) {
-  const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState<Option | null>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Option | null>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option)
-    setOpen(false)
-    onChange?.(option)
-  }, [onChange])
-
-  const handleClear = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation()
-    setSelected(null)
-    onChange?.(null)
-  }, [onChange])
+  const handleSelect = useCallback(
+    (option: Option) => {
+      setSelected(option);
+      setOpen(false);
+      onChange?.(option);
+    },
+    [onChange]
+  );
 
   return (
     <div className="space-y-2">
@@ -118,5 +113,5 @@ export function BasicAutocomplete({
         </motion.p>
       )}
     </div>
-  )
+  );
 }

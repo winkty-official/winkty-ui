@@ -1,69 +1,89 @@
-# Project overview
+# Project Overview
 
-you are building a component library build top of shadcn/ui and next.js. where user can install the code through shadcn CLI or manually copy and paste the code into their project.
+NextUIX is an enterprise-grade component library built on modern web technologies, combining the power of framer-motion 12+ + Popmotion with shadcn/ui with Next.js 15's advanced capabilities. Designed for developers who demand both aesthetic polish and technical excellence, this library provides:
 
-you will be using the shadcn/ui library to build the components. Next js will be used to build the website. Tailwind css will be used to style the components. react-hook-form will be used to handle the form validation.lucide-react will be used to build the icons.
+Production-Ready Components: 150+ accessible UI elements built with Radix UI primitives
+
+Full-Stack Integration: Seamless compatibility with Next.js App Router and React Server Components
+
+Performance Optimized: Components average <5kB bundle size with intelligent code splitting
+
+Multi-Paradigm Styling: CSS Variables + Tailwind CSS + Optional CSS-in-JS integration
+
+Enterprise Features: TypeScript-first API, Auth-ready forms, Payment integrations
+
+## Stack Overview
+
+- **Foundation**: Built on shadcn/ui v0.7+ (Radix UI primitives)
+- **Framework**: Next.js 15+ (App Router)
+- **Styling**: Tailwind CSS 3.4+ with CSS Variables
+- **Forms**: react-hook-form 7+ with Zod integration
+- **Icons**: lucide-react 0.474+
+- **Icons**: react-icons 5+
+- **Animations**: framer-motion 12+ + Popmotion
+- **Type Safety**: TypeScript 5+
 
 # Core functionality
 
-Component Library
+## Component Architecture System
 
-    Build a collection of UI components using shadcn/ui.
-    Ensure components are customizable and reusable.
-    Provide both installation via shadcn CLI and manual copy-paste options.
+```jsx
+// Example Component Structure
+<SmartForm
+  schema={PaymentSchema}
+  onSubmit={handlePayment}
+  className="w-[600px]"
+>
+  <PaymentCardPreview />
+  <AutoCompletePaymentField options={currencies} />
+  <SecurityCodeInput withRippleEffect />
+  <FormSubmitButton loadingContent={<ParticleLoader />} variant="neon" />
+</SmartForm>
+```
 
-Website Development
+## Key Features:
 
-    Use Next.js to create a documentation site.
-    Implement a user-friendly interface for browsing and previewing components.
-    Provide clear installation and usage instructions for each component.
+Atomic Design Pattern: Components organized as Atoms > Molecules > Organisms
 
-Styling & Theming
+Adaptive Dark Mode: Automatic system preference + manual override
 
-    Utilize Tailwind CSS for styling components.
-    Support dark mode and configurable themes.
-    Ensure responsive design for all components.
+Zero-Config Responsive: Breakpoint-aware components with mobile-first CSS
 
-Form Handling
+Headless Option: Use components without default styling via unstyled prop
 
-    Use react-hook-form for form validation and state management.
-    Provide accessible and customizable form components (e.g., inputs, selects, checkboxes).
+Context-Driven: Component groups share state via React Context API
 
-Icons & UI Enhancements
+## Documentation Engine
 
-    Use lucide-react for icons.
-    Ensure consistent and modern UI/UX design.
-    Optimize for performance and accessibility.
+```
+docs/
+├── Interactive Playground
+├── Prop Type Visualization
+├── Accessibility Audit Results
+├── Bundle Size Metrics
+└── Version Migration Guides
+```
 
-Code Accessibility
+## Enterprise-Grade Forms
 
-    Provide users with easy copy-paste code snippets.
-    Ensure well-documented and structured code.
-    Support TypeScript for better developer experience.
-
-Component Variants & Customization
-
-    Offer different variations of components (e.g., outlined, filled, sizes).
-    Provide props-based customization for flexibility.
-    Enable easy integration with other Tailwind configurations.
-
-# Docs
-
-# Project Overview
-
-You are building a component library on top of shadcn/ui and Next.js, where users can install the code through the shadcn CLI or manually copy and paste the code into their project.
-
-## Technologies Used
-
-- **shadcn/ui**: For building the UI components.
-- **Next.js**: For developing the website and documentation.
-- **Tailwind CSS**: For styling components.
-- **react-hook-form**: For form validation and state management.
-- **lucide-react**: For icons.
-
----
-
-# Core Functionality
+```tsx
+// Secure Payment Form Implementation
+const PaymentForm = () => (
+  <Form encryptSecrets securityLevel="PCI-DSS">
+    <CreditCardInput
+      validateOn="blur"
+      cardTypes={[VISA, MASTERCARD]}
+      errorTranslations={paymentErrors}
+    />
+    <ThreeDSecureWrapper>
+      <SubmitButton
+        loadingState={<ChromaticLoader />}
+        successEffect="particle-confetti"
+      />
+    </ThreeDSecureWrapper>
+  </Form>
+);
+```
 
 ## Component Library
 
@@ -114,15 +134,23 @@ You are building a component library on top of shadcn/ui and Next.js, where user
 
 ### 1. Using shadcn CLI
 
-```sh
-npx shadcn-ui@latest add https://your-domain.com/components/auth-form.json
+```bash
+npx shadcn-ui@latest add \
+  process.env.BASE_URI/components/area-switch.json \
+  process.env.BASE_URI/components/dialog.json
 ```
 
 ### 2. Manual Installation
 
-- Copy the provided component code.
-- Paste it into your project inside the designated folder.
-- Import and use it as needed.
+Create components/ui/area-switch.tsx
+
+Copy component code from documentation
+
+Add required dependencies:
+
+```bash
+npm install @radix-ui/react-switch lucide-react
+```
 
 ## Example Usage
 
@@ -139,6 +167,18 @@ export default function Example() {
 ## code exampel
 
 ```tsx
+/**
+ * Enhanced Switch component with label and description support
+ *
+ * @param {string} id - Unique identifier for accessibility
+ * @param {React.ReactNode} children - Main label content
+ * @param {string} description - Optional helper text
+ * @param {React.HTMLAttributes} SwitchContainerProps - Container HTML attributes
+ *
+ * @example <AreaSwitch id="notifications" description="Receive email alerts">
+ *   <span className="font-medium">Email Notifications</span>
+ * </AreaSwitch>
+ */
 import React, { forwardRef, useRef } from "react";
 import { Switch } from "@/components/ui/switch";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
@@ -241,6 +281,18 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
+/**
+ * Accessible modal dialog with configurable transitions
+ *
+ * @param {React.ReactNode} children - Dialog content
+ * @param {string} size - Size variant (sm|md|lg|xl)
+ *
+ * @example <Dialog>
+ *   <DialogContent size="lg">
+ *     <DialogHeader>...</DialogHeader>
+ *   </DialogContent>
+ * </Dialog>
+ */
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
@@ -339,46 +391,10 @@ export {
 To view the project structure, run the following command on macOS:
 
 ```sh
-tree -L 2 -I "node_modules|.next"
+tree -L 7 -I "node_modules|.next"
 ```
 
-Example Output:
-
-```
-.
-├── components
-│   ├── ui
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── input.tsx
-├── pages
-│   ├── index.tsx
-│   ├── docs.tsx
-├── styles
-│   ├── globals.css
-├── public
-│   ├── logo.svg
-├── package.json
-├── tailwind.config.js
-├── tsconfig.json
-```
-
----
-
-# Contribution Guide
-
-- Fork the repository.
-- Create a new branch for your feature.
-- Submit a pull request with a clear description.
-- Follow the existing code style and naming conventions.
-
----
-
-# License
-
-This project is licensed under the MIT License.
-
-# Current file structure
+## Documentation System
 
 .
 ├── README.md
@@ -390,34 +406,69 @@ This project is licensed under the MIT License.
 ├── package.json
 ├── postcss.config.mjs
 ├── public
+│ ├── components-img
+│ │ └── file-tree-preview.png
 │ └── registry
 │ ├── area-radio-group.json
+│ ├── async-autocomplete.json
 │ ├── auth-form.json
+│ ├── file-tree.json
 │ ├── highlighted-article.json
 │ ├── particle-field.json
 │ └── simple-input.json
 ├── src
 │ ├── app
 │ │ ├── components
-│ │ │ ├── (basic)
+│ │ │ ├── (basic) # basic components (e.g. button, input, card, etc.)
+│ │ │ │ ├── autocomplete
+│ │ │ │ │ ├── data
+│ │ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ │ ├── package.ts
+│ │ │ │ │ │ └── props.ts
+│ │ │ │ │ └── page.tsx
+│ │ │ │ ├── file-tree
+│ │ │ │ │ ├── data
+│ │ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ │ ├── package.ts
+│ │ │ │ │ │ └── props.ts
+│ │ │ │ │ └── page.tsx
 │ │ │ │ ├── input
 │ │ │ │ │ ├── data
+│ │ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ │ ├── examples.tsx
+│ │ │ │ │ │ ├── metadata.ts
+│ │ │ │ │ │ ├── package.ts
+│ │ │ │ │ │ └── props.ts
 │ │ │ │ │ └── page.tsx
 │ │ │ │ └── radio
 │ │ │ │ ├── data
+│ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ ├── examples.ts
+│ │ │ │ │ ├── metadata.ts
+│ │ │ │ │ ├── package.ts
+│ │ │ │ │ └── props.ts
 │ │ │ │ └── page.tsx
-│ │ │ ├── (fancy)
+│ │ │ ├── (fancy) # fancy components (e.g. chromatic-ripple-effect, highlighted-article, neon-pulse, particle-field, etc.)
 │ │ │ │ ├── chromatic-ripple-effect
 │ │ │ │ │ └── page.tsx
 │ │ │ │ ├── highlighted-article
 │ │ │ │ │ ├── data
+│ │ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ │ ├── examples.tsx
+│ │ │ │ │ │ ├── package.ts
+│ │ │ │ │ │ └── props.ts
 │ │ │ │ │ └── page.tsx
 │ │ │ │ ├── neon-pulse
 │ │ │ │ │ └── page.tsx
 │ │ │ │ └── particle-field
 │ │ │ │ ├── data
+│ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ ├── examples.tsx
+│ │ │ │ │ ├── package.ts
+│ │ │ │ │ ├── previews.tsx
+│ │ │ │ │ └── props.ts
 │ │ │ │ └── page.tsx
-│ │ │ ├── (layout)
+│ │ │ ├── (layout) # layout components (e.g. auth-form, payment-card, etc.)
 │ │ │ │ ├── auth-form
 │ │ │ │ │ ├── docs.tsx
 │ │ │ │ │ └── page.tsx
@@ -428,8 +479,6 @@ This project is licensed under the MIT License.
 │ │ ├── favicon.ico
 │ │ ├── globals.css
 │ │ ├── layout.tsx
-│ │ ├── page.tsx
-│ │ └── test
 │ │ └── page.tsx
 │ ├── assets
 │ │ └── icons
@@ -438,28 +487,40 @@ This project is licensed under the MIT License.
 │ │ ├── mastercard.svg
 │ │ └── visa.svg
 │ ├── components
-│ │ ├── base
+│ │ ├── base # base components (e.g. autocomplete, breadcrumb, buttons, inputs, etc.)
+│ │ │ ├── autocomplete
+│ │ │ │ ├── AsyncAutoComplete.usage.tsx
+│ │ │ │ ├── async-autocomplete.tsx
+│ │ │ │ ├── basic-autocomplete.tsx
+│ │ │ │ ├── custom-autocomplete.tsx
+│ │ │ │ ├── examples.tsx
+│ │ │ │ ├── form.example.tsx
+│ │ │ │ ├── index.ts
+│ │ │ │ ├── multi-select-autocomplete.tsx
+│ │ │ │ ├── normal-autocomplete.tsx
+│ │ │ │ ├── searchable-autocomplete.tsx
+│ │ │ │ └── types.ts
 │ │ │ ├── breadcrumb.tsx
 │ │ │ ├── buttons
 │ │ │ ├── inputs
 │ │ │ │ └── simple-input.tsx
 │ │ │ └── radio
 │ │ │ ├── area-radio-group.tsx
-│ │ │ ├── example
-│ │ │ │ ├── card-selector.tsx
-│ │ │ │ ├── color-picker.tsx
-│ │ │ │ ├── examples.tsx
-│ │ │ │ └── layout-selector.tsx
-│ │ │ └── manual-install.tsx
-│ │ ├── docs
+│ │ │ └── example
+│ │ │ ├── card-selector.tsx
+│ │ │ ├── color-picker.tsx
+│ │ │ ├── examples.tsx
+│ │ │ └── layout-selector.tsx
+│ │ ├── docs # documentation for the components
 │ │ │ ├── accessibility.tsx
 │ │ │ ├── code-examples.tsx
 │ │ │ ├── header.tsx
 │ │ │ ├── installation.tsx
+│ │ │ ├── manual-install.tsx
 │ │ │ ├── props-table.tsx
 │ │ │ ├── sidebar.tsx
 │ │ │ └── types.ts
-│ │ ├── fancy
+│ │ ├── fancy # fancy components (e.g. chromatic-ripple-effect, highlighted-article, mouse-ripple-effect, neon-pulse, etc.)
 │ │ │ ├── chromatic-ripple-effect
 │ │ │ │ └── chromatic-ripple-effect.tsx
 │ │ │ ├── highlighted-article.tsx
@@ -479,23 +540,30 @@ This project is licensed under the MIT License.
 │ │ │ ├── index.tsx
 │ │ │ ├── live-editor-section.tsx
 │ │ │ └── theme-toggle.tsx
-│ │ ├── icons
+│ │ ├── icons # icons for the components
 │ │ │ ├── payment
 │ │ │ │ ├── amex-icon.tsx
 │ │ │ │ └── mastercard-icon.tsx
 │ │ │ └── payment-icons.tsx
-│ │ ├── layout
+│ │ ├── layout # layout components (e.g. auth-form, payment-card, etc.)
 │ │ │ ├── auth-form
 │ │ │ │ ├── auth-card.tsx
 │ │ │ │ ├── forgot-password.tsx
 │ │ │ │ ├── sign-in.tsx
 │ │ │ │ └── sign-up.tsx
-│ │ │ ├── hero
-│ │ │ └── payment
-│ │ │ ├── card-preview.tsx
-│ │ │ └── payment-form.tsx
-│ │ ├── my-ui
-│ │ └── ui
+│ │ │ ├── hero # hero section for the website
+│ │ │ └── payment # payment components (e.g. card-preview, payment-form, etc.)
+│ │ ├── my-ui # my-ui components (e.g. navigation, ui, etc.)
+│ │ │ ├── navigation # navigation components (e.g. file-tree, nav-bar, etc.)
+│ │ │ │ ├── file-tree
+│ │ │ │ │ ├── examples.tsx
+│ │ │ │ │ ├── file-icon.tsx
+│ │ │ │ │ ├── file-tree.tsx
+│ │ │ │ ├── tree-node.tsx
+│ │ │ │ └── type
+│ │ │ │ └── file.ts
+│ │ │ └── nav-bar
+│ │ └── ui # shadcn ui components only
 │ │ ├── accordion.tsx
 │ │ ├── alert-dialog.tsx
 │ │ ├── aspect-ratio.tsx
@@ -508,6 +576,7 @@ This project is licensed under the MIT License.
 │ │ ├── carousel.tsx
 │ │ ├── checkbox.tsx
 │ │ ├── collapsible.tsx
+│ │ ├── command.tsx
 │ │ ├── context-menu.tsx
 │ │ ├── dialog.tsx
 │ │ ├── drawer.tsx
@@ -540,12 +609,14 @@ This project is licensed under the MIT License.
 │ │ ├── toggle.tsx
 │ │ └── tooltip.tsx
 │ ├── hooks
+│ │ ├── use-debounce.ts
 │ │ └── use-mobile.tsx
 │ ├── instructions
 │ │ ├── docs-structure.md
 │ │ ├── instruction.md
 │ │ └── registry.md
 │ ├── lib
+│ │ ├── api.ts
 │ │ └── utils.ts
 │ ├── pages
 │ ├── provider
@@ -555,3 +626,7 @@ This project is licensed under the MIT License.
 │ └── index.tsx
 ├── tailwind.config.ts
 └── tsconfig.json
+
+# License
+
+This project is licensed under the MIT License.

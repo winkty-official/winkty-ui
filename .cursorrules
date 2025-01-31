@@ -1,4 +1,4 @@
-This comprehensive guide outlines best practices, conventions, and standards for development with modern web technologies including ReactJS, NextJS, Redux, TypeScript, JavaScript, HTML, CSS, and UI frameworks.
+This comprehensive guide outlines best practices, conventions, and standards for development with modern web technologies including ReactJS, NextJS, Redux, TypeScript, JavaScript, framer-motion, Popmotion, HTML, CSS, and UI frameworks.
 
     Development Philosophy
     - Write clean, maintainable, and scalable code
@@ -201,3 +201,238 @@ This comprehensive guide outlines best practices, conventions, and standards for
     - Use proper links
     - Use proper headings
     - Use proper lists
+
+# Current File Structure
+
+.
+├── README.md
+├── components.json
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── public
+│ ├── components-img
+│ │ └── file-tree-preview.png
+│ └── registry
+│ ├── area-radio-group.json
+│ ├── async-autocomplete.json
+│ ├── auth-form.json
+│ ├── file-tree.json
+│ ├── highlighted-article.json
+│ ├── particle-field.json
+│ └── simple-input.json
+├── src
+│ ├── app
+│ │ ├── components
+│ │ │ ├── (basic)
+│ │ │ │ ├── autocomplete
+│ │ │ │ │ ├── data
+│ │ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ │ ├── package.ts
+│ │ │ │ │ │ └── props.ts
+│ │ │ │ │ └── page.tsx
+│ │ │ │ ├── file-tree
+│ │ │ │ │ ├── data
+│ │ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ │ ├── package.ts
+│ │ │ │ │ │ └── props.ts
+│ │ │ │ │ └── page.tsx
+│ │ │ │ ├── input
+│ │ │ │ │ ├── data
+│ │ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ │ ├── examples.tsx
+│ │ │ │ │ │ ├── metadata.ts
+│ │ │ │ │ │ ├── package.ts
+│ │ │ │ │ │ └── props.ts
+│ │ │ │ │ └── page.tsx
+│ │ │ │ └── radio
+│ │ │ │ ├── data
+│ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ ├── examples.ts
+│ │ │ │ │ ├── metadata.ts
+│ │ │ │ │ ├── package.ts
+│ │ │ │ │ └── props.ts
+│ │ │ │ └── page.tsx
+│ │ │ ├── (fancy)
+│ │ │ │ ├── chromatic-ripple-effect
+│ │ │ │ │ └── page.tsx
+│ │ │ │ ├── highlighted-article
+│ │ │ │ │ ├── data
+│ │ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ │ ├── examples.tsx
+│ │ │ │ │ │ ├── package.ts
+│ │ │ │ │ │ └── props.ts
+│ │ │ │ │ └── page.tsx
+│ │ │ │ ├── neon-pulse
+│ │ │ │ │ └── page.tsx
+│ │ │ │ └── particle-field
+│ │ │ │ ├── data
+│ │ │ │ │ ├── accessibility.ts
+│ │ │ │ │ ├── examples.tsx
+│ │ │ │ │ ├── package.ts
+│ │ │ │ │ ├── previews.tsx
+│ │ │ │ │ └── props.ts
+│ │ │ │ └── page.tsx
+│ │ │ ├── (layout)
+│ │ │ │ ├── auth-form
+│ │ │ │ │ ├── docs.tsx
+│ │ │ │ │ └── page.tsx
+│ │ │ │ └── payment-card
+│ │ │ │ └── page.tsx
+│ │ │ ├── layout.tsx
+│ │ │ └── page.tsx
+│ │ ├── favicon.ico
+│ │ ├── globals.css
+│ │ ├── layout.tsx
+│ │ └── page.tsx
+│ ├── assets
+│ │ └── icons
+│ │ └── payment
+│ │ ├── amex.svg
+│ │ ├── mastercard.svg
+│ │ └── visa.svg
+│ ├── components
+│ │ ├── base
+│ │ │ ├── autocomplete
+│ │ │ │ ├── AsyncAutoComplete.usage.tsx
+│ │ │ │ ├── async-autocomplete.tsx
+│ │ │ │ ├── basic-autocomplete.tsx
+│ │ │ │ ├── custom-autocomplete.tsx
+│ │ │ │ ├── examples.tsx
+│ │ │ │ ├── form.example.tsx
+│ │ │ │ ├── index.ts
+│ │ │ │ ├── multi-select-autocomplete.tsx
+│ │ │ │ ├── normal-autocomplete.tsx
+│ │ │ │ ├── searchable-autocomplete.tsx
+│ │ │ │ └── types.ts
+│ │ │ ├── breadcrumb.tsx
+│ │ │ ├── buttons
+│ │ │ ├── inputs
+│ │ │ │ └── simple-input.tsx
+│ │ │ └── radio
+│ │ │ ├── area-radio-group.tsx
+│ │ │ └── example
+│ │ │ ├── card-selector.tsx
+│ │ │ ├── color-picker.tsx
+│ │ │ ├── examples.tsx
+│ │ │ └── layout-selector.tsx
+│ │ ├── docs
+│ │ │ ├── accessibility.tsx
+│ │ │ ├── code-examples.tsx
+│ │ │ ├── header.tsx
+│ │ │ ├── installation.tsx
+│ │ │ ├── manual-install.tsx
+│ │ │ ├── props-table.tsx
+│ │ │ ├── sidebar.tsx
+│ │ │ └── types.ts
+│ │ ├── fancy
+│ │ │ ├── chromatic-ripple-effect
+│ │ │ │ └── chromatic-ripple-effect.tsx
+│ │ │ ├── highlighted-article.tsx
+│ │ │ ├── mouse-ripple-effect.tsx
+│ │ │ ├── neon-pulse
+│ │ │ │ └── neon-pulse.tsx
+│ │ │ ├── particle-field
+│ │ │ │ ├── examples.tsx
+│ │ │ │ └── particle-field.tsx
+│ │ │ └── text-hover-effect.tsx
+│ │ ├── home
+│ │ │ ├── code-block.tsx
+│ │ │ ├── features-grid.tsx
+│ │ │ ├── floating-feature.tsx
+│ │ │ ├── footer.tsx
+│ │ │ ├── hero-section.tsx
+│ │ │ ├── index.tsx
+│ │ │ ├── live-editor-section.tsx
+│ │ │ └── theme-toggle.tsx
+│ │ ├── icons
+│ │ │ ├── payment
+│ │ │ │ ├── amex-icon.tsx
+│ │ │ │ └── mastercard-icon.tsx
+│ │ │ └── payment-icons.tsx
+│ │ ├── layout
+│ │ │ ├── auth-form
+│ │ │ │ ├── auth-card.tsx
+│ │ │ │ ├── forgot-password.tsx
+│ │ │ │ ├── sign-in.tsx
+│ │ │ │ └── sign-up.tsx
+│ │ │ ├── hero
+│ │ │ └── payment
+│ │ │ ├── card-preview.tsx
+│ │ │ └── payment-form.tsx
+│ │ ├── my-ui
+│ │ ├── navigation
+│ │ │ ├── file-tree
+│ │ │ │ ├── examples.tsx
+│ │ │ │ ├── file-icon.tsx
+│ │ │ │ ├── file-tree.tsx
+│ │ │ │ ├── tree-node.tsx
+│ │ │ │ └── type
+│ │ │ │ └── file.ts
+│ │ │ └── nav-bar
+│ │ └── ui
+│ │ ├── accordion.tsx
+│ │ ├── alert-dialog.tsx
+│ │ ├── aspect-ratio.tsx
+│ │ ├── avatar.tsx
+│ │ ├── badge.tsx
+│ │ ├── breadcrumb.tsx
+│ │ ├── button.tsx
+│ │ ├── calendar.tsx
+│ │ ├── card.tsx
+│ │ ├── carousel.tsx
+│ │ ├── checkbox.tsx
+│ │ ├── collapsible.tsx
+│ │ ├── command.tsx
+│ │ ├── context-menu.tsx
+│ │ ├── dialog.tsx
+│ │ ├── drawer.tsx
+│ │ ├── dropdown-menu.tsx
+│ │ ├── form.tsx
+│ │ ├── hover-card.tsx
+│ │ ├── input-otp.tsx
+│ │ ├── input.tsx
+│ │ ├── label.tsx
+│ │ ├── menubar.tsx
+│ │ ├── navigation-menu.tsx
+│ │ ├── pagination.tsx
+│ │ ├── popover.tsx
+│ │ ├── progress.tsx
+│ │ ├── radio-group.tsx
+│ │ ├── resizable.tsx
+│ │ ├── scroll-area.tsx
+│ │ ├── select.tsx
+│ │ ├── separator.tsx
+│ │ ├── sheet.tsx
+│ │ ├── sidebar.tsx
+│ │ ├── skeleton.tsx
+│ │ ├── slider.tsx
+│ │ ├── switch.tsx
+│ │ ├── table.tsx
+│ │ ├── tabs.tsx
+│ │ ├── textarea.tsx
+│ │ ├── toast.tsx
+│ │ ├── toggle-group.tsx
+│ │ ├── toggle.tsx
+│ │ └── tooltip.tsx
+│ ├── hooks
+│ │ ├── use-debounce.ts
+│ │ └── use-mobile.tsx
+│ ├── instructions
+│ │ ├── docs-structure.md
+│ │ ├── instruction.md
+│ │ └── registry.md
+│ ├── lib
+│ │ ├── api.ts
+│ │ └── utils.ts
+│ ├── pages
+│ ├── provider
+│ │ └── theme-provider.tsx
+│ └── registry
+│ └── area-radio-group
+│ └── index.tsx
+├── tailwind.config.ts
+└── tsconfig.json

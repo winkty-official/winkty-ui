@@ -14,8 +14,6 @@ import { MultiSelectAutocomplete } from "./multi-select-autocomplete";
 import { useState } from "react";
 import { Option } from "./types";
 import { AsyncAutocomplete } from "./async-autocomplete";
-import AsyncAutocompleteUsage from "./AsyncAutoComplete.usage";
-import { NormalAutocomplete } from "./normal-autocomplete";
 import {
   AsyncAutocompleteExample,
   AutocompleteFormExample,

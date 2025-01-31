@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 export interface Option {
   label: string;
   value: string | number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface BaseAutocompleteProps {
