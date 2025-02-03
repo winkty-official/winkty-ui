@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Folder, FolderOpen } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { FileNode } from "./type/file";
@@ -38,9 +38,10 @@ export function TreeNode({
     <div>
       <motion.div
         className={cn(
-          "flex items-center gap-2 p-2 rounded-lg hover:bg-accent cursor-pointer relative group",
-          level > 0 && `ml-${level * 4}`
+          "flex items-center gap-2 p-2 rounded-lg hover:bg-accent cursor-pointer relative group"
         )}
+        // Indent each level (e.g. 16px per level)
+        style={{ marginLeft: level * 16 }}
         onClick={handleClick}
         whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.2 }}
@@ -66,13 +67,18 @@ export function TreeNode({
             )}
           </div>
           <div className="w-4 flex items-center">
-            <FileTypeIcon
-              type={node.type}
-              className={cn(
-                "h-4 w-4",
-                node.type === "folder" ? "text-blue-500" : "text-gray-500"
-              )}
-            />
+            {node.type === "folder" ? (
+              isOpen ? (
+                <FolderOpen className="h-4 w-4 text-blue-500" />
+              ) : (
+                <Folder className="h-4 w-4 text-blue-500" />
+              )
+            ) : (
+              <FileTypeIcon
+                type={node.type}
+                className={cn("h-4 w-4", "text-blue-500")}
+              />
+            )}
           </div>
           <span
             className={cn("text-sm", node.type === "folder" && "font-medium")}

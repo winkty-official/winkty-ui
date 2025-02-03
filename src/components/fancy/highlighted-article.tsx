@@ -1,5 +1,4 @@
 "use client";
-
 import { cn } from "@/lib/utils";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { MouseEvent, useRef } from "react";
@@ -20,13 +19,14 @@ export const HighlightedArticle = ({
   className,
 }: HighlightedArticleProps) => {
   const ref = useRef<HTMLDivElement>(null);
-
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const isHovered = useMotionValue(0);
 
   // Create smooth spring animations
   const mouseX = useSpring(x, { stiffness: 500, damping: 50 });
   const mouseY = useSpring(y, { stiffness: 500, damping: 50 });
+  const hoverSpring = useSpring(isHovered, { stiffness: 500, damping: 50 });
 
   // Transform mouse position to rotation values
   const rotateX = useTransform(mouseY, [-100, 100], [2, -2]);
@@ -34,11 +34,9 @@ export const HighlightedArticle = ({
 
   function handleMouseMove({ clientX, clientY }: MouseEvent) {
     if (!ref.current) return;
-
     const rect = ref.current.getBoundingClientRect();
     const centerX = rect.x + rect.width / 2;
     const centerY = rect.y + rect.height / 2;
-
     // Calculate distance from center
     x.set(clientX - centerX);
     y.set(clientY - centerY);
@@ -47,6 +45,11 @@ export const HighlightedArticle = ({
   function handleMouseLeave() {
     x.set(0);
     y.set(0);
+    isHovered.set(0);
+  }
+
+  function handleMouseEnter() {
+    isHovered.set(1);
   }
 
   return (
@@ -66,13 +69,15 @@ export const HighlightedArticle = ({
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onMouseEnter={handleMouseEnter}
     >
       {/* Background gradient */}
-      <div
-        className="absolute inset-0 opacity-20 transition-opacity duration-500"
+      <motion.div
+        className="absolute inset-0"
         style={{
           background: `radial-gradient(circle at center, ${color}, transparent 70%)`,
           boxShadow: `0 0 30px ${glowColor}`,
+          opacity: useTransform(hoverSpring, [0, 1], [0.2, 0.3]),
         }}
       />
 
@@ -84,14 +89,16 @@ export const HighlightedArticle = ({
         <p className="text-sm text-white/70">{description}</p>
       </div>
 
-      {/* Hover effect */}
+      {/* Hover gradient effect */}
       <motion.div
-        className="absolute inset-0 opacity-0 pointer-events-none"
+        className="absolute inset-0"
         style={{
           background: `linear-gradient(45deg, ${color}20, transparent)`,
+          opacity: useTransform(hoverSpring, [0, 1], [0, 0.2]),
         }}
-        whileHover={{ opacity: 0.1 }}
       />
     </motion.div>
   );
 };
+
+export default HighlightedArticle;

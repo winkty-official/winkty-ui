@@ -12,19 +12,16 @@ export const propDefinitions: PropsDefinition[] = [
     description: "Brief description or excerpt of the article",
   },
   {
-    prop: "image",
+    prop: "color",
     type: "string",
-    description: "URL of the article's featured image",
+    default: "#4f46e5",
+    description: "Primary color for the article highlight effect",
   },
   {
-    prop: "date",
+    prop: "glowColor",
     type: "string",
-    description: "Publication date of the article",
-  },
-  {
-    prop: "author",
-    type: "{ name: string; avatar?: string }",
-    description: "Author information including name and optional avatar",
+    default: "#818cf8",
+    description: "Color of the glow/shadow effect",
   },
   {
     prop: "className",

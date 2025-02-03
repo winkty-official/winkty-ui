@@ -1,15 +1,18 @@
-import { HighlightedArticle } from "@/components/fancy/highlighted-article";
 import type { CodeExample } from "@/components/docs/code-examples";
+import { HighlightedArticle } from "@/components/fancy/highlighted-article";
 
 export const usageExamples: CodeExample[] = [
   {
     title: "Basic Usage",
-    description: "A simple highlighted article with default styling",
+    description: "Simple article card with hover effects",
     preview: (
-      <div className="w-full max-w-md mx-auto">
+      <div className="w-full p-8 bg-background/95 rounded-lg">
         <HighlightedArticle
           title="Getting Started with React"
-          description="Learn the fundamentals of React and start building modern web applications."
+          description="Learn the fundamentals of React and build your first application"
+          image="/placeholder.jpg"
+          date="2024-03-15"
+          author={{ name: "John Doe", avatar: "/avatars/john.jpg" }}
         />
       </div>
     ),
@@ -19,33 +22,40 @@ export function BasicExample() {
   return (
     <HighlightedArticle
       title="Getting Started with React"
-      description="Learn the fundamentals of React and start building modern web applications."
+      description="Learn the fundamentals of React and build your first application"
+      image="/placeholder.jpg"
+      date="2024-03-15"
+      author={{ name: "John Doe", avatar: "/avatars/john.jpg" }}
     />
   );
 }`,
   },
   {
-    title: "Custom Colors",
-    description: "Customizing the colors of the highlighted article",
+    title: "Custom Styling",
+    description: "Article card with custom styling and animations",
     preview: (
-      <div className="w-full max-w-md mx-auto">
+      <div className="w-full p-8 bg-background/95 rounded-lg">
         <HighlightedArticle
-          title="Advanced TypeScript"
-          description="Master TypeScript's advanced features and type system."
-          color="#22c55e"
-          glowColor="#4ade80"
+          title="Advanced TypeScript Patterns"
+          description="Explore advanced TypeScript patterns and best practices"
+          image="/typescript.jpg"
+          date="2024-03-10"
+          author={{ name: "Jane Smith" }}
+          className="custom-theme"
         />
       </div>
     ),
     code: `import { HighlightedArticle } from "@/components/ui/highlighted-article";
 
-export function CustomColorExample() {
+export function CustomExample() {
   return (
     <HighlightedArticle
-      title="Advanced TypeScript"
-      description="Master TypeScript's advanced features and type system."
-      color="#22c55e"
-      glowColor="#4ade80"
+      title="Advanced TypeScript Patterns"
+      description="Explore advanced TypeScript patterns and best practices"
+      image="/typescript.jpg"
+      date="2024-03-10"
+      author={{ name: "Jane Smith" }}
+      className="custom-theme"
     />
   );
 }`,
