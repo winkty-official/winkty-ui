@@ -1,29 +1,30 @@
 export const propDefinitions = [
   {
-    prop: "title",
-    type: "string",
-    description: "The title of the article card",
-  },
-  {
-    prop: "description",
-    type: "string",
-    description: "The description text for the article",
-  },
-  {
     prop: "color",
     type: "string",
     default: "#4f46e5",
-    description: "Primary color for the card's highlight effects",
+    description: "Primary color for the highlight effect",
   },
   {
     prop: "glowColor",
     type: "string",
     default: "#818cf8",
-    description: "Color for the glow effect on hover",
+    description: "Secondary color for the glow effect",
   },
   {
     prop: "className",
     type: "string",
     description: "Additional CSS classes to apply to the component",
   },
+  {
+    prop: "children",
+    type: "React.ReactNode",
+    description: "The content to be rendered inside the highlighted article",
+    required: true,
+  },
+  {
+    prop: "ref",
+    type: "React.Ref<HTMLDivElement>",
+    description: "Forward ref to the underlying div element",
+  }
 ];

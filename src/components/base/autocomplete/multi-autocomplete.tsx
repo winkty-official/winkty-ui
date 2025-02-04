@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { Badge } from "@/components/ui/badge";
@@ -42,10 +41,10 @@ type MultiAutocompleteProps = {
 };
 
 export function MultiAutocomplete({
-  options: initialOptions = [],
+  // options: initialOptions = [],
   value,
   onChange,
-  loadOptions,
+  // loadOptions,
   placeholder = "Select...",
   disabled = false,
   loading: externalLoading = false,
@@ -54,13 +53,13 @@ export function MultiAutocomplete({
   size = "md",
   clearable = true,
   renderOption,
-  filterOption,
+  // filterOption,
   name,
 }: MultiAutocompleteProps) {
   const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState<Option[]>(initialOptions);
+  // const [options, setOptions] = useState<Option[]>(initialOptions);
   const [query, setQuery] = useState("");
-  const [internalLoading, setInternalLoading] = useState(false);
+  const [internalLoading] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   const loading = externalLoading || internalLoading;
