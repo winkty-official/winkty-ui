@@ -46,7 +46,7 @@ export function BasicExample() {
               Advanced TypeScript
             </h3>
             <p className="text-white/70">
-              Master TypeScript's advanced features and type system.
+              Master TypeScript&apos;s advanced features and type system.
             </p>
           </div>
         </HighlightedArticle>

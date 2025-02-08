@@ -6,10 +6,25 @@ interface ManualInstallProps {
   name: string;
   type: string;
   dependencies: string[];
-  files: { name: string; content: string; dir: string }[];
+  files: {
+    name: string;
+    type: string;
+    path: string;
+    content: string;
+    target: string;
+  }[];
+  styles?: {
+    name: string;
+    type: string;
+    content: string;
+    target: string;
+  }[];
   author: string;
   title: string;
   description: string;
+  featiures?: string[];
+  version?: string;
+  license?: string;
 }
 
 export function ManualInstall({ dependencies, files }: ManualInstallProps) {
@@ -37,7 +52,7 @@ export function ManualInstall({ dependencies, files }: ManualInstallProps) {
         {files.map((file, index) => (
           <div key={index}>
             <h5 className="text-sm mb-2 p-1 px-2 bg-primary/20 rounded-md w-fit text-white/80">
-              {file.dir}
+              {file.path}
             </h5>
             <ScrollArea className=" h-[400px]  w-full rounded-md border relative overflow-x-auto">
               <CodeBlock code={file.content} language="tsx" />
