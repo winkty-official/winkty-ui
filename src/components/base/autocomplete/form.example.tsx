@@ -55,28 +55,6 @@ export function AutocompleteFormExample() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="country"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Country</FormLabel>
-              <FormControl>
-                <NormalAutocomplete
-                  options={countries}
-                  value={field.value}
-                  onChange={field.onChange}
-                  placeholder="Select a country"
-                  clearable
-                />
-              </FormControl>
-              <FormDescription>
-                Select your country of residence.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <FormField
           control={form.control}
@@ -108,7 +86,7 @@ export function AutocompleteFormExample() {
 
 // 1. Async Autocomplete Example
 export function AsyncAutocompleteExample() {
-  const [selectedCountry, setSelectedCountry] = useState<Option | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<Option | Option[] | null>(null);
 
   return (
     <div className="space-y-4">
@@ -135,7 +113,6 @@ const basicFormSchema = z.object({
     })
     .nullable(),
 });
-
 export function BasicAutocompleteExample() {
   const form = useForm<z.infer<typeof basicFormSchema>>({
     resolver: zodResolver(basicFormSchema),
@@ -143,7 +120,6 @@ export function BasicAutocompleteExample() {
       fruit: null,
     },
   });
-
   function onSubmit(values: z.infer<typeof basicFormSchema>) {
     console.log("🚀 ~ onSubmit ~ values:", values);
     // toast({
@@ -155,7 +131,6 @@ export function BasicAutocompleteExample() {
     //   ),
     // });
   }
-
   const fruits: Option[] = [
     { value: "apple", label: "Apple" },
     { value: "banana", label: "Banana" },
@@ -163,7 +138,6 @@ export function BasicAutocompleteExample() {
     { value: "date", label: "Date" },
     { value: "elderberry", label: "Elderberry" },
   ];
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -188,7 +162,6 @@ export function BasicAutocompleteExample() {
             </FormItem>
           )}
         />
-
         <Button type="submit">Submit</Button>
       </form>
     </Form>

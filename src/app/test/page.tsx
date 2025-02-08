@@ -1,67 +1,30 @@
-"use client";
+import { HighlightedArticle } from "@/components/fancy/highlighted-article";
+import React from "react";
 
-import {
-  FileNode,
-  FileTree,
-} from "@/components/navigation/file-tree/file-tree-new";
-
-const demoData: FileNode[] = [
-  {
-    id: "1",
-    name: "src",
-    type: "folder",
-    children: [
-      {
-        id: "2",
-        name: "components",
-        type: "folder",
-        children: [
-          { id: "3", name: "Button.tsx", type: "file" },
-          { id: "4", name: "Card.tsx", type: "file" },
-        ],
-      },
-      {
-        id: "5",
-        name: "pages",
-        type: "folder",
-        children: [
-          { id: "6", name: "index.tsx", type: "file" },
-          { id: "7", name: "about.tsx", type: "file" },
-        ],
-      },
-      { id: "8", name: "styles.css", type: "file" },
-    ],
-  },
-  {
-    id: "9",
-    name: "public",
-    type: "folder",
-    children: [
-      { id: "10", name: "favicon.ico", type: "file" },
-      { id: "11", name: "logo.svg", type: "file" },
-    ],
-  },
-];
-
-export default function Home() {
-  const handleSelect = (node: FileNode) => {
-    console.log("Selected:", node.name);
-  };
-
+function TestPage() {
   return (
-    <div className="min-h-screen bg-background p-8">
-      <div className="mx-auto max-w-4xl">
-        <h1 className="mb-8 text-4xl font-bold tracking-tight">
-          File Explorer
+    <div>
+      <HighlightedArticle color="#4f46e550" glowColor="#818cf8">
+        <h1 className=" text-[#4f46e5] font-bold text-2xl mb-4">
+          Highlighted Article
         </h1>
-        <div className="rounded-lg border bg-card p-6 shadow-sm">
-          <FileTree
-            data={demoData}
-            onSelect={handleSelect}
-            className="max-w-sm"
-          />
-        </div>
-      </div>
+        <h5 className=" text-muted-foreground text-base">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
+          repudiandae quia illo magni vitae amet animi excepturi ad blanditiis,
+          praesentium possimus deserunt odit ducimus quo quidem suscipit aliquid
+          quasi ratione accusamus? Impedit, expedita omnis. Quidem deleniti
+          facere possimus debitis tempore aspernatur tenetur blanditiis ab
+          labore cupiditate quaerat magnam amet quas, ducimus optio. Quasi, odit
+          dignissimos rerum praesentium accusantium magni eveniet quae, error,
+          voluptate doloremque fugit incidunt voluptatem animi. Culpa a iusto
+          laboriosam quia odio in unde excepturi accusantium. Quia ullam error
+          sequi sapiente cum, officia architecto dolores tenetur, exercitationem
+          quaerat dolorum alias corrupti soluta, fuga veritatis ipsam a voluptas
+          rem?
+        </h5>
+      </HighlightedArticle>
     </div>
   );
 }
+
+export default TestPage;

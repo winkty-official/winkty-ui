@@ -4,7 +4,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import { AlertCircle } from "lucide-react";
 
 // Define input variants using class-variance-authority
-const inputVariants = cva(
+const inputFieldVariants = cva(
   [
     "flex h-10 w-full rounded-sm bg-background px-3 py-2 text-sm ring-offset-background",
     "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
@@ -17,6 +17,7 @@ const inputVariants = cva(
         default: "border border-input",
         outline: "border border-input bg-transparent",
         ghost: "border-none bg-transparent shadow-none",
+        "outline-bottom": "border-b border-input bg-transparent",
       },
       inputSize: {
         default: "h-10 px-3 py-2",
@@ -39,7 +40,7 @@ const inputVariants = cva(
 
 export interface SimpleInputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
-    VariantProps<typeof inputVariants> {
+    VariantProps<typeof inputFieldVariants> {
   /** Additional className for the input wrapper */
   wrapperClassName?: string;
   /** Additional className for the input element */
@@ -63,7 +64,7 @@ export interface SimpleInputProps
   };
 }
 
-const SimpleInput = React.forwardRef<HTMLInputElement, SimpleInputProps>(
+const InputField = React.forwardRef<HTMLInputElement, SimpleInputProps>(
   (
     {
       wrapperClassName,
@@ -113,7 +114,7 @@ const SimpleInput = React.forwardRef<HTMLInputElement, SimpleInputProps>(
           <input
             type={type}
             className={cn(
-              inputVariants({ variant, inputSize, state: inputState }),
+              inputFieldVariants({ variant, inputSize, state: inputState }),
               InputProps?.startAdornment && "pl-10",
               InputProps?.endAdornment && "pr-10",
               inputClassName
@@ -157,6 +158,6 @@ const SimpleInput = React.forwardRef<HTMLInputElement, SimpleInputProps>(
   }
 );
 
-SimpleInput.displayName = "SimpleInput";
+InputField.displayName = "InputField";
 
-export default SimpleInput;
+export default InputField;

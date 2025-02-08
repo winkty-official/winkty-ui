@@ -1,5 +1,5 @@
-import SimpleInput from "@/components/base/inputs/simple-input";
-import { Lock, Mail } from "lucide-react";
+import InputField from "@/components/base/inputs/input-field";
+import PasswordInput from "./examples/password-input";
 
 export const examples = [
   {
@@ -7,16 +7,16 @@ export const examples = [
     description: "A basic input example with username and password fields.",
     preview: (
       <div className="flex flex-col gap-4">
-        <SimpleInput label="Username" placeholder="Enter your username" />
-        <SimpleInput
+        <InputField label="Username" placeholder="Enter your username" />
+        <InputField
           label="Password"
           type="password"
           placeholder="Enter your password"
         />
       </div>
     ),
-    code: `<SimpleInput label="Username" placeholder="Enter your username" />
-<SimpleInput
+    code: `<InputField label="Username" placeholder="Enter your username" />
+<InputField
   label="Password"
   type="password"
   placeholder="Enter your password"
@@ -25,116 +25,99 @@ export const examples = [
   {
     title: "Input with Icons",
     description: "Input fields with start and end adornments using icons.",
-    preview: (
-      <div className="flex flex-col gap-4">
-        <SimpleInput
-          label="Email"
-          placeholder="Enter your email"
-          InputProps={{
-            startAdornment: <Mail className="h-4 w-4" />,
-          }}
-        />
-        <SimpleInput
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-          InputProps={{
-            startAdornment: <Lock className="h-4 w-4" />,
-          }}
-        />
-      </div>
-    ),
-    code: `<SimpleInput
+    preview: <PasswordInput />,
+    code: `<InputField
   label="Email"
   placeholder="Enter your email"
   InputProps={{
     startAdornment: <Mail className="h-4 w-4" />,
   }}
 />
-<SimpleInput
+<InputField
   label="Password"
   type="password"
   placeholder="Enter your password"
   InputProps={{
     startAdornment: <Lock className="h-4 w-4" />,
+    endAdornment: <Eye className="h-4 w-4 cursor-pointer" />,
   }}
 />`,
   },
   {
-    title: "Input States",
+    title: "Input With States",
     description: "Various input states including error, success, and disabled.",
     preview: (
       <div className="flex flex-col gap-4">
-        <SimpleInput
+        <InputField
           label="Error State"
           error
           helperText="This field is required"
           placeholder="Error input"
         />
-        <SimpleInput
+        <InputField
           label="Success State"
           success
           helperText="Username is available"
           placeholder="Success input"
         />
-        <SimpleInput
+        <InputField
           label="Disabled State"
           disabled
           placeholder="Disabled input"
         />
       </div>
     ),
-    code: `<SimpleInput
+    code: `<InputField
   label="Error State"
   error
   helperText="This field is required"
   placeholder="Error input"
 />
-<SimpleInput
+<InputField
   label="Success State"
   success
   helperText="Username is available"
   placeholder="Success input"
 />
-<SimpleInput
+<InputField
   label="Disabled State"
   disabled
   placeholder="Disabled input"
 />`,
   },
   {
-    title: "Input Sizes",
+    title: "Input With Sizes",
     description: "Different input sizes: small, default, and large.",
     preview: (
       <div className="flex flex-col gap-4">
-        <SimpleInput
+        <InputField
           label="Small Input"
           inputSize="sm"
           placeholder="Small input"
         />
-        <SimpleInput
+        <InputField
           label="Default Input"
           inputSize="default"
           placeholder="Default input"
         />
-        <SimpleInput
+        <InputField
           label="Large Input"
           inputSize="lg"
           placeholder="Large input"
         />
       </div>
     ),
-    code: `<SimpleInput
+    code: `<InputField
   label="Small Input"
   inputSize="sm"
   placeholder="Small input"
 />
-<SimpleInput
+<InputField
   label="Default Input"
   inputSize="default"
   placeholder="Default input"
 />
-<SimpleInput
+<InputField
   label="Large Input"
   inputSize="lg"
   placeholder="Large input"
@@ -142,32 +125,42 @@ export const examples = [
   },
 ];
 
-export const hookFormUsageCode = `import { useForm } from "react-hook-form";
-import SimpleInput from "@/components/base/inputs/simple-input";
+export const hookFormUsageCode = `"use client";
+
+import { useForm } from "react-hook-form";
 import { Mail } from "lucide-react";
-import { Accessibility } from '../../../../components/docs/accessibility';
+import InputField from "@/components/ui/input-field";
 
 export default function LoginForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (value: any) => {
+    console.log("🚀 ~ onSubmit ~ value:", value);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <SimpleInput
+      <InputField
         label="Email"
         required
         error={!!errors.email}
-        helperText={errors.email?.message}
+        helperText={errors.email?.message?.toString()}
         InputProps={{
           startAdornment: <Mail className="h-4 w-4" />,
         }}
         {...register("email", {
           required: "Email is required",
           pattern: {
-            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$/i,
-            message: "Invalid email address"
-          }
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "Invalid email address",
+          },
         })}
       />
     </form>
   );
-}`;
+}
+`;

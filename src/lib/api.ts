@@ -16,7 +16,7 @@ const countries: Option[] = [
 
 export async function searchCountries(query: string): Promise<Option[]> {
   // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 500));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   // Filter countries based on the query
   return countries.filter((country) =>

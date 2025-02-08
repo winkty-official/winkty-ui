@@ -1,10 +1,4 @@
 "use client";
-
-import { useState, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { BaseAutocompleteProps, Option } from "./types";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -18,9 +12,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { useCallback, useRef, useState } from "react";
+import { BaseAutocompleteProps, Option } from "./types";
 
 export function BasicAutocomplete({
   options,
+  // value,
   onChange,
   placeholder = "Select...",
   disabled = false,
@@ -28,7 +28,8 @@ export function BasicAutocomplete({
   error,
   className,
   size = "md",
-}: BaseAutocompleteProps) {
+}: // clearable = true,
+BaseAutocompleteProps) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Option | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -41,6 +42,12 @@ export function BasicAutocomplete({
     },
     [onChange]
   );
+
+  // const handleClear = useCallback((e: React.MouseEvent) => {
+  //   e.stopPropagation()
+  //   setSelected(null)
+  //   onChange?.(null)
+  // }, [onChange])
 
   return (
     <div className="space-y-2">

@@ -16,7 +16,7 @@ export const metadata: Metadata = InputPageMetadata.meta;
 
 export default function InputPage() {
   return (
-    <div className="container max-w-4xl py-10 space-y-10">
+    <div className="container max-w-6xl py-10 space-y-10">
       <div className="space-y-4">
         <DynamicBreadcrumb />
         <Header

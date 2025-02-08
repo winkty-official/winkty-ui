@@ -1,34 +1,30 @@
-import { PropsDefinition } from "@/components/docs/types";
-
-export const propDefinitions: PropsDefinition[] = [
-  {
-    prop: "title",
-    type: "string",
-    description: "Title of the article",
-  },
-  {
-    prop: "description",
-    type: "string",
-    description: "Brief description or excerpt of the article",
-  },
+export const propDefinitions = [
   {
     prop: "image",
     type: "string",
-    description: "URL of the article's featured image",
+    default: "#4f46e5",
+    description: "Primary color for the highlight effect",
   },
   {
     prop: "date",
     type: "string",
-    description: "Publication date of the article",
-  },
-  {
-    prop: "author",
-    type: "{ name: string; avatar?: string }",
-    description: "Author information including name and optional avatar",
+    default: "#818cf8",
+    description: "Secondary color for the glow effect",
   },
   {
     prop: "className",
     type: "string",
-    description: "Additional CSS classes",
+    description: "Additional CSS classes to apply to the component",
+  },
+  {
+    prop: "children",
+    type: "React.ReactNode",
+    description: "The content to be rendered inside the highlighted article",
+    required: true,
+  },
+  {
+    prop: "ref",
+    type: "React.Ref<HTMLDivElement>",
+    description: "Forward ref to the underlying div element",
   },
 ];

@@ -147,7 +147,9 @@ export function LiveEditorSection() {
 
           <Card className="p-6">
             <h3 className="text-2xl font-semibold mb-4">Generated Code</h3>
-            <CodeBlock code={generateCode(config)} language="tsx" />
+            <div className="realtive">
+              <CodeBlock code={generateCode(config)} language="tsx" />
+            </div>
           </Card>
         </div>
       </div>
