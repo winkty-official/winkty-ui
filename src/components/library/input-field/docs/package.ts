@@ -1,4 +1,4 @@
-import manual from "../../../../../../public/registry/input-field.json";
+import manual from "../../../../../public/registry/input-field.json";
 
 export const packageInfo = {
   cli: {

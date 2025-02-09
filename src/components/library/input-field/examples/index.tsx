@@ -1,5 +1,5 @@
 import InputField from "@/components/base/inputs/input-field";
-import PasswordInput from "./examples/password-input";
+import PasswordInput from "../examples/password-input";
 
 export const examples = [
   {
