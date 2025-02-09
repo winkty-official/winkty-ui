@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import AutoComplete, { Option } from "@/components/library/auto-complete";
+import AutoComplete, { Option } from "../../../registry/ui/input-field";
 
 // Simulated async data fetching function
 const fetchOptions = async (inputValue: string): Promise<Option[]> => {

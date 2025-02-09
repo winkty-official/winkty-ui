@@ -1,8 +1,9 @@
-import manual from "../../../../../public/registry/autocomplete.json";
+import globalConfig from "@/config";
+import manual from "../../../../../public/registry/auto-complete.json";
 
 export const packageInfo = {
   cli: {
-    command: `${process.env.BASE_URI}/registry/async-autocomplete.json`,
+    command: `${globalConfig.BASE_URI}/registry/auto-complete.json`,
   },
   manual,
 };

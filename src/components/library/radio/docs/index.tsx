@@ -13,7 +13,7 @@ import { packageInfo } from "./package";
 
 export default function RadioGroupDocs() {
   return (
-    <div className="container max-w-4xl py-10 space-y-10">
+    <div className="container max-w-6xl py-10 space-y-10">
       <DynamicBreadcrumb />
 
       <Header

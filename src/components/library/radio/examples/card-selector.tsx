@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import AreaRadioGroup, { RadioItem } from "../";
+import AreaRadioGroup, { RadioItem } from "..";
 import { Label } from "@/components/ui/label";
 import { MastercardIcon } from "@/components/icons/payment/mastercard-icon";
 import { VisaIcon } from "@/components/icons/payment-icons";

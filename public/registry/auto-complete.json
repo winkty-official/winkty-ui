@@ -1,5 +1,5 @@
 {
-  "name": "autocomplete",
+  "name": "auto-complete",
   "type": "registry:ui",
   "registryDependencies": [
     "button",
