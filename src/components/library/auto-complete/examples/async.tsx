@@ -1,4 +1,4 @@
-import { searchCountries } from "@/lib/api";
+import { searchCountries } from "@/components/library/auto-complete/data/api";
 import Autocomplete, { Option } from "..";
 import { useState } from "react";
 

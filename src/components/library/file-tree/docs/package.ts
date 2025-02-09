@@ -1,5 +1,5 @@
 import globalConfig from "@/config";
-import manual from "../../../../../../public/registry/file-tree.json";
+import manual from "../../../../../public/registry/file-tree.json";
 
 export const packageInfo = {
   cli: {

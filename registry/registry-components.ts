@@ -22,6 +22,13 @@ export const ui: Registry = [
     dependencies: ["@radix-ui/react-radio-group"],
     files: ["ui/area-radio.tsx"],
   },
+  {
+    name: "file-tree",
+    type: "registry:ui",
+    registryDependencies: ["card", "utils"],
+    dependencies: ["framer-motion", "lucide-react"],
+    files: ["ui/file-tree.tsx"],
+  },
   // {
   //   name: "hint",
   //   type: "registry:ui",

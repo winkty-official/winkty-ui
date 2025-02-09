@@ -1,11 +1,35 @@
 "use client";
 
+import { Card } from "@/components/ui/card";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, Folder, FolderOpen } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { FileNode } from "./type/file";
-import { FileTypeIcon } from "./file-icon";
+import {
+  ChevronRight,
+  Folder,
+  FolderOpen,
+  FileIcon,
+  FolderIcon,
+} from "lucide-react";
+
+interface FileIconProps {
+  type: "file" | "folder";
+  className?: string;
+}
+
+interface FileNode {
+  name: string;
+  type: "file" | "folder";
+  children?: FileNode[];
+  icon?: string;
+}
+
+interface FileTreeProps {
+  files: FileNode[];
+  className?: string;
+  activeSelect?: string;
+  onSelect?: (path: string) => void;
+}
 
 interface TreeNodeProps {
   node: FileNode;
@@ -15,13 +39,43 @@ interface TreeNodeProps {
   onSelect: (path: string) => void;
 }
 
-export function TreeNode({
+function FileTree({
+  files,
+  className,
+  activeSelect,
+  onSelect,
+}: Readonly<FileTreeProps>) {
+  const [selectedPath, setSelectedPath] = useState<string>(activeSelect ?? "");
+
+  const handleSelect = (path: string) => {
+    setSelectedPath(path);
+    onSelect?.(path);
+  };
+
+  return (
+    <Card className={className}>
+      <div className="p-4">
+        {files.map((file, index) => (
+          <TreeNode
+            key={`${file.name}-${index}`}
+            node={file}
+            basePath={file.name}
+            selectedPath={selectedPath}
+            onSelect={handleSelect}
+          />
+        ))}
+      </div>
+    </Card>
+  );
+}
+
+function TreeNode({
   node,
   level = 0,
   basePath,
   selectedPath,
   onSelect,
-}: TreeNodeProps) {
+}: Readonly<TreeNodeProps>) {
   const [isOpen, setIsOpen] = useState(false);
   const hasChildren = node.children && node.children.length > 0;
   const isSelected = selectedPath === basePath;
@@ -68,11 +122,13 @@ export function TreeNode({
           </div>
           <div className="w-4 flex items-center">
             {node.type === "folder" ? (
-              isOpen ? (
-                <FolderOpen className="h-4 w-4 text-blue-500" />
-              ) : (
-                <Folder className="h-4 w-4 text-blue-500" />
-              )
+              <>
+                {isOpen ? (
+                  <FolderOpen className="h-4 w-4 text-primary" />
+                ) : (
+                  <Folder className="h-4 w-4 text-primary" />
+                )}
+              </>
             ) : (
               <FileTypeIcon
                 type={node.type}
@@ -112,3 +168,12 @@ export function TreeNode({
     </div>
   );
 }
+
+function FileTypeIcon({ type, className }: Readonly<FileIconProps>) {
+  if (type === "folder") {
+    return <FolderIcon className={className} />;
+  }
+  return <FileIcon className={className} />;
+}
+
+export { FileTree, TreeNode, FileTypeIcon };
