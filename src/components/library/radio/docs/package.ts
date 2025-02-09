@@ -1,4 +1,4 @@
-import manual from "../../../../../../public/registry/area-radio-group.json";
+import manual from "../../../../../public/registry/area-radio-group.json";
 
 export const packageInfo = {
   cli: {
