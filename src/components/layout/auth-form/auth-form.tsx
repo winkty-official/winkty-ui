@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import InputField from "@/components/base/inputs/input-field";
 import {
   Form,
   FormControl,
@@ -23,7 +23,7 @@ interface AuthFormData {
 
 interface AuthFormProps {
   variant: "signin" | "signup" | "forgot-password";
-  onSubmit: (data: AuthFormData) => void;
+  onSubmit: (data: AuthFormData) => Promise<void>;
   onSuccess?: (response: unknown) => void;
   providers?: string[];
 }
@@ -33,7 +33,7 @@ export function AuthForm({
   onSubmit,
   onSuccess,
   providers,
-}: AuthFormProps) {
+}: Readonly<AuthFormProps>) {
   const [isLoading, setIsLoading] = useState(false);
   const [currentView, setCurrentView] = useState(variant);
 
@@ -119,7 +119,7 @@ export function AuthForm({
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input
+                  <InputField
                     placeholder="m@example.com"
                     type="email"
                     disabled={isLoading}
@@ -139,7 +139,11 @@ export function AuthForm({
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" disabled={isLoading} {...field} />
+                    <InputField
+                      type="password"
+                      disabled={isLoading}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

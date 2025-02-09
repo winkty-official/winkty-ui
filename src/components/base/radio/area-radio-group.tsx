@@ -1,9 +1,8 @@
 "use client";
+import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import React from "react";
-import { Label } from "@/components/ui/label";
-import { Check } from "lucide-react";
 
 // Define types for radio items
 export interface RadioItem {
@@ -25,78 +24,74 @@ export interface RadioItemProps
   value: string;
   RadioGroupContainerProps?: React.HTMLProps<HTMLDivElement>;
   children: React.ReactNode;
-  indicatorType?: 'border' | 'check' | 'radio';
-  radioPosition?: 'left' | 'right';
+  // indicatorType?: "border" | "check" | "radio";
+  // radioPosition?: "left" | "right";
+  indicator?: React.ReactNode;
+  indicatorPosition?: "left" | "right";
 }
 
-const RadioItem = React.forwardRef<HTMLDivElement, RadioItemProps>(
+const RadioItem = React.forwardRef<HTMLButtonElement, RadioItemProps>(
   (
-    { 
-      value, 
-      RadioGroupContainerProps, 
-      children, 
-      className, 
-      indicatorType = 'radio',
-      radioPosition = 'left',
-      ...itemProps 
+    {
+      value,
+      children,
+      className,
+      indicator,
+      indicatorPosition = "left",
+      ...itemProps
     },
     ref
   ) => {
-    const { className: containerClassName, ...containerProps } =
-      RadioGroupContainerProps || {};
-
-    const showRadio = indicatorType === 'radio';
-    const showCheck = indicatorType === 'check';
-
     return (
       <RadioGroup.Item
+        ref={ref}
         value={value}
-        className={cn("group peer w-full", className)}
+        className={cn(
+          "group peer w-full",
+          "relative rounded-lg border border-input bg-background shadow-sm transition-all duration-150",
+          "hover:bg-muted/50",
+          "group-data-[state=checked]:border-primary group-data-[state=checked]:bg-primary/5",
+          "group-data-[state=checked]:ring-2 group-data-[state=checked]:ring-primary/10",
+          className
+        )}
         {...itemProps}
       >
-        <div
-          ref={ref}
-          className={cn(
-            "relative rounded-lg border border-input bg-background shadow-sm transition-all duration-150",
-            "hover:bg-muted/50",
-            "group-data-[state=checked]:border-primary group-data-[state=checked]:bg-primary/5",
-            indicatorType !== 'border' && "group-data-[state=checked]:ring-2 group-data-[state=checked]:ring-primary/10",
-            containerClassName
-          )}
-          {...containerProps}
+        <Label
+          htmlFor={value}
+          className="flex w-full cursor-pointer items-start p-4"
         >
-          <Label
-            htmlFor={value}
-            className="flex w-full cursor-pointer items-start p-4"
-          >
-            {showRadio && radioPosition === 'left' && (
-              <div className="flex h-full items-center pr-2">
+          {indicatorPosition === "left" && (
+            <div className="flex h-full items-center pr-2">
+              {indicator ? (
+                <div className=" opacity-0 group-data-[state=checked]:opacity-100">
+                  {indicator}
+                </div>
+              ) : (
                 <div className="h-4 w-4 rounded-full border border-primary bg-background transition-colors group-data-[state=checked]:bg-primary">
                   <RadioGroup.Indicator className="flex h-full w-full items-center justify-center">
                     <div className="h-2 w-2 rounded-full bg-white" />
                   </RadioGroup.Indicator>
                 </div>
-              </div>
-            )}
-            <div className="flex grow">
-              {children}
+              )}
             </div>
-            {showRadio && radioPosition === 'right' && (
-              <div className="flex h-full items-center pl-2">
+          )}
+          <div className="flex grow">{children}</div>
+          {indicatorPosition === "right" && (
+            <div className="flex h-full items-center pl-2">
+              {indicator ? (
+                <div className=" opacity-0 group-data-[state=checked]:opacity-100">
+                  {indicator}
+                </div>
+              ) : (
                 <div className="h-4 w-4 rounded-full border border-primary bg-background transition-colors group-data-[state=checked]:bg-primary">
                   <RadioGroup.Indicator className="flex h-full w-full items-center justify-center">
                     <div className="h-2 w-2 rounded-full bg-white" />
                   </RadioGroup.Indicator>
                 </div>
-              </div>
-            )}
-            {showCheck && (
-              <div className="ml-auto pl-2 text-primary opacity-0 transition-opacity duration-150 group-data-[state=checked]:opacity-100">
-                <Check className="h-4 w-4" />
-              </div>
-            )}
-          </Label>
-        </div>
+              )}
+            </div>
+          )}
+        </Label>
       </RadioGroup.Item>
     );
   }
