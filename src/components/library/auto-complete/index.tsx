@@ -1,4 +1,5 @@
 "use client";
+
 import type React from "react";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,15 +20,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
+
 export type Option = {
   value: string;
   label: string;
   [key: string]: unknown; // Allow additional properties
 };
-type AutocompleteProps = {
+
+type SingleSelectProps = {
+  multiSelect?: false;
+  value?: Option | null;
+  onChange?: (value: Option | null) => void;
+};
+
+type MultiSelectProps = {
+  multiSelect: true;
+  value?: Option[] | null;
+  onChange?: (value: Option[] | null) => void;
+};
+
+type CommonProps = {
   options?: Option[];
-  value?: Option | null | Option[];
-  onChange?: (value: Option | null | Option[]) => void;
   loadOptions?: (inputValue: string) => Promise<Option[]>;
   placeholder?: string;
   disabled?: boolean;
@@ -40,9 +53,11 @@ type AutocompleteProps = {
   filterOption?: (option: Option, inputValue: string) => boolean;
   name?: string;
   onBlur?: () => void;
-  multiSelect?: boolean;
 };
-export function NormalAutocomplete({
+
+type AutocompleteProps = CommonProps & (SingleSelectProps | MultiSelectProps);
+
+export default function Autocomplete({
   options: initialOptions = [],
   value,
   onChange,
@@ -57,7 +72,6 @@ export function NormalAutocomplete({
   renderOption,
   filterOption,
   name,
-  // onBlur,
   multiSelect = false,
 }: AutocompleteProps) {
   const [open, setOpen] = useState(false);
@@ -66,11 +80,13 @@ export function NormalAutocomplete({
   const [internalLoading, setInternalLoading] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const loading = externalLoading || internalLoading;
+
   useEffect(() => {
     if (!loadOptions) {
       setOptions(initialOptions);
     }
   }, [initialOptions, loadOptions]);
+
   const debouncedLoadOptions = useCallback(
     async (inputValue: string) => {
       if (loadOptions) {
@@ -82,17 +98,20 @@ export function NormalAutocomplete({
     },
     [loadOptions]
   );
+
   useEffect(() => {
     const timer = setTimeout(() => {
       debouncedLoadOptions(query);
     }, 300);
     return () => clearTimeout(timer);
   }, [query, debouncedLoadOptions]);
+
   const filteredOptions = filterOption
     ? options.filter((option) => filterOption(option, query))
     : options.filter((option) =>
         option.label.toLowerCase().includes(query.toLowerCase())
       );
+
   const handleSelect = useCallback(
     (option: Option) => {
       if (multiSelect) {
@@ -105,48 +124,61 @@ export function NormalAutocomplete({
         } else {
           newValue.push(option);
         }
-        onChange?.(newValue);
+        onChange?.(newValue as Option & Option[]);
       } else {
         setOpen(false);
-        onChange?.(option);
+        onChange?.(option as Option & Option[]);
       }
     },
     [multiSelect, value, onChange]
   );
+
   const handleClear = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
-      onChange?.(multiSelect ? [] : null);
+      if (multiSelect) {
+        onChange?.(null as unknown as Option & Option[]);
+      } else {
+        onChange?.(null as unknown as Option & Option[]);
+      }
     },
     [onChange, multiSelect]
   );
+
   const handleRemoveOption = useCallback(
     (optionToRemove: Option) => {
       if (multiSelect && Array.isArray(value)) {
         const newValue = value.filter(
           (option) => option.value !== optionToRemove.value
         );
-        onChange?.(newValue);
+        onChange?.(newValue as Option & Option[]);
       }
     },
     [multiSelect, value, onChange]
   );
+
   const renderValue = () => {
     if (multiSelect && Array.isArray(value)) {
       return (
         <div className="flex flex-wrap gap-1">
           {value.map((option) => (
-            <Badge key={option.value} variant="secondary" className="mr-1">
+            <Badge
+              key={option.value}
+              variant="secondary"
+              className="mr-1 group-hover:border group-hover:border-primary"
+            >
               {option.label}
-              <button
-                className="ml-1 rounded-full outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-50 focus:ring-blue-600"
+              <div
+                role="button"
+                tabIndex={0}
+                className="ml-1 rounded-full  outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-50 focus:ring-blue-600"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleRemoveOption(option);
                 }}
               >
-                <X className="h-3 w-3" />
-              </button>
+                <X className="h-3 w-3 hover:text-primary" />
+              </div>
             </Badge>
           ))}
         </div>
@@ -160,38 +192,52 @@ export function NormalAutocomplete({
       placeholder
     );
   };
+
   return (
     <div className="space-y-2">
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild className="h-auto">
           <Button
             ref={buttonRef}
             variant="outline"
             role="combobox"
             aria-expanded={open}
             className={cn(
-              "w-full justify-between",
-              size === "sm" && "h-8 text-sm",
-              size === "lg" && "h-12",
+              "w-full justify-between  group",
+              size === "sm" && "h-auto text-sm",
+              size === "lg" && "h-auto",
               error && "border-destructive",
               className
             )}
             disabled={disabled}
             onClick={() => setOpen((prev) => !prev)}
           >
-            <div className="flex flex-wrap items-center gap-1 overflow-hidden">
+            <div className="flex flex-wrap items-center gap-1 overflow-hidden ">
               {renderValue()}
             </div>
             <div className="flex items-center">
               {clearable && value && (
-                <X
-                  className="mr-2 h-4 w-4 shrink-0 opacity-50 hover:opacity-100"
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className="mr-2 h-4 w-4 shrink-0 opacity-50 hover:opacity-100 focus:outline-none"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleClear(e);
                   }}
-                />
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.stopPropagation();
+                      handleClear(
+                        e as unknown as React.MouseEvent<Element, MouseEvent>
+                      );
+                    }
+                  }}
+                >
+                  <X />
+                </div>
               )}
+
               <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
             </div>
           </Button>

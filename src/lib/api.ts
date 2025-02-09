@@ -1,25 +1,19 @@
-import { Option } from "@/components/base/autocomplete/normal-autocomplete";
+import countries from "./allCountries.json";
 
-// Simulated database of countries
-const countries: Option[] = [
-  { value: "us", label: "United States" },
-  { value: "ca", label: "Canada" },
-  { value: "uk", label: "United Kingdom" },
-  { value: "au", label: "Australia" },
-  { value: "de", label: "Germany" },
-  { value: "fr", label: "France" },
-  { value: "jp", label: "Japan" },
-  { value: "br", label: "Brazil" },
-  { value: "in", label: "India" },
-  { value: "it", label: "Italy" },
-];
-
-export async function searchCountries(query: string): Promise<Option[]> {
+export async function searchCountries(
+  query: string
+): Promise<{ label: string; value: string }[]> {
   // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
+  if (!query) {
+    return countries.slice(0, 10);
+  }
 
   // Filter countries based on the query
-  return countries.filter((country) =>
-    country.label.toLowerCase().includes(query.toLowerCase())
-  );
+  return countries
+    .filter((country) =>
+      country.label.toLowerCase().includes(query.toLowerCase())
+    )
+    .slice(0, 10);
 }

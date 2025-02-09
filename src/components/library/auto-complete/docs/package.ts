@@ -1,4 +1,4 @@
-import manual from "../../../../../../public/registry/async-autocomplete.json";
+import manual from "../../../../../public/registry/autocomplete.json";
 
 export const packageInfo = {
   cli: {
