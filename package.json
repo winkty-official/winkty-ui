@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "registry:build": "tsx ./scripts/build-registry.ts",
-    "copy-components": "ts-node scripts/copy-components.ts"
+    "copy-components": "tsx ./scripts/copy-components.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

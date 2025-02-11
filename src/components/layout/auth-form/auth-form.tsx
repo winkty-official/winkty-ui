@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import InputField from "@/components/base/inputs/input-field";
+import InputField from "@/components/ui/input-field";
 import {
   Form,
   FormControl,
@@ -44,7 +44,7 @@ export function AuthForm({
         ...(currentView !== "forgot-password"
           ? { password: z.string().min(8) }
           : {}),
-      })
+      }),
     ),
     defaultValues: {
       email: "",

@@ -1,14 +1,12 @@
-import { Metadata } from "next";
-import { Installation } from "@/components/docs/installation";
-import { PropsTable } from "@/components/docs/props-table";
-import { CodeExamples } from "@/components/docs/code-examples";
-import { Accessibility } from "@/components/docs/accessibility";
 import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
-import { propDefinitions } from "./data/props";
-import { packageInfo } from "./data/package";
+import { Accessibility } from "@/components/docs/accessibility";
+import { CodeExamples } from "@/components/docs/code-examples";
+import Header from "@/components/docs/header";
+import { PropsTable } from "@/components/docs/props-table";
+import { Metadata } from "next";
 import { accessibilityFeatures } from "./data/accessibility";
 import { usageExamples } from "./data/examples";
-import Header from "@/components/docs/header";
+import { propDefinitions } from "./data/props";
 
 export const metadata: Metadata = {
   title: "Highlighted Article - UI Components",
@@ -29,7 +27,7 @@ export default function HighlightedArticlePage() {
       {/* Installation */}
       <section>
         <h2 className="text-2xl font-semibold mb-4">Installation</h2>
-        <Installation {...packageInfo} />
+        {/* <Installation {...packageInfo} /> */}
       </section>
 
       {/* Usage */}

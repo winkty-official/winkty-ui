@@ -1,5 +1,5 @@
+import Autocomplete from "@/components/ui/auto-complete";
 import { useState } from "react";
-import Autocomplete, { Option } from "@/components/ui/auto-complete";
 
 export function BasicAutocompleteExample() {
   const [selectedFruit, setSelectedFruit] = useState<{

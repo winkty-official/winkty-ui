@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import AreaRadioGroup, { RadioItem } from "@/components/ui/radio";
+import AreaRadioGroup, { AreaRadioItem } from "@/components/ui/area-radio";
 import { Label } from "@/components/ui/label";
 
 export interface ColorPickerProps {
@@ -34,7 +34,7 @@ export function ColorPicker({ colors }: Readonly<ColorPickerProps>) {
         className="flex-row gap-4"
       >
         {colors.map((color) => (
-          <RadioItem key={color.id} value={color.value}>
+          <AreaRadioItem key={color.id} value={color.value}>
             <div className="flex items-center gap-3">
               <div
                 className="h-6 w-6 rounded-full border"
@@ -47,7 +47,7 @@ export function ColorPicker({ colors }: Readonly<ColorPickerProps>) {
                 </p>
               </div>
             </div>
-          </RadioItem>
+          </AreaRadioItem>
         ))}
       </AreaRadioGroup>
     </div>

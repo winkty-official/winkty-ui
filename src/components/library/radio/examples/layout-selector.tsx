@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import AreaRadioGroup, { RadioItem } from "@/components/ui/radio";
+import AreaRadioGroup, { AreaRadioItem } from "@/components/ui/area-radio";
 import { Label } from "@/components/ui/label";
 
 export interface LayoutSelectorProps {
@@ -38,14 +38,14 @@ export function LayoutSelector({ items }: Readonly<LayoutSelectorProps>) {
         className="flex-row gap-4"
       >
         {items.map((item) => (
-          <RadioItem key={item.id} value={item.value}>
+          <AreaRadioItem key={item.id} value={item.value}>
             <div className="flex flex-col">
               <Label>{item.label}</Label>
               <p className="text-sm text-muted-foreground">
                 {item.description}
               </p>
             </div>
-          </RadioItem>
+          </AreaRadioItem>
         ))}
       </AreaRadioGroup>
     </div>

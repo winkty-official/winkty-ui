@@ -38,7 +38,7 @@ function ResetpasswordExample() {
     try {
       // Perform the password reset.
       console.log(values);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error during password reset:", error);
     } finally {
       setIsLoading(false);

@@ -10,7 +10,9 @@ export const usageExamples: CodeExample[] = [
       <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
         <AuthForm
           variant="signin"
-          onSubmit={(data) => console.log("Sign in:", data)}
+          onSubmit={async (data) => {
+            console.log("Sign in:", data);
+          }}
           onSuccess={(response) => console.log("Success:", response)}
         />
       </div>
@@ -34,7 +36,7 @@ export function SignInExample() {
       <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
         <AuthForm
           variant="signup"
-          onSubmit={(data) => console.log("Sign up:", data)}
+          onSubmit={async (data) => console.log("Sign up:", data)}
           providers={["google", "github"]}
         />
       </div>
@@ -58,7 +60,7 @@ export function SignUpExample() {
       <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
         <AuthForm
           variant="forgot-password"
-          onSubmit={(data) => console.log("Reset:", data)}
+          onSubmit={async (data) => console.log("Reset:", data)}
         />
       </div>
     ),

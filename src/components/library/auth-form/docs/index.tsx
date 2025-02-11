@@ -1,14 +1,13 @@
-import { Metadata } from "next";
+import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
+import { Accessibility } from "@/components/docs/accessibility";
+import Header from "@/components/docs/header";
 import { Installation } from "@/components/docs/installation";
 import { PropsTable } from "@/components/docs/props-table";
-import { Accessibility } from "@/components/docs/accessibility";
-import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
-import { propDefinitions } from "./props";
-import { packageInfo } from "./package";
-import { accessibilityFeatures } from "./accessibility";
-import Header from "@/components/docs/header";
-import AuthIndex from ".";
+import { Metadata } from "next";
 import AuthFormExamples from "../examples";
+import { accessibilityFeatures } from "./accessibility";
+import { packageInfo } from "./package";
+import { propDefinitions } from "./props";
 
 export const metadata: Metadata = {
   title: "Auth Form - UI Components",

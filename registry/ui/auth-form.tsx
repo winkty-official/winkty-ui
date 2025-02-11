@@ -21,7 +21,7 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { ZodType } from "zod";
-import InputField from "@/components/ui/input-field";
+import InputField from "./input-field";
 
 interface AuthFormProps<T extends FieldValues> {
   type: "SIGN_IN" | "SIGN_UP" | "FORGOT_PASSWORD" | "RESET_PASSWORD";

@@ -5,7 +5,7 @@ import * as RadioGroup from "@radix-ui/react-radio-group";
 import React from "react";
 
 // Define types for radio items
-export interface RadioItem {
+export interface AreaRadioItem {
   id: string | number;
   value: string;
   disabled?: boolean;
@@ -19,7 +19,7 @@ export interface AreaRadioGroupProps
   className?: string;
 }
 
-export interface RadioItemProps
+export interface AreaRadioItemProps
   extends React.ComponentPropsWithoutRef<typeof RadioGroup.Item> {
   value: string;
   RadioGroupContainerProps?: React.HTMLProps<HTMLDivElement>;
@@ -30,7 +30,7 @@ export interface RadioItemProps
   indicatorPosition?: "left" | "right";
 }
 
-const RadioItem = React.forwardRef<HTMLButtonElement, RadioItemProps>(
+const AreaRadioItem = React.forwardRef<HTMLButtonElement, AreaRadioItemProps>(
   (
     {
       value,
@@ -97,7 +97,7 @@ const RadioItem = React.forwardRef<HTMLButtonElement, RadioItemProps>(
   }
 );
 
-RadioItem.displayName = "RadioItem";
+AreaRadioItem.displayName = "AreaRadioItem";
 
 const AreaRadioGroup = React.forwardRef<HTMLDivElement, AreaRadioGroupProps>(
   (
@@ -144,5 +144,5 @@ const AreaRadioGroup = React.forwardRef<HTMLDivElement, AreaRadioGroupProps>(
 
 AreaRadioGroup.displayName = "AreaRadioGroup";
 
-export { RadioItem };
+export { AreaRadioItem };
 export default AreaRadioGroup;

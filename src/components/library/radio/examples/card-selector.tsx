@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import AreaRadioGroup, { RadioItem } from "../../../ui/radio";
+import AreaRadioGroup, { AreaRadioItem } from "../../../ui/area-radio";
 import { Label } from "@/components/ui/label";
 import { MastercardIcon } from "@/components/icons/payment/mastercard-icon";
 import { VisaIcon } from "@/components/icons/payment-icons";
@@ -57,7 +57,7 @@ const CardSelector = ({
         className="flex flex-col gap-3"
       >
         {cards.map((card) => (
-          <RadioItem key={card.id} value={card.value}>
+          <AreaRadioItem key={card.id} value={card.value}>
             <div className="flex items-center gap-4">
               <div className="shrink-0">{getCardIcon(card.network)}</div>
               <div className="flex flex-col items-start">
@@ -70,7 +70,7 @@ const CardSelector = ({
                 </p>
               </div>
             </div>
-          </RadioItem>
+          </AreaRadioItem>
         ))}
       </AreaRadioGroup>
     </motion.div>
