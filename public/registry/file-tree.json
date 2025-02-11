@@ -1,51 +1,20 @@
 {
   "name": "file-tree",
   "type": "registry:ui",
-  "dependencies": ["framer-motion", "lucide-react"],
+  "registryDependencies": [
+    "card",
+    "utils"
+  ],
+  "dependencies": [
+    "framer-motion",
+    "lucide-react"
+  ],
   "files": [
     {
-      "name": "file-tree.tsx",
-      "content": "\"use client\";\n\nimport { Card } from \"@/components/ui/card\";\nimport { FileNode } from \"./type/file\";\nimport { TreeNode } from \"./tree-node\";\nimport { useState } from \"react\";\n\ninterface FileTreeProps {\n  files: FileNode[];\n  className?: string;\n  activeSelect?: string;\n  onSelect?: (path: string) => void;\n}\n\nexport function FileTree({\n  files,\n  className,\n  activeSelect,\n  onSelect,\n}: FileTreeProps) {\n  const [selectedPath, setSelectedPath] = useState<string>(activeSelect || \"\");\n\n  const handleSelect = (path: string) => {\n    setSelectedPath(path);\n    onSelect?.(path);\n  };\n\n  return (\n    <Card className={className}>\n      <div className=\"p-4\">\n        {files.map((file, index) => (\n          <TreeNode\n            key={`${file.name}-${index}`}\n            node={file}\n            basePath={file.name}\n            selectedPath={selectedPath}\n            onSelect={handleSelect}\n          />\n        ))}\n      </div>\n    </Card>\n  );\n}",
-      "dir": "components/navigation/file-tree"
-    },
-    {
-      "name": "tree-node.tsx",
-      "content": "\"use client\";\n\nimport { motion, AnimatePresence } from \"framer-motion\";\nimport { ChevronRight } from \"lucide-react\";\nimport { useState } from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { FileNode } from \"./type/file\";\nimport { FileTypeIcon } from \"./file-icon\";\n\ninterface TreeNodeProps {\n  node: FileNode;\n  level?: number;\n  basePath: string;\n  selectedPath: string;\n  onSelect: (path: string) => void;\n}\n\nexport function TreeNode({\n  node,\n  level = 0,\n  basePath,\n  selectedPath,\n  onSelect,\n}: TreeNodeProps) {\n  const [isOpen, setIsOpen] = useState(false);\n  const hasChildren = node.children && node.children.length > 0;\n  const isSelected = selectedPath === basePath;\n\n  const handleClick = (e: React.MouseEvent) => {\n    e.stopPropagation();\n    onSelect(basePath);\n    if (hasChildren) {\n      setIsOpen(!isOpen);\n    }\n  };\n\n  return (\n    <div>\n      <motion.div\n        className={cn(\n          \"flex items-center gap-2 p-2 rounded-lg hover:bg-accent cursor-pointer relative group\",\n          level > 0 && `ml-${level * 4}`\n        )}\n        onClick={handleClick}\n        whileHover={{ scale: 1.01 }}\n        transition={{ duration: 0.2 }}\n      >\n        <motion.div\n          className=\"absolute inset-0 rounded-lg bg-primary/10\"\n          initial={false}\n          animate={{\n            opacity: isSelected ? 1 : 0,\n            scale: isSelected ? 1 : 0.95,\n          }}\n          transition={{ duration: 0.2 }}\n        />\n        <div className=\"flex items-center gap-2 relative\">\n          <div className=\"w-4 flex items-center\">\n            {hasChildren && (\n              <motion.div\n                animate={{ rotate: isOpen ? 90 : 0 }}\n                transition={{ duration: 0.2 }}\n              >\n                <ChevronRight className=\"h-4 w-4\" />\n              </motion.div>\n            )}\n          </div>\n          <div className=\"w-4 flex items-center\">\n            <FileTypeIcon\n              type={node.type}\n              className={cn(\n                \"h-4 w-4\",\n                node.type === \"folder\" ? \"text-blue-500\" : \"text-gray-500\"\n              )}\n            />\n          </div>\n          <span\n            className={cn(\"text-sm\", node.type === \"folder\" && \"font-medium\")}\n          >\n            {node.name}\n          </span>\n        </div>\n      </motion.div>\n\n      <AnimatePresence>\n        {isOpen && hasChildren && (\n          <motion.div\n            initial={{ opacity: 0, height: 0 }}\n            animate={{ opacity: 1, height: \"auto\" }}\n            exit={{ opacity: 0, height: 0 }}\n            transition={{ duration: 0.2 }}\n          >\n            {node.children?.map((child, index) => (\n              <TreeNode\n                key={`${child.name}-${index}`}\n                node={child}\n                level={level + 1}\n                basePath={`${basePath}/${child.name}`}\n                selectedPath={selectedPath}\n                onSelect={onSelect}\n              />\n            ))}\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}",
-      "dir": "components/navigation/file-tree"
-    },
-    {
-      "name": "file-icon.tsx",
-      "content": "\"use client\";\n\nimport { FileIcon, FolderIcon } from \"lucide-react\";\n\ninterface FileIconProps {\n  type: \"file\" | \"folder\";\n  className?: string;\n}\n\nexport function FileTypeIcon({ type, className }: FileIconProps) {\n  if (type === \"folder\") {\n    return <FolderIcon className={className} />;\n  }\n  return <FileIcon className={className} />;\n}",
-      "dir": "components/navigation/file-tree"
-    },
-    {
-      "name": "types.ts",
-      "content": "export interface FileNode {\n  name: string;\n  type: \"file\" | \"folder\";\n  children?: FileNode[];\n  icon?: string;\n}\n\nexport const sampleFiles: FileNode[] = [\n  {\n    name: \"src\",\n    type: \"folder\",\n    children: [\n      {\n        name: \"components\",\n        type: \"folder\",\n        children: [\n          { name: \"Button.tsx\", type: \"file\" },\n          { name: \"Card.tsx\", type: \"file\" },\n        ],\n      },\n      {\n        name: \"pages\",\n        type: \"folder\",\n        children: [\n          { name: \"index.tsx\", type: \"file\" },\n          { name: \"about.tsx\", type: \"file\" },\n        ],\n      },\n      { name: \"styles.css\", type: \"file\" },\n    ],\n  },\n  {\n    name: \"public\",\n    type: \"folder\",\n    children: [\n      { name: \"favicon.ico\", type: \"file\" },\n      { name: \"robots.txt\", type: \"file\" },\n    ],\n  },\n  { name: \"package.json\", type: \"file\" },\n  { name: \"tsconfig.json\", type: \"file\" },\n];",
-      "dir": "components/navigation/file-tree/type"
+      "type": "registry:ui",
+      "content": "\"use client\";\n\nimport { Card } from \"@/components/ui/card\";\nimport { motion, AnimatePresence } from \"framer-motion\";\nimport { useState } from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport {\n  ChevronRight,\n  Folder,\n  FolderOpen,\n  FileIcon,\n  FolderIcon,\n} from \"lucide-react\";\n\ninterface FileIconProps {\n  type: \"file\" | \"folder\";\n  className?: string;\n}\n\ninterface FileNode {\n  name: string;\n  type: \"file\" | \"folder\";\n  children?: FileNode[];\n  icon?: string;\n}\n\ninterface FileTreeProps {\n  files: FileNode[];\n  className?: string;\n  activeSelect?: string;\n  onSelect?: (path: string) => void;\n}\n\ninterface TreeNodeProps {\n  node: FileNode;\n  level?: number;\n  basePath: string;\n  selectedPath: string;\n  onSelect: (path: string) => void;\n}\n\nfunction FileTree({\n  files,\n  className,\n  activeSelect,\n  onSelect,\n}: Readonly<FileTreeProps>) {\n  const [selectedPath, setSelectedPath] = useState<string>(activeSelect ?? \"\");\n\n  const handleSelect = (path: string) => {\n    setSelectedPath(path);\n    onSelect?.(path);\n  };\n\n  return (\n    <Card className={className}>\n      <div className=\"p-4\">\n        {files.map((file, index) => (\n          <TreeNode\n            key={`${file.name}-${index}`}\n            node={file}\n            basePath={file.name}\n            selectedPath={selectedPath}\n            onSelect={handleSelect}\n          />\n        ))}\n      </div>\n    </Card>\n  );\n}\n\nfunction TreeNode({\n  node,\n  level = 0,\n  basePath,\n  selectedPath,\n  onSelect,\n}: Readonly<TreeNodeProps>) {\n  const [isOpen, setIsOpen] = useState(false);\n  const hasChildren = node.children && node.children.length > 0;\n  const isSelected = selectedPath === basePath;\n\n  const handleClick = (e: React.MouseEvent) => {\n    e.stopPropagation();\n    onSelect(basePath);\n    if (hasChildren) {\n      setIsOpen(!isOpen);\n    }\n  };\n\n  return (\n    <div>\n      <motion.div\n        className={cn(\n          \"flex items-center gap-2 p-2 rounded-lg hover:bg-accent cursor-pointer relative group\"\n        )}\n        // Indent each level (e.g. 16px per level)\n        style={{ marginLeft: level * 16 }}\n        onClick={handleClick}\n        whileHover={{ scale: 1.01 }}\n        transition={{ duration: 0.2 }}\n      >\n        <motion.div\n          className=\"absolute inset-0 rounded-lg bg-primary/10\"\n          initial={false}\n          animate={{\n            opacity: isSelected ? 1 : 0,\n            scale: isSelected ? 1 : 0.95,\n          }}\n          transition={{ duration: 0.2 }}\n        />\n        <div className=\"flex items-center gap-2 relative\">\n          <div className=\"w-4 flex items-center\">\n            {hasChildren && (\n              <motion.div\n                animate={{ rotate: isOpen ? 90 : 0 }}\n                transition={{ duration: 0.2 }}\n              >\n                <ChevronRight className=\"h-4 w-4\" />\n              </motion.div>\n            )}\n          </div>\n          <div className=\"w-4 flex items-center\">\n            {node.type === \"folder\" ? (\n              <>\n                {isOpen ? (\n                  <FolderOpen className=\"h-4 w-4 text-primary\" />\n                ) : (\n                  <Folder className=\"h-4 w-4 text-primary\" />\n                )}\n              </>\n            ) : (\n              <FileTypeIcon\n                type={node.type}\n                className={cn(\"h-4 w-4\", \"text-blue-500\")}\n              />\n            )}\n          </div>\n          <span\n            className={cn(\"text-sm\", node.type === \"folder\" && \"font-medium\")}\n          >\n            {node.name}\n          </span>\n        </div>\n      </motion.div>\n\n      <AnimatePresence>\n        {isOpen && hasChildren && (\n          <motion.div\n            initial={{ opacity: 0, height: 0 }}\n            animate={{ opacity: 1, height: \"auto\" }}\n            exit={{ opacity: 0, height: 0 }}\n            transition={{ duration: 0.2 }}\n          >\n            {node.children?.map((child, index) => (\n              <TreeNode\n                key={`${child.name}-${index}`}\n                node={child}\n                level={level + 1}\n                basePath={`${basePath}/${child.name}`}\n                selectedPath={selectedPath}\n                onSelect={onSelect}\n              />\n            ))}\n          </motion.div>\n        )}\n      </AnimatePresence>\n    </div>\n  );\n}\n\nfunction FileTypeIcon({ type, className }: Readonly<FileIconProps>) {\n  if (type === \"folder\") {\n    return <FolderIcon className={className} />;\n  }\n  return <FileIcon className={className} />;\n}\n\nexport { FileTree, TreeNode, FileTypeIcon };\n",
+      "path": "ui/file-tree.tsx",
+      "target": "components/ui/file-tree.tsx"
     }
-  ],
-  "author": "Your Name <your.email@example.com>",
-  "title": "File Tree",
-  "description": "An animated file tree component with selection, expansion, and smooth animations.",
-  "features": [
-    "Animated folder expansion/collapse",
-    "File/folder selection",
-    "Path tracking",
-    "Nested file structure support",
-    "Custom icons for files and folders",
-    "Keyboard navigation",
-    "Smooth animations with Framer Motion",
-    "Accessible interactions",
-    "Dark mode support",
-    "Customizable styling"
-  ],
-  "styles": [
-    {
-      "name": "file-tree.css",
-      "content": ".file-tree-node {\n  @apply flex items-center gap-2 p-2 rounded-lg hover:bg-accent cursor-pointer relative group;\n}\n\n.file-tree-node-selected {\n  @apply bg-primary/10;\n}\n\n.file-tree-icon {\n  @apply h-4 w-4;\n}\n\n.file-tree-folder-icon {\n  @apply text-blue-500;\n}\n\n.file-tree-file-icon {\n  @apply text-gray-500;\n}\n\n.file-tree-chevron {\n  @apply h-4 w-4 transition-transform;\n}\n\n.file-tree-chevron-open {\n  @apply rotate-90;\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .file-tree-node,\n  .file-tree-chevron {\n    @apply transition-none;\n  }\n}",
-      "dir": "styles/components"
-    }
-  ],
-  "version": "1.0.0",
-  "license": "MIT"
+  ]
 }

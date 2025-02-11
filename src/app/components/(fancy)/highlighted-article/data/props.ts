@@ -1,12 +1,12 @@
 export const propDefinitions = [
   {
-    prop: "color",
+    prop: "image",
     type: "string",
     default: "#4f46e5",
     description: "Primary color for the highlight effect",
   },
   {
-    prop: "glowColor",
+    prop: "date",
     type: "string",
     default: "#818cf8",
     description: "Secondary color for the glow effect",
@@ -26,5 +26,5 @@ export const propDefinitions = [
     prop: "ref",
     type: "React.Ref<HTMLDivElement>",
     description: "Forward ref to the underlying div element",
-  }
+  },
 ];

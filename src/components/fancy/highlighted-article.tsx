@@ -1,5 +1,4 @@
 "use client";
-
 import { cn } from "@/lib/utils";
 import {
   HTMLMotionProps,
@@ -30,7 +29,7 @@ export const HighlightedArticle = React.forwardRef<
       clientX,
       clientY,
     }: MouseEvent<HTMLDivElement>) {
-      let { left, top } = currentTarget.getBoundingClientRect();
+      const { left, top } = currentTarget.getBoundingClientRect();
 
       mouseX.set(clientX - left);
       mouseY.set(clientY - top);
@@ -53,7 +52,6 @@ export const HighlightedArticle = React.forwardRef<
         }}
         {...props}
       >
-
         {/* Hover gradient effect */}
         <motion.div
           className="pointer-events-none absolute -z-10 -inset-px rounded-md transition duration-300"
@@ -63,7 +61,10 @@ export const HighlightedArticle = React.forwardRef<
         />
 
         {/* Apply bold color to h3 elements within children */}
-        <div className="relative [&>*>h3]:font-extrabold [&>*>h3]:text-xl [&>*>h3]:mb-2 [&>*>h3]:[text-shadow:0_0_10px_var(--glow-color)]" style={{ '--glow-color': `${color}40` } as React.CSSProperties}>
+        <div
+          className="relative [&>*>h3]:font-extrabold [&>*>h3]:text-xl [&>*>h3]:mb-2 [&>*>h3]:[text-shadow:0_0_10px_var(--glow-color)]"
+          style={{ "--glow-color": `${color}40` } as React.CSSProperties}
+        >
           {children}
         </div>
       </motion.div>

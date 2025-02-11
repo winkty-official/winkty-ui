@@ -1,9 +1,10 @@
 export const accessibilityFeatures = [
-  "Proper focus management for interactive elements",
-  "Keyboard navigation support",
+  "Semantic HTML structure",
+  "Proper heading hierarchy",
   "ARIA labels for interactive elements",
-  "Maintains proper color contrast ratios",
-  "Respects reduced motion preferences",
-  "Screen reader friendly content structure",
-  "Interactive elements have proper hover and focus states",
+  "Keyboard navigation support",
+  "Focus management for interactive elements",
+  "Alt text for images",
+  "Sufficient color contrast",
+  "Reduced motion support",
 ];

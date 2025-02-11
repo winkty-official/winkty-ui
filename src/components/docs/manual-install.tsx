@@ -1,23 +1,43 @@
 "use client";
 import { CodeBlock } from "@/components/home/code-block";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import Link from "next/link";
+import { Badge } from "../ui/badge";
+import { RegistryType } from "@/types/registry";
 
-interface ManualInstallProps {
-  name: string;
-  type: string;
-  dependencies: string[];
-  files: { name: string; content: string; dir: string }[];
-  author: string;
-  title: string;
-  description: string;
-}
-
-export function ManualInstall({ dependencies, files }: ManualInstallProps) {
+export function ManualInstall({
+  dependencies,
+  files,
+  registryDependencies,
+}: Readonly<RegistryType>) {
   return (
     <div className="mb-4 space-y-5">
       <p className="text-sm text-muted-foreground mb-2">
         Copy and paste the following code into your project.
       </p>
+
+      {registryDependencies && (
+        <div>
+          <h4 className="mb-4">Install Shadcn Dependencies</h4>
+          <p className=" flex items-center space-x-2">
+            This component depends on Shadcn
+            {registryDependencies.map((dependency) => (
+              <Link
+                className="first:ml-2"
+                key={dependency}
+                href={`${process.env.NEXT_PUBLIC_SHADCN_BASE_URI}/${dependency}`}
+              >
+                <Badge variant={"secondary"}>
+                  <span className="text-sm font-mono capitalize">
+                    &lt;{dependency} /&gt;
+                  </span>
+                </Badge>
+              </Link>
+            ))}
+            {"."}
+          </p>
+        </div>
+      )}
 
       {dependencies && (
         <div className="">
@@ -34,10 +54,10 @@ export function ManualInstall({ dependencies, files }: ManualInstallProps) {
 
       <div className="relative space-y-2">
         <h4>Copy the source code</h4>
-        {files.map((file, index) => (
-          <div key={index}>
+        {files.map((file) => (
+          <div key={file.path}>
             <h5 className="text-sm mb-2 p-1 px-2 bg-primary/20 rounded-md w-fit text-white/80">
-              {file.dir}
+              {file.path}
             </h5>
             <ScrollArea className=" h-[400px]  w-full rounded-md border relative overflow-x-auto">
               <CodeBlock code={file.content} language="tsx" />

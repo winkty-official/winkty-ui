@@ -1,6 +1,6 @@
 # Project Overview
 
-NextUIX is an enterprise-grade component library built on modern web technologies, combining the power of framer-motion 12+ + Popmotion with shadcn/ui with Next.js 15's advanced capabilities. Designed for developers who demand both aesthetic polish and technical excellence, this library provides:
+NexusIX is an enterprise-grade component library built on modern web technologies, combining the power of framer-motion 12+ + Popmotion with shadcn/ui with Next.js 15's advanced capabilities. Designed for developers who demand both aesthetic polish and technical excellence, this library provides:
 
 Production-Ready Components: 150+ accessible UI elements built with Radix UI primitives
 
@@ -64,6 +64,18 @@ docs/
 └── Version Migration Guides
 ```
 
+## Documentation Features:
+
+Live Code Editor: Edit component props in real-time (CodeSandbox integration)
+
+Visual Regression Testing: Component states comparison tool
+
+API Explorer: Generate TypeScript interfaces from component examples
+
+Performance Dashboard: Lighthouse scores per component
+
+Multi-Language Support: Code samples in TS/JS/CJS/ESM formats
+
 ## Enterprise-Grade Forms
 
 ```tsx
@@ -84,6 +96,17 @@ const PaymentForm = () => (
   </Form>
 );
 ```
+
+Form Capabilities:
+Bank-Level Security: AES-256 encryption + PCI-DSS compliance
+
+Multi-Step Validation: Field-level + cross-field + async server validation
+
+Payment Ready: Prebuilt Stripe/Card integrations
+
+Error Localization: 45+ language error messages
+
+Analytics Integration: Track form abandonment metrics
 
 ## Component Library
 
@@ -128,6 +151,36 @@ const PaymentForm = () => (
 
 ---
 
+## Advanced Styling System
+
+````css
+/* Custom Theme Example */
+:root {
+  --primary-gradient: linear-gradient(
+    135deg,
+    hsl(215 100% 60%) 0%,
+    hsl(215 100% 40%) 100%
+  );
+  --neon-effect: 0 0 15px hsl(215 100% 60% / 0.4);
+}
+
+.dark {
+  --surface-elevation: hsl(215 18% 16%);
+  --text-primary: hsl(215 28% 92%);
+}
+```
+
+## Styling Features:
+
+- Theme Studio: Visual theme configurator with CSS variable mapping
+
+-   Dynamic Effects: Parametric shadows, animated gradients, particle systems
+
+- Style Encryption: Obfuscated critical CSS for anti-scraping
+
+- CSS Auditing: PurgeCSS + Critical CSS in production builds
+
+- Design Token System: Math-based spacing/typography scales
 # Documentation Guide
 
 ## Installation
@@ -136,9 +189,9 @@ const PaymentForm = () => (
 
 ```bash
 npx shadcn-ui@latest add \
-  process.env.BASE_URI/components/area-switch.json \
-  process.env.BASE_URI/components/dialog.json
-```
+process.env.BASE_URI/components/area-switch.json \
+process.env.BASE_URI/components/dialog.json
+````
 
 ### 2. Manual Installation
 

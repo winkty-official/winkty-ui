@@ -1,84 +1,73 @@
-"use client";
+import { Metadata } from "next";
+import { Installation } from "@/components/docs/installation";
+import { PropsTable } from "@/components/docs/props-table";
+import { Accessibility } from "@/components/docs/accessibility";
+import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
+import { propDefinitions } from "./data/props";
+import { packageInfo } from "./data/package";
+import { accessibilityFeatures } from "./data/accessibility";
+import Header from "@/components/docs/header";
+import AuthIndex from ".";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import AuthDocs from "./docs";
-import { SignUp } from "@/components/layout/auth-form/sign-up";
-import { SignIn } from "@/components/layout/auth-form/sign-in";
-import { ForgotPassword } from "@/components/layout/auth-form/forgot-password";
+export const metadata: Metadata = {
+  title: "Auth Form - UI Components",
+  description:
+    "A flexible authentication form component with multiple variants and OAuth support.",
+  keywords: [
+    "authentication",
+    "login form",
+    "signup form",
+    "password reset",
+    "OAuth",
+    "form validation",
+    "React component",
+    "TypeScript",
+  ],
+};
 
-type AuthState = "signUp" | "signIn" | "forgotPassword" | "success";
-
-export default function AuthPage() {
-  const [authState, setAuthState] = useState<AuthState>("signIn");
-
-  const handleSuccess = (message: string) => {
-    console.log("🚀 ~ handleSuccess ~ message:", message);
-    // toast({
-    //   title: "Success",
-    //   description: message,
-    // });
-    setAuthState("success");
-  };
-
+export default function AuthFormPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <Tabs defaultValue="demo" className="w-full">
-        <div className="container flex justify-center py-4">
-          <TabsList>
-            <TabsTrigger value="demo">Demo</TabsTrigger>
-            <TabsTrigger value="docs">Documentation</TabsTrigger>
-          </TabsList>
-        </div>
+    <div className="container max-w-4xl py-10 space-y-10">
+      <DynamicBreadcrumb />
 
-        <TabsContent value="demo">
-          <div className="flex items-center justify-center min-h-[calc(100vh-120px)]">
-            {authState === "signUp" && (
-              <SignUp
-                onSignIn={() => setAuthState("signIn")}
-                onSuccess={() =>
-                  handleSuccess(
-                    "Account created successfully. Please check your email for verification."
-                  )
-                }
-              />
-            )}
-            {authState === "signIn" && (
-              <SignIn
-                onSignUp={() => setAuthState("signUp")}
-                onForgotPassword={() => setAuthState("forgotPassword")}
-                onSuccess={() => handleSuccess("Signed in successfully.")}
-              />
-            )}
-            {authState === "forgotPassword" && (
-              <ForgotPassword
-                onSignIn={() => setAuthState("signIn")}
-                onSuccess={() =>
-                  handleSuccess(
-                    "Password reset link sent. Please check your email."
-                  )
-                }
-              />
-            )}
-            {authState === "success" && (
-              <div className="text-center">
-                <h2 className="text-2xl font-bold mb-4">
-                  Authentication Successful
-                </h2>
-                <p className="mb-4">You have successfully authenticated.</p>
-                <Button onClick={() => setAuthState("signIn")}>
-                  Back to Sign In
-                </Button>
-              </div>
-            )}
-          </div>
-        </TabsContent>
+      <Header
+        title="Auth Form"
+        description="A comprehensive authentication form component with sign in, sign up, and password reset variants. Includes OAuth provider support and form validation."
+      />
 
-        <TabsContent value="docs">
-          <AuthDocs />
-        </TabsContent>
-      </Tabs>
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">Installation</h2>
+        <Installation {...packageInfo} />
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-6">Usage</h2>
+        <AuthIndex />
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">Props</h2>
+        <PropsTable definitions={propDefinitions} />
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">Accessibility</h2>
+        <Accessibility features={accessibilityFeatures} />
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">Features</h2>
+        <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
+          <li>Multiple form variants (sign in, sign up, password reset)</li>
+          <li>OAuth provider integration</li>
+          <li>Form validation with react-hook-form</li>
+          <li>Customizable styling with Tailwind CSS</li>
+          <li>Loading and error states</li>
+          <li>TypeScript support</li>
+          <li>Responsive design</li>
+          <li>Dark mode support</li>
+        </ul>
+      </section>
     </div>
   );
 }

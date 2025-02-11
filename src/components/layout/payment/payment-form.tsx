@@ -38,10 +38,7 @@ const formSchema = z.object({
     .regex(/^[a-zA-Z\s]+$/, "Cardholder name must contain only letters"),
   expiryDate: z
     .string()
-    .regex(
-      /^(0[1-9]|1[0-2])\/([0-9]{2})$/,
-      "Invalid expiry date format (MM/YY)"
-    )
+    .regex(/^(0[1-9]|1[0-2])\/(\d{2})$/, "Invalid expiry date format (MM/YY)")
     .refine((val) => {
       const [month, year] = val.split("/");
       const expiry = new Date(2000 + parseInt(year), parseInt(month) - 1);
@@ -51,7 +48,7 @@ const formSchema = z.object({
     .string()
     .min(3, "CVV must be at least 3 digits")
     .max(4, "CVV cannot exceed 4 digits")
-    .regex(/^[0-9]+$/, "CVV must contain only digits"),
+    .regex(/^\d+$/, "CVV must contain only digits"),
   paymentMethod: z.string(),
   address: z.string().min(5, "Address must be at least 5 characters"),
   city: z.string().min(2, "City must be at least 2 characters"),
@@ -108,9 +105,9 @@ export function PaymentForm() {
   });
 
   const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    const v = value.replace(/\s+/g, "").replace(/\D/gi, "");
     const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || "";
+    const match = matches?.[0] ?? "";
     const parts = [];
 
     for (let i = 0, len = match.length; i < len; i += 4) {

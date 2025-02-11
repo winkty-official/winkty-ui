@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useAnimation } from "framer-motion";
-import { useTheme } from "next-themes";
 import { CreditCard, Ship as Chip } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
@@ -22,16 +21,21 @@ export function CardPreview({
   cvv,
   isFlipped,
   cardType,
-}: CardPreviewProps) {
+}: Readonly<CardPreviewProps>) {
   const controls = useAnimation();
-  const { theme } = useTheme();
+  const cvvCardControls = useAnimation();
 
   useEffect(() => {
     controls.start({
       rotateY: isFlipped ? 180 : 0,
       transition: { duration: 0.6, ease: "easeInOut" },
     });
-  }, [isFlipped, controls]);
+    cvvCardControls.start({
+      rotateY: isFlipped ? 180 : 0,
+      opacity: isFlipped ? 1 : 0,
+      transition: { duration: 0, delay: 0.3 },
+    });
+  }, [isFlipped, controls, cvvCardControls]);
 
   const cardBrandLogo = () => {
     switch (cardType?.toLowerCase()) {
@@ -46,7 +50,6 @@ export function CardPreview({
     }
   };
 
-  // Reverse CVV for back of card display
   const reversedCvv = cvv.split("").reverse().join("");
 
   return (
@@ -58,13 +61,13 @@ export function CardPreview({
         animate={controls}
       >
         {/* Front of card */}
-        <div
+        <motion.div
           className={cn(
             "absolute inset-0 rounded-xl p-4 md:p-6",
             "bg-gradient-to-br from-primary/90 to-primary/40",
             "backdrop-blur-sm shadow-xl",
             "transform-style-3d backface-hidden",
-            theme === "dark" ? "text-white" : "text-white"
+            "text-white"
           )}
         >
           <div className="flex flex-col h-full justify-between">
@@ -103,7 +106,7 @@ export function CardPreview({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Back of card */}
         <motion.div
@@ -112,8 +115,12 @@ export function CardPreview({
             "bg-gradient-to-br from-primary/90 to-primary/40",
             "backdrop-blur-sm shadow-xl",
             "transform-style-3d backface-hidden rotate-y-180",
-            theme === "dark" ? "text-white" : "text-white"
+            "text-white"
           )}
+          initial={{
+            opacity: 0,
+          }}
+          animate={cvvCardControls}
         >
           <div className="w-full h-8 md:h-12 bg-black/30 mt-6 md:mt-8" />
           <div className="mt-4 md:mt-8 px-4 md:px-6">

@@ -3,22 +3,15 @@
 import { ManualInstall } from "@/components/docs/manual-install";
 import { CodeBlock } from "@/components/home/code-block";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { RegistryType } from "@/types/registry";
 import { FileCode2, Terminal } from "lucide-react";
 
 interface InstallationProps {
   cli?: { command: string };
-  manual: {
-    name: string;
-    type: string;
-    dependencies: string[];
-    files: { name: string; content: string; dir: string }[];
-    author: string;
-    title: string;
-    description: string;
-  };
+  manual: RegistryType;
 }
 
-export function Installation({ cli, manual }: InstallationProps) {
+export function Installation({ cli, manual }: Readonly<InstallationProps>) {
   return (
     <Tabs defaultValue="cli">
       <TabsList className="mb-4">
@@ -37,7 +30,7 @@ export function Installation({ cli, manual }: InstallationProps) {
       {cli && (
         <TabsContent value="cli" className="relative">
           <CodeBlock
-            code={`npx shadcn@latest add ${cli.command}` || ""}
+            code={`npx shadcn@latest add ${cli.command}`}
             language="bash"
             isExecutableCommand
             packageUrl={cli.command}

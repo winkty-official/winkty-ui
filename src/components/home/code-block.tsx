@@ -30,14 +30,14 @@ export function CodeBlock({
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = async () => {
-    let textToCopy = code;
+    const textToCopy = code;
     await navigator.clipboard.writeText(textToCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className=" border rounded-lg overflow-hidden">
+    <div className=" border rounded-lg overflow-hidden relative">
       {/* Dropdown menu with Copy button */}
       {packageUrl ? (
         <PackageMangerSelectButton
