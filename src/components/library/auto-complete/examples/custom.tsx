@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import Autocomplete, { Option } from "..";
+import Autocomplete, { Option } from "@/components/ui/auto-complete";
 
 interface CustomOption extends Option {
   icon: string;

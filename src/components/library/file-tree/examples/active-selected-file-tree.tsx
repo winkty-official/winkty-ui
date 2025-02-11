@@ -1,7 +1,7 @@
 "use client";
 import { sampleFiles } from "../data/sample-files";
 import { useState } from "react";
-import { FileTree } from "..";
+import { FileTree } from "@/components/ui/file-tree";
 
 export function ActiveSelectFileTreeExample() {
   const [selectedFile, setSelectedFile] = useState<string>("");

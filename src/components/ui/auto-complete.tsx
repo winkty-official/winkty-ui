@@ -96,7 +96,7 @@ export default function Autocomplete({
         setInternalLoading(false);
       }
     },
-    [loadOptions]
+    [loadOptions],
   );
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export default function Autocomplete({
   const filteredOptions = filterOption
     ? options.filter((option) => filterOption(option, query))
     : options.filter((option) =>
-        option.label.toLowerCase().includes(query.toLowerCase())
+        option.label.toLowerCase().includes(query.toLowerCase()),
       );
 
   const handleSelect = useCallback(
@@ -117,7 +117,7 @@ export default function Autocomplete({
       if (multiSelect) {
         const newValue = Array.isArray(value) ? [...value] : [];
         const optionIndex = newValue.findIndex(
-          (item) => item.value === option.value
+          (item) => item.value === option.value,
         );
         if (optionIndex > -1) {
           newValue.splice(optionIndex, 1);
@@ -130,7 +130,7 @@ export default function Autocomplete({
         onChange?.(option as Option & Option[]);
       }
     },
-    [multiSelect, value, onChange]
+    [multiSelect, value, onChange],
   );
 
   const handleClear = useCallback(
@@ -142,19 +142,19 @@ export default function Autocomplete({
         onChange?.(null as unknown as Option & Option[]);
       }
     },
-    [onChange, multiSelect]
+    [onChange, multiSelect],
   );
 
   const handleRemoveOption = useCallback(
     (optionToRemove: Option) => {
       if (multiSelect && Array.isArray(value)) {
         const newValue = value.filter(
-          (option) => option.value !== optionToRemove.value
+          (option) => option.value !== optionToRemove.value,
         );
         onChange?.(newValue as Option & Option[]);
       }
     },
-    [multiSelect, value, onChange]
+    [multiSelect, value, onChange],
   );
 
   const renderValue = () => {
@@ -207,7 +207,7 @@ export default function Autocomplete({
               size === "sm" && "h-auto text-sm",
               size === "lg" && "h-auto",
               error && "border-destructive",
-              className
+              className,
             )}
             disabled={disabled}
             onClick={() => setOpen((prev) => !prev)}
@@ -229,7 +229,7 @@ export default function Autocomplete({
                     if (e.key === "Enter" || e.key === " ") {
                       e.stopPropagation();
                       handleClear(
-                        e as unknown as React.MouseEvent<Element, MouseEvent>
+                        e as unknown as React.MouseEvent<Element, MouseEvent>,
                       );
                     }
                   }}
@@ -276,13 +276,13 @@ export default function Autocomplete({
                             "ml-2 h-4 w-4",
                             multiSelect && Array.isArray(value)
                               ? value.some(
-                                  (item) => item.value === option.value
+                                  (item) => item.value === option.value,
                                 )
                                 ? "opacity-100"
                                 : "opacity-0"
                               : (value as Option)?.value === option.value
-                              ? "opacity-100"
-                              : "opacity-0"
+                                ? "opacity-100"
+                                : "opacity-0",
                           )}
                         />
                       </CommandItem>

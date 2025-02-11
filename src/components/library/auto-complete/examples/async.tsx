@@ -1,5 +1,5 @@
 import { searchCountries } from "@/components/library/auto-complete/data/api";
-import Autocomplete, { Option } from "..";
+import Autocomplete, { Option } from "@/components/ui/auto-complete";
 import { useState } from "react";
 
 export function AsyncAutocompleteExample() {

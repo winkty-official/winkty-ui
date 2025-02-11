@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Autocomplete, { Option } from "..";
+import Autocomplete, { Option } from "@/components/ui/auto-complete";
 
 export function MultiSelectExample() {
   const [selectedCountries, setSelectedCountries] = useState<Option[] | null>(

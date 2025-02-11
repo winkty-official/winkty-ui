@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import InputField from "@/components/base/inputs/input-field";
+import InputField from "@/components/ui/input-field";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 
 const PasswordInput = () => {

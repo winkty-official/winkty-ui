@@ -29,6 +29,18 @@ export const ui: Registry = [
     dependencies: ["framer-motion", "lucide-react"],
     files: ["ui/file-tree.tsx"],
   },
+  {
+    name: "auth-form",
+    type: "registry:ui",
+    registryDependencies: ["button", "form", "utils"],
+    dependencies: [
+      "zod",
+      "react-hook-form",
+      "lucide-react",
+      "@hookform/resolvers",
+    ],
+    files: ["ui/auth-form.tsx", "ui/input-field.tsx"],
+  },
   // {
   //   name: "hint",
   //   type: "registry:ui",

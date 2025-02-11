@@ -1,15 +1,17 @@
+"use client";
+
 import { cn } from "@/lib/utils";
+import React from "react";
 import { VariantProps, cva } from "class-variance-authority";
 import { AlertCircle } from "lucide-react";
-import React from "react";
 
-// Define input variants using class-variance-authority
 const inputFieldVariants = cva(
   [
     "flex h-10 w-full rounded-sm bg-background px-3 py-2 text-sm ring-offset-background",
     "file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
-    "placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-    "disabled:cursor-not-allowed disabled:opacity-50",
+    "placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 ",
+    "disabled:cursor-not-allowed disabled:opacity-50 ",
+    "[data-error='true'] ",
   ],
   {
     variants: {
@@ -38,37 +40,25 @@ const inputFieldVariants = cva(
   }
 );
 
-export interface SimpleInputProps
+export interface InputFieldProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     VariantProps<typeof inputFieldVariants> {
-  /** Additional className for the input wrapper */
   wrapperClassName?: string;
-  /** Additional className for the input element */
-  inputClassName?: string;
-  /** Label text */
   label?: string;
-  /** Helper or error text shown below the input */
   helperText?: string;
-  /** Whether the input is in an error state */
   error?: boolean;
-  /** Whether the input is in a success state */
   success?: boolean;
-  /** Props for input decorations */
   InputProps?: {
-    /** Element to show before the input */
     startAdornment?: React.ReactNode;
-    /** Element to show after the input */
     endAdornment?: React.ReactNode;
-    /** Custom styles for the input element */
     style?: React.CSSProperties;
   };
 }
 
-const InputField = React.forwardRef<HTMLInputElement, SimpleInputProps>(
+const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
   (
     {
       wrapperClassName,
-      inputClassName,
       type = "text",
       label,
       helperText,
@@ -83,7 +73,6 @@ const InputField = React.forwardRef<HTMLInputElement, SimpleInputProps>(
     },
     ref
   ) => {
-    // Determine the input state
     const inputState = error ? "error" : success ? "success" : "default";
 
     return (
@@ -93,6 +82,9 @@ const InputField = React.forwardRef<HTMLInputElement, SimpleInputProps>(
           disabled && "opacity-50",
           wrapperClassName
         )}
+        data-error={error}
+        data-success={success}
+        data-disabled={disabled}
       >
         {label && (
           <label
@@ -112,12 +104,13 @@ const InputField = React.forwardRef<HTMLInputElement, SimpleInputProps>(
             </div>
           )}
           <input
+            {...props}
             type={type}
             className={cn(
               inputFieldVariants({ variant, inputSize, state: inputState }),
               InputProps?.startAdornment && "pl-10",
               InputProps?.endAdornment && "pr-10",
-              inputClassName
+              props?.className
             )}
             ref={ref}
             aria-invalid={error}
@@ -126,7 +119,6 @@ const InputField = React.forwardRef<HTMLInputElement, SimpleInputProps>(
             }
             disabled={disabled}
             required={required}
-            {...props}
             style={InputProps?.style}
           />
           {InputProps?.endAdornment && (

@@ -3,7 +3,7 @@ import {
   CodeExamples,
   type CodeExample,
 } from "@/components/docs/code-examples";
-import { FileTree } from "..";
+import { FileTree } from "../../../ui/file-tree";
 import { ActiveSelectFileTreeExample } from "./active-selected-file-tree";
 import { sampleFiles } from "../data/sample-files";
 
