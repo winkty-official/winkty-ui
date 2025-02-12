@@ -48,7 +48,10 @@ function ExampleWrapper({
         <TabsTrigger value="preview">Preview</TabsTrigger>
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
-      <TabsContent value="preview" className="rounded-md border p-4">
+      <TabsContent
+        value="preview"
+        className="rounded-md border p-4 bg-dotted-pattern"
+      >
         {preview}
       </TabsContent>
       <TabsContent value="code" className="border-none">
