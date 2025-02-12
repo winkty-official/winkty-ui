@@ -4,7 +4,7 @@ import Autocomplete, { Option } from "@/components/ui/auto-complete";
 import { useState } from "react";
 
 const TestPage = () => {
-  const [value, setValue] = useState<Option[] | null>(null);
+  const [value, setValue] = useState<Option | null>(null);
   return (
     <div className="max-w-lg mx-auto mt-40">
       <Autocomplete
@@ -22,7 +22,7 @@ const TestPage = () => {
           console.log(value);
         }}
         any={true}
-        multiSelect
+        multiSelect={false}
       />
     </div>
   );

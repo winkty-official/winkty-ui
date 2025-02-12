@@ -119,34 +119,43 @@ export default function Autocomplete({
     if (!query.trim()) return;
 
     const customOption: Option = {
-      value: query,
-      label: query,
+      value: query.trim(),
+      label: query.trim(),
     };
 
     if (multiSelect) {
-      const newValue = Array.isArray(value) ? [...value] : [];
-      newValue.push(customOption);
-      onChange?.(newValue as Option & Option[]);
+      const newValueSet = new Set(
+        (Array.isArray(value) ? value : []).map((v) => v.value),
+      );
+
+      if (!newValueSet.has(customOption.value)) {
+        const newValue = [...(Array.isArray(value) ? value : []), customOption];
+        onChange?.(newValue as Option & Option[]);
+      }
     } else {
       onChange?.(customOption as Option & Option[]);
       setOpen(false);
     }
+
     setQuery("");
   }, [query, multiSelect, value, onChange]);
 
   const handleSelect = useCallback(
     (option: Option) => {
       if (multiSelect) {
-        const newValue = Array.isArray(value) ? [...value] : [];
-        const optionIndex = newValue.findIndex(
-          (item) => item.value === option.value,
+        const newValueSet = new Set(
+          (Array.isArray(value) ? value : []).map((v) => v.value),
         );
-        if (optionIndex > -1) {
-          newValue.splice(optionIndex, 1);
+
+        if (newValueSet.has(option.value)) {
+          const newValue = (Array.isArray(value) ? value : []).filter(
+            (item) => item.value !== option.value,
+          );
+          onChange?.(newValue as Option & Option[]);
         } else {
-          newValue.push(option);
+          const newValue = [...(Array.isArray(value) ? value : []), option];
+          onChange?.(newValue as Option & Option[]);
         }
-        onChange?.(newValue as Option & Option[]);
       } else {
         setOpen(false);
         onChange?.(option as Option & Option[]);
@@ -169,12 +178,7 @@ export default function Autocomplete({
       } else if (e.key === "Backspace" && query === "") {
         if (multiSelect && Array.isArray(value) && value.length > 0) {
           const newValue = value.slice(0, -1);
-          // onChange?.(newValue);
-          // if (newValue.length === 0) {
-          //   onChange?.(null as unknown as Option & Option[]);
-          // } else {
           onChange?.(newValue as Option & Option[]);
-          // }
         } else if (!multiSelect) {
           handleClear();
         }
