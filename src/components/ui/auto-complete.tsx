@@ -165,6 +165,15 @@ export default function Autocomplete({
     [multiSelect, value, onChange],
   );
 
+  const handleClear = useCallback(
+    (e?: React.MouseEvent) => {
+      e?.stopPropagation();
+      onChange?.(null as unknown as Option & Option[]);
+      setQuery("");
+    },
+    [onChange, multiSelect],
+  );
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (
@@ -184,16 +193,7 @@ export default function Autocomplete({
         }
       }
     },
-    [any, filteredOptions.length, query, handleCustomValue],
-  );
-
-  const handleClear = useCallback(
-    (e?: React.MouseEvent) => {
-      e?.stopPropagation();
-      onChange?.(null as unknown as Option & Option[]);
-      setQuery("");
-    },
-    [onChange, multiSelect],
+    [any, filteredOptions.length, query, handleCustomValue, multiSelect, value, onChange, handleClear],
   );
 
   const handleRemoveOption = useCallback(
@@ -313,7 +313,7 @@ export default function Autocomplete({
               <CommandEmpty>
                 {any ? (
                   <div className="p-2 text-sm">
-                    Press Enter to add "{query}" as a custom value
+                    Press Enter to add &quot;{query}&quot; as a custom value
                   </div>
                 ) : (
                   "No results found."
