@@ -1,16 +1,3 @@
-import React from 'react'
-
-function page() {
-  return (
-    <div>
-      Test page
-    </div>
-  )
-}
-
-export default page
-
-
 // "use client";
 
 // import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
@@ -64,8 +51,8 @@ export default page
 //             style={{
 //               background: useMotionTemplate`
 //               radial-gradient(
-//                 ${radius}px circle at ${mouseX}px ${mouseY}px, 
-//                 ${color}, 
+//                 ${radius}px circle at ${mouseX}px ${mouseY}px,
+//                 ${color},
 //                 transparent 70%
 //               )
 //             `,
@@ -84,3 +71,11 @@ export default page
 // };
 
 // export default CardSpotlight;
+
+import React from "react";
+
+const page = () => {
+  return <div></div>;
+};
+
+export default page;
