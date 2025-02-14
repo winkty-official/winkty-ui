@@ -1,5 +1,5 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CodeBlock } from "@/components/home/code-block";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export interface CodeExample {
   title: string;
@@ -44,10 +44,12 @@ function ExampleWrapper({
 }) {
   return (
     <Tabs defaultValue="preview" className="relative w-full">
-      <TabsList className="w-fit justify-start">
-        <TabsTrigger value="preview">Preview</TabsTrigger>
-        <TabsTrigger value="code">Code</TabsTrigger>
-      </TabsList>
+      <div className="flex justify-between w-full">
+        <TabsList className="w-fit justify-start">
+          <TabsTrigger value="preview">Preview</TabsTrigger>
+          <TabsTrigger value="code">Code</TabsTrigger>
+        </TabsList>
+      </div>
       <TabsContent
         value="preview"
         className="rounded-md border p-4 bg-dotted-pattern"

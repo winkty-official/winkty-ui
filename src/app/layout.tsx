@@ -1,5 +1,6 @@
 import { ThemeToggle } from "@/components/home/theme-toggle";
 import { ThemeProvider } from "@/provider/theme-provider";
+import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -42,6 +43,7 @@ export default function RootLayout({
         >
           <ThemeToggle />
           {children}
+          <Toaster richColors closeButton />
         </ThemeProvider>
       </body>
     </html>
