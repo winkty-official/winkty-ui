@@ -41,6 +41,20 @@ export const ui: Registry = [
     ],
     files: ["ui/auth-form.tsx", "ui/input-field.tsx"],
   },
+  {
+    name: "payment-form",
+    type: "registry:ui",
+    registryDependencies: ["button", "form", "utils", "select"],
+    dependencies: [
+      "react-hook-form",
+      "framer-motion",
+      "@hookform/resolvers",
+      "zod",
+      "payment",
+      "lucide-react",
+    ],
+    files: ["ui/payment-form.tsx", "ui/input-field.tsx"],
+  },
   // {
   //   name: "hint",
   //   type: "registry:ui",

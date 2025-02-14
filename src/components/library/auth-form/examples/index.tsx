@@ -13,7 +13,7 @@ export const usageExamples: CodeExample[] = [
     title: "Sign In Form",
     description: "Basic sign in form with email and password",
     preview: (
-      <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
+      <div className="w-fit mx-auto rounded-lg">
         <SigninExample />
       </div>
     ),
@@ -69,7 +69,7 @@ export default function SigninExample() {
     title: "Sign Up Form",
     description: "Registration form with additional fields",
     preview: (
-      <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
+      <div className="w-fit mx-auto rounded-lg">
         <SignUpExample />
       </div>
     ),
@@ -160,7 +160,7 @@ export default function SignUpExample() {
     title: "Password Reset",
     description: "Forgot password form with email verification",
     preview: (
-      <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
+      <div className="w-fit mx-auto rounded-lg">
         <ResetpasswordExample />
       </div>
     ),
@@ -237,7 +237,7 @@ export default ResetpasswordExample;
     title: "Forgot Password",
     description: "Forgot password form with email verification",
     preview: (
-      <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
+      <div className="w-fit mx-auto rounded-lg">
         <ForgotpasswordExample />
       </div>
     ),

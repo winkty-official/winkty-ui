@@ -7,7 +7,7 @@ export const usageExamples: CodeExample[] = [
     title: "Sign In Form",
     description: "Basic sign in form with email and password",
     preview: (
-      <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
+      <div className="w-full max-w-md bg-background/95 rounded-lg">
         <AuthForm
           variant="signin"
           onSubmit={async (data) => {
@@ -33,7 +33,7 @@ export function SignInExample() {
     title: "Sign Up Form",
     description: "Registration form with additional fields",
     preview: (
-      <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
+      <div className="w-full max-w-md bg-background/95 rounded-lg">
         <AuthForm
           variant="signup"
           onSubmit={async (data) => console.log("Sign up:", data)}
@@ -57,7 +57,7 @@ export function SignUpExample() {
     title: "Password Reset",
     description: "Forgot password form with email verification",
     preview: (
-      <div className="w-full max-w-md p-8 bg-background/95 rounded-lg">
+      <div className="w-full max-w-md bg-background/95 rounded-lg">
         <AuthForm
           variant="forgot-password"
           onSubmit={async (data) => console.log("Reset:", data)}

@@ -4,4 +4,5 @@ export const LIBRARY_COMPONENTS = [
   "auto-complete",
   "auth-form",
   "file-tree",
+  "payment-form",
 ];
