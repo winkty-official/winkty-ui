@@ -1,4 +1,4 @@
-import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
+import { DynamicBreadcrumb } from "@/components/docs/breadcrumb";
 import { Accessibility } from "@/components/docs/accessibility";
 import { CodeExamples } from "@/components/docs/code-examples";
 import { Installation } from "@/components/docs/installation";

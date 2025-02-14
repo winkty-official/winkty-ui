@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Installation } from "@/components/docs/installation";
 import { PropsTable } from "@/components/docs/props-table";
 import { Accessibility } from "@/components/docs/accessibility";
-import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
+import { DynamicBreadcrumb } from "@/components/docs/breadcrumb";
 import { asyncAutocompleteProps } from "./props";
 import { packageInfo } from "./package";
 import { accessibilityFeatures } from "./accessibility";

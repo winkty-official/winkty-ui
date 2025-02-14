@@ -1,5 +1,5 @@
 "use client";
-import { DynamicBreadcrumb } from "@/components/base/breadcrumb";
+import { DynamicBreadcrumb } from "@/components/docs/breadcrumb";
 import { Accessibility } from "@/components/docs/accessibility";
 import { CodeExamples } from "@/components/docs/code-examples";
 import Header from "@/components/docs/header";
