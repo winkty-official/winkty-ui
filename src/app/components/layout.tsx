@@ -21,7 +21,7 @@ const componentGroups: ComponentGroup[] = [
     name: "Layout",
     components: [
       { name: "Auth Form", path: "auth-form" },
-      { name: "Payment Card", path: "payment-card" },
+      { name: "Payment Form", path: "payment-form" },
     ],
   },
   {
