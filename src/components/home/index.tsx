@@ -3,16 +3,16 @@ import { HeroSection } from "./hero-section";
 import { FeaturesGrid } from "./features-grid";
 import { LiveEditorSection } from "./live-editor-section";
 import { Footer } from "./footer";
-import { MouseRippleEffect } from "../fancy/mouse-ripple-effect";
+import { MouseRippleEffect } from "@/components/ui/chromatic-ripple-effect";
 
 const HomeSection = () => {
   return (
     <div>
       <MouseRippleEffect
-        rippleColor="#3b82f6"
+        rippleColor="#6617a6"
         className="w-full h-full"
         rippleSize={150}
-        rippleDuration={0.7}
+        rippleDuration={.8}
       >
         <HeroSection />
       </MouseRippleEffect>

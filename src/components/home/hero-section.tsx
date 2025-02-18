@@ -1,11 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { ArrowRight, Package, Zap, Scale } from "lucide-react";
+import { ArrowRight, Package, Scale, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useInView } from "react-intersection-observer";
 import { Button } from "../ui/button";
-import { TextRippleEffect } from "../fancy/chromatic-ripple-effect/chromatic-ripple-effect";
 
 export function HeroSection() {
   const [ref] = useInView({
@@ -37,9 +36,9 @@ export function HeroSection() {
           animate={{ scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <TextRippleEffect>Animate</TextRippleEffect>
+          Animate
           <br />
-          <TextRippleEffect>Without Limits.</TextRippleEffect>
+          Without Limits.
         </motion.h1>
         <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8">
           A powerful animation library that combines the best of Framer Motion

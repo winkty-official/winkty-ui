@@ -1,5 +1,5 @@
 import globalConfig from "@/config";
-import manual from "../../../../../../public/registry/chromatic-ripple-effect.json";
+import manual from "../../../../../public/registry/chromatic-ripple-effect.json";
 
 export const packageInfo = {
   cli: {
