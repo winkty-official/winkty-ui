@@ -64,6 +64,15 @@ export const ui: Registry = [
     ],
     files: ["ui/chromatic-ripple-effect.tsx"],
   },
+  {
+    name: "highlighted-article",
+    type: "registry:ui",
+    registryDependencies: ["utils"],
+    dependencies: [
+      "framer-motion",
+    ],
+    files: ["ui/highlighted-article.tsx"],
+  },
   // {
   //   name: "hint",
   //   type: "registry:ui",

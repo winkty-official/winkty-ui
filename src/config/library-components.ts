@@ -6,4 +6,5 @@ export const LIBRARY_COMPONENTS = [
   "file-tree",
   "payment-form",
   "chromatic-ripple-effect",
+  "highlighted-article",
 ];
