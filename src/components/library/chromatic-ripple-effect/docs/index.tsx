@@ -10,6 +10,8 @@ import {
   textAndMouseRippleEffectProps,
   textHoverEffectProps,
 } from "./props";
+import { Installation } from "@/components/docs/installation";
+import { packageInfo } from "./package";
 
 export default function ChromaticRippleDocs() {
   return (
@@ -23,7 +25,7 @@ export default function ChromaticRippleDocs() {
 
       <section>
         <h2 className="text-2xl font-semibold mb-4">Installation</h2>
-        {/* <Installation {...packageInfo} /> */}
+        <Installation {...packageInfo} />
       </section>
 
       <section>
@@ -34,8 +36,13 @@ export default function ChromaticRippleDocs() {
       <section>
         <h2 className="text-2xl font-semibold mb-4">Props</h2>
 
-        <h3 className="text-xl font-semibold mb-4">Text & Mouse Ripple Effect</h3>
-        <PropsTable definitions={textAndMouseRippleEffectProps} className=" mb-6" />
+        <h3 className="text-xl font-semibold mb-4">
+          Text & Mouse Ripple Effect
+        </h3>
+        <PropsTable
+          definitions={textAndMouseRippleEffectProps}
+          className=" mb-6"
+        />
 
         <h3 className="text-xl font-semibold mb-4">Mouse Ripple Effect</h3>
         <PropsTable definitions={mouseRippleEffectProps} className=" mb-6" />

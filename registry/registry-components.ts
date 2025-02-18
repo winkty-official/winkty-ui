@@ -55,6 +55,15 @@ export const ui: Registry = [
     ],
     files: ["ui/payment-form.tsx", "ui/input-field.tsx"],
   },
+  {
+    name: "chromatic-ripple-effect",
+    type: "registry:ui",
+    registryDependencies: [],
+    dependencies: [
+      "framer-motion",
+    ],
+    files: ["ui/chromatic-ripple-effect.tsx"],
+  },
   // {
   //   name: "hint",
   //   type: "registry:ui",

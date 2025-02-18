@@ -5,4 +5,5 @@ export const LIBRARY_COMPONENTS = [
   "auth-form",
   "file-tree",
   "payment-form",
+  "chromatic-ripple-effect",
 ];

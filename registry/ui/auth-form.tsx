@@ -114,12 +114,9 @@ const AuthForm = <T extends FieldValues>({
                                   : "password"
                               }
                               placeholder="********"
-                              className={cn(
-                                "bg-white/10 border-white/20 leading-none",
-                                {
-                                  "pt-2": true,
-                                },
-                              )}
+                              className={cn(" leading-none", {
+                                "pt-2": true,
+                              })}
                               {...formField}
                               InputProps={{
                                 endAdornment: (
@@ -150,12 +147,9 @@ const AuthForm = <T extends FieldValues>({
                                 ? "user@example.com"
                                 : formField.name
                             }
-                            className={cn(
-                              "bg-white/10 border-white/2 leading-none",
-                              {
-                                "pt-2": false,
-                              },
-                            )}
+                            className={cn(" leading-none", {
+                              "pt-2": false,
+                            })}
                             {...formField}
                           />
                         )}
