@@ -73,6 +73,24 @@ export const ui: Registry = [
     ],
     files: ["ui/highlighted-article.tsx"],
   },
+  {
+    name: "neon-pulse",
+    type: "registry:ui",
+    registryDependencies: [],
+    dependencies: [
+      "framer-motion",
+    ],
+    files: ["ui/neon-pulse.tsx"],
+  },
+  {
+    name: "particle-field",
+    type: "registry:ui",
+    registryDependencies: [],
+    dependencies: [
+      "framer-motion",
+    ],
+    files: ["ui/particle-field.tsx"],
+  },
   // {
   //   name: "hint",
   //   type: "registry:ui",

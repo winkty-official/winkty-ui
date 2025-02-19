@@ -9,10 +9,10 @@ const HomeSection = () => {
   return (
     <div>
       <MouseRippleEffect
-        rippleColor="#6617a6"
+        rippleColor="#F98F3E"
         className="w-full h-full"
         rippleSize={150}
-        rippleDuration={.8}
+        rippleDuration={0.8}
       >
         <HeroSection />
       </MouseRippleEffect>

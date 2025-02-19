@@ -1,5 +1,6 @@
 "use client";
 
+import Logo from "@/assets/icons/logo";
 import { motion } from "framer-motion";
 import { ArrowRight, Package, Scale, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -21,7 +22,7 @@ export function HeroSection() {
   return (
     <section
       ref={ref}
-      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-background to-background/50"
+      className="max-h-[54rem] flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-background to-background/50"
     >
       <div className="absolute inset-0 bg-grid-white/10 bg-grid-pattern" />
       <motion.div
@@ -30,6 +31,7 @@ export function HeroSection() {
         transition={{ duration: 0.8 }}
         className="relative z-10 text-center px-4"
       >
+        <Logo />
         <motion.h1
           className="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/50 mb-6"
           initial={{ scale: 0.8 }}

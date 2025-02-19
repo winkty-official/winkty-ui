@@ -64,7 +64,7 @@ export default function ComponentsLayout({
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <div className="w-64 border-r bg-muted/30">
+      <div className="w-64 border-r bg-[--sidebar-background]">
         <div className="p-4 border-b">
           <div className="relative">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -92,7 +92,7 @@ export default function ComponentsLayout({
                         "block w-full text-left px-2 py-1.5 text-sm rounded-md",
                         "hover:bg-accent hover:text-accent-foreground",
                         pathname === `/components/${component.path}` &&
-                          "bg-accent text-accent-foreground"
+                          "bg-accent text-accent-foreground",
                       )}
                     >
                       {component.name}

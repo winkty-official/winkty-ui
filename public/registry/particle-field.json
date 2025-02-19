@@ -1,37 +1,16 @@
 {
   "name": "particle-field",
   "type": "registry:ui",
-  "dependencies": ["framer-motion"],
+  "registryDependencies": [],
+  "dependencies": [
+    "framer-motion"
+  ],
   "files": [
     {
-      "name": "particle-field.tsx",
-      "content": "\"use client\";\n\nimport { useState, useEffect } from \"react\";\nimport { motion, useAnimation } from \"framer-motion\";\n\ninterface Particle {\n  id: number;\n  x: number;\n  y: number;\n  size: number;\n  color: string;\n}\n\ninterface ParticleFieldProps {\n  className?: string;\n  particleCount?: number;\n  colors?: string[];\n  minSize?: number;\n  maxSize?: number;\n  glowIntensity?: number;\n  expandScale?: number;\n}\n\nexport const ParticleField = ({\n  className,\n  particleCount = 50,\n  colors = [\"#4f46e5\", \"#0ea5e9\", \"#8b5cf6\", \"#ec4899\"],\n  minSize = 3,\n  maxSize = 6,\n  glowIntensity = 15,\n  expandScale = 1.5,\n}: ParticleFieldProps) => {\n  const [particles, setParticles] = useState<Particle[]>([]);\n  const controls = useAnimation();\n  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });\n\n  // Update particles and container size dynamically\n  useEffect(() => {\n    const updateParticles = () => {\n      const container = document.querySelector(\n        \".particle-field-container\"\n      ) as HTMLElement;\n      if (!container) return;\n\n      const { offsetWidth: width, offsetHeight: height } = container;\n      setContainerSize({ width, height });\n\n      setParticles(\n        Array.from({ length: particleCount }, (_, i) => ({\n          id: i,\n          x: Math.random() * width,\n          y: Math.random() * height,\n          size: Math.random() * (maxSize - minSize) + minSize,\n          color: colors[Math.floor(Math.random() * colors.length)],\n        }))\n      );\n    };\n\n    updateParticles();\n    window.addEventListener(\"resize\", updateParticles);\n    return () => window.removeEventListener(\"resize\", updateParticles);\n  }, [particleCount, colors, minSize, maxSize]);\n\n  // Animate particle movement\n  useEffect(() => {\n    const interval = setInterval(() => {\n      controls.start((particle: Particle) => ({\n        x: particle.x + (Math.random() - 0.5) * 10,\n        y: particle.y + (Math.random() - 0.5) * 10,\n        transition: {\n          duration: 2,\n          ease: \"easeInOut\",\n        },\n      }));\n    }, 2000);\n\n    return () => clearInterval(interval);\n  }, [controls]);\n\n  // Handle hover effects\n  const handleHover = (id: number) => {\n    controls.start((particle: Particle) =>\n      particle.id === id\n        ? { scale: expandScale, filter: `blur(${glowIntensity}px)` }\n        : {}\n    );\n  };\n\n  return (\n    <div\n      className={`relative w-full h-full particle-field-container ${className}`}\n      style={{ overflow: \"hidden\" }}\n    >\n      {particles.map((particle) => (\n        <motion.div\n          key={particle.id}\n          className=\"absolute rounded-full pointer-events-none\"\n          style={{\n            width: particle.size,\n            height: particle.size,\n            backgroundColor: particle.color,\n            boxShadow: `0 0 ${glowIntensity}px ${particle.color}`,\n          }}\n          initial={{ x: particle.x, y: particle.y, scale: 1 }}\n          animate={controls}\n          custom={particle}\n          whileHover={{ scale: expandScale }}\n          onMouseEnter={() => handleHover(particle.id)}\n        />\n      ))}\n    </div>\n  );\n};",
-      "dir": "components/fancy/particle-field"
-    },
-    {
-      "name": "index.ts",
-      "content": "export { ParticleField } from \"./particle-field\";\nexport type { ParticleFieldProps } from \"./particle-field\";",
-      "dir": "components/fancy/particle-field"
+      "type": "registry:ui",
+      "content": "\"use client\";\r\n\r\nimport { useState, useEffect } from \"react\";\r\nimport { motion, useAnimation } from \"framer-motion\";\r\n\r\ninterface Particle {\r\n  id: number;\r\n  x: number;\r\n  y: number;\r\n  size: number;\r\n  color: string;\r\n}\r\n\r\ninterface ParticleFieldProps {\r\n  className?: string;\r\n  particleCount?: number;\r\n  colors?: string[];\r\n  minSize?: number;\r\n  maxSize?: number;\r\n  glowIntensity?: number;\r\n  expandScale?: number;\r\n}\r\n\r\nexport const ParticleField = ({\r\n  className,\r\n  particleCount = 50,\r\n  colors = [\"#4f46e5\", \"#0ea5e9\", \"#8b5cf6\", \"#ec4899\"],\r\n  minSize = 3,\r\n  maxSize = 6,\r\n  glowIntensity = 15,\r\n  expandScale = 1.5,\r\n}: ParticleFieldProps) => {\r\n  const [particles, setParticles] = useState<Particle[]>([]);\r\n  const controls = useAnimation();\r\n  const [, setContainerSize] = useState({ width: 0, height: 0 });\r\n\r\n  // Update particles and container size dynamically\r\n  useEffect(() => {\r\n    const updateParticles = () => {\r\n      const container = document.querySelector(\r\n        \".particle-field-container\"\r\n      ) as HTMLElement;\r\n      if (!container) return;\r\n\r\n      const { offsetWidth: width, offsetHeight: height } = container;\r\n      setContainerSize({ width, height });\r\n\r\n      setParticles(\r\n        Array.from({ length: particleCount }, (_, i) => ({\r\n          id: i,\r\n          x: Math.random() * width,\r\n          y: Math.random() * height,\r\n          size: Math.random() * (maxSize - minSize) + minSize,\r\n          color: colors[Math.floor(Math.random() * colors.length)],\r\n        }))\r\n      );\r\n    };\r\n\r\n    updateParticles();\r\n    window.addEventListener(\"resize\", updateParticles);\r\n    return () => window.removeEventListener(\"resize\", updateParticles);\r\n  }, [particleCount, colors, minSize, maxSize]);\r\n\r\n  // Animate particle movement\r\n  useEffect(() => {\r\n    const interval = setInterval(() => {\r\n      controls.start((particle: Particle) => ({\r\n        x: particle.x + (Math.random() - 0.5) * 10,\r\n        y: particle.y + (Math.random() - 0.5) * 10,\r\n        transition: {\r\n          duration: 2,\r\n          ease: \"easeInOut\",\r\n        },\r\n      }));\r\n    }, 2000);\r\n\r\n    return () => clearInterval(interval);\r\n  }, [controls]);\r\n\r\n  // Handle hover effects\r\n  const handleHover = (id: number) => {\r\n    controls.start((particle: Particle) =>\r\n      particle.id === id\r\n        ? { scale: expandScale, filter: `blur(${glowIntensity}px)` }\r\n        : {}\r\n    );\r\n  };\r\n\r\n  return (\r\n    <div\r\n      className={`relative w-full h-full particle-field-container ${className}`}\r\n      style={{ overflow: \"hidden\" }}\r\n    >\r\n      {particles.map((particle) => (\r\n        <motion.div\r\n          key={particle.id}\r\n          className=\"absolute rounded-full pointer-events-none\"\r\n          style={{\r\n            width: particle.size,\r\n            height: particle.size,\r\n            backgroundColor: particle.color,\r\n            boxShadow: `0 0 ${glowIntensity}px ${particle.color}`,\r\n          }}\r\n          initial={{ x: particle.x, y: particle.y, scale: 1 }}\r\n          animate={controls}\r\n          custom={particle}\r\n          whileHover={{ scale: expandScale }}\r\n          onMouseEnter={() => handleHover(particle.id)}\r\n        />\r\n      ))}\r\n    </div>\r\n  );\r\n};\r\n",
+      "path": "ui/particle-field.tsx",
+      "target": "components/ui/particle-field.tsx"
     }
-  ],
-  "author": "Your Name <your.email@example.com>",
-  "title": "Particle Field",
-  "description": "An interactive particle field animation component with customizable properties. Perfect for creating dynamic, animated backgrounds.",
-  "features": [
-    "Interactive particle animations",
-    "Customizable colors and sizes",
-    "Hover effects with glow",
-    "Responsive design",
-    "Performance optimized",
-    "Fully typed with TypeScript"
-  ],
-  "styles": [
-    {
-      "name": "particle-field.css",
-      "content": ".particle-field-container {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n}\n\n.particle-field-container .particle {\n  position: absolute;\n  border-radius: 9999px;\n  pointer-events: none;\n  transition: transform 0.2s ease-in-out;\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .particle-field-container .particle {\n    transition: none;\n  }\n}",
-      "dir": "styles/components"
-    }
-  ],
-  "version": "1.0.0",
-  "license": "MIT"
+  ]
 }

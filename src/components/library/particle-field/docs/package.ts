@@ -1,5 +1,5 @@
 import globalConfig from "@/config";
-import manual from "../../../../../../public/registry/particle-field.json";
+import manual from "../../../../../public/registry/particle-field.json";
 
 export const packageInfo = {
   cli: {

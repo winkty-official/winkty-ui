@@ -36,7 +36,7 @@ export const usageExamples: CodeExample[] = [
     title: "Custom Styling",
     description: "Article card with custom styling and animations",
     preview: <CustomStyling />,
-    code: `import { HighlightedArticle } from "@/components/fancy/highlighted-article";
+    code: `import { HighlightedArticle } from "@/components/ui/highlighted-article";
     import React from "react";
     
     function CustomStyling() {

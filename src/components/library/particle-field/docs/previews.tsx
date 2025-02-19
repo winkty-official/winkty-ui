@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ParticleField } from "@/components/fancy/particle-field/particle-field";
+import { ParticleField } from "@/components/ui/particle-field";
 
 export function BasicParticleField() {
   return (

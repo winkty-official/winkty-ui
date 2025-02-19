@@ -1,4 +1,4 @@
-import { HighlightedArticle } from "@/components/fancy/highlighted-article";
+import { HighlightedArticle } from "@/components/ui/highlighted-article";
 import React from "react";
 
 function CustomStyling() {

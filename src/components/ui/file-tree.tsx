@@ -132,7 +132,7 @@ function TreeNode({
             ) : (
               <FileTypeIcon
                 type={node.type}
-                className={cn("h-4 w-4", "text-blue-500")}
+                className={cn("h-4 w-4", "text-primary")}
               />
             )}
           </div>

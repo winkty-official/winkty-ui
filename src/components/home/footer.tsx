@@ -3,6 +3,7 @@ import { Github, Twitter } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import Logo from "@/assets/icons/logo";
 
 export function Footer() {
   return (
@@ -11,7 +12,9 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
           <div className="flex flex-col items-center gap-4 px-8 md:items-start md:gap-2 md:px-0">
             <Link href="/" className="flex items-center space-x-2">
-              <span className="text-xl font-bold">Your Logo</span>
+              <span className="text-xl font-bold">
+                <Logo className="w-30" />
+              </span>
             </Link>
             <p className="text-center text-sm text-muted-foreground md:text-left">
               Build beautiful components with shadcn/ui and Next.js

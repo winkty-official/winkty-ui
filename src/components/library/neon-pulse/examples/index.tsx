@@ -1,4 +1,4 @@
-import { NeonPulse } from "@/components/fancy/neon-pulse/neon-pulse";
+import { NeonPulse } from "@/components/ui/neon-pulse";
 import type { CodeExample } from "@/components/docs/code-examples";
 
 export const usageExamples: CodeExample[] = [
@@ -6,7 +6,7 @@ export const usageExamples: CodeExample[] = [
     title: "Basic Usage",
     description: "Simple neon text with default magenta color",
     preview: (
-      <div className="w-full p-8 bg-background/95 rounded-lg">
+      <div className="w-full p-8 bg-background/95 rounded-lg flex justify-center">
         <NeonPulse text="NEON" />
       </div>
     ),

@@ -7,4 +7,6 @@ export const LIBRARY_COMPONENTS = [
   "payment-form",
   "chromatic-ripple-effect",
   "highlighted-article",
+  "neon-pulse",
+  "particle-field"
 ];

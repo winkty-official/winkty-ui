@@ -16,28 +16,30 @@ export function ManualInstall({
         Copy and paste the following code into your project.
       </p>
 
-      {registryDependencies && (
+      {registryDependencies?.filter((i) => i != "utils")?.length ? (
         <div>
           <h4 className="mb-4">Install Shadcn Dependencies</h4>
           <p className=" flex items-center space-x-2">
             This component depends on Shadcn
-            {registryDependencies.map((dependency) => (
-              <Link
-                className="first:ml-2"
-                key={dependency}
-                href={`${process.env.NEXT_PUBLIC_SHADCN_BASE_URI}/${dependency}`}
-              >
-                <Badge variant={"secondary"}>
-                  <span className="text-sm font-mono capitalize">
-                    &lt;{dependency} /&gt;
-                  </span>
-                </Badge>
-              </Link>
-            ))}
+            {registryDependencies
+              .filter((i) => i != "utils")
+              .map((dependency) => (
+                <Link
+                  className="first:ml-2"
+                  key={dependency}
+                  href={`${process.env.NEXT_PUBLIC_SHADCN_BASE_URI}/${dependency}`}
+                >
+                  <Badge variant={"secondary"}>
+                    <span className="text-sm font-mono capitalize">
+                      &lt;{dependency} /&gt;
+                    </span>
+                  </Badge>
+                </Link>
+              ))}
             {"."}
           </p>
         </div>
-      )}
+      ) : null}
 
       {dependencies && (
         <div className="">
