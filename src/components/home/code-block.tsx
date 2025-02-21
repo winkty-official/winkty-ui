@@ -11,6 +11,7 @@ import { Check, Copy } from "lucide-react";
 import { Highlight, themes } from "prism-react-renderer";
 import { useState } from "react";
 import { Button } from "../ui/button";
+import { ScrollArea } from "../ui/scroll-area";
 
 export type PackageManager = "npm" | "yarn" | "pnpm" | "bun";
 
@@ -37,7 +38,15 @@ export function CodeBlock({
   };
 
   return (
-    <div className=" border rounded-lg overflow-hidden relative">
+    <ScrollArea
+  className={cn(
+    code.split('\n').length > 18 // Adjust the number 10 as needed
+      ? 'h-[30rem]'
+      : 'h-auto',
+    'min-h-0 w-full rounded-md border relative '
+  )}
+>
+    <div className=" border rounded-lg   ">
       {/* Dropdown menu with Copy button */}
       {packageUrl ? (
         <PackageMangerSelectButton
@@ -82,6 +91,7 @@ export function CodeBlock({
         )}
       </Highlight>
     </div>
+    </ScrollArea>
   );
 }
 
