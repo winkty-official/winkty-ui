@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Scroll, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -62,9 +62,9 @@ export default function ComponentsLayout({
     .filter((group) => group.components.length > 0);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       {/* Sidebar */}
-      <div className="w-64 border-r bg-[--sidebar-background]">
+      <div className=" sticky top-[70px] h-[calc(100vh-70px)] w-64 border-r bg-[--sidebar-background]">
         <div className="p-4 border-b">
           <div className="relative">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -76,7 +76,7 @@ export default function ComponentsLayout({
             />
           </div>
         </div>
-        <ScrollArea className="h-[calc(100vh-5rem)]">
+        <ScrollArea className="h-[calc(100vh-139px)]">
           <div className="p-4 space-y-6">
             {filteredGroups.map((group) => (
               <div key={group.name}>

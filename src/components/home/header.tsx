@@ -4,7 +4,7 @@ import { ThemeToggle } from "./theme-toggle";
 
 function Header() {
   return (
-    <nav className="flex items-center justify-between py-4 px-8">
+    <nav className=" sticky top-0 flex items-center justify-between py-4 px-8 border-b bg-background z-[9999]">
       <Logo />
       <ThemeToggle />
     </nav>
