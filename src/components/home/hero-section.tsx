@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 import { Button } from "../ui/button";
-import { MouseRippleEffect, TextRippleEffect } from "../ui/chromatic-ripple-effect";
+import { TextRippleEffect } from "../ui/chromatic-ripple-effect";
 
 export function HeroSection() {
   const [ref] = useInView({

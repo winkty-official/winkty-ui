@@ -51,7 +51,7 @@ export default function ComponentsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [search, setSearch] = useState("");
+  const [search] = useState("");
   const pathname = usePathname();
 
   const filteredGroups = componentGroups
