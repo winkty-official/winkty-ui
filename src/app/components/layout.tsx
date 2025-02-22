@@ -1,9 +1,7 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -19,9 +17,7 @@ interface ComponentGroup {
 const componentGroups: ComponentGroup[] = [
   {
     name: "Getting Started",
-    components: [
-      { name: "Installation", path: "" },
-    ],
+    components: [{ name: "Installation", path: "" }],
   },
   {
     name: "Layout",
@@ -62,7 +58,7 @@ export default function ComponentsLayout({
     .map((group) => ({
       ...group,
       components: group.components.filter((component) =>
-        component.name.toLowerCase().includes(search.toLowerCase())
+        component.name.toLowerCase().includes(search.toLowerCase()),
       ),
     }))
     .filter((group) => group.components.length > 0);
@@ -71,18 +67,7 @@ export default function ComponentsLayout({
     <div className="flex">
       {/* Sidebar */}
       <div className=" sticky top-[70px] h-[calc(100vh-70px)] w-64 border-r bg-[--sidebar-background]">
-        <div className="p-4 border-b">
-          <div className="relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search components..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-8"
-            />
-          </div>
-        </div>
-        <ScrollArea className="h-[calc(100vh-139px)]">
+        <ScrollArea className="h-full">
           <div className="p-4 space-y-6">
             {filteredGroups.map((group) => (
               <div key={group.name}>
