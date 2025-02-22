@@ -1,32 +1,15 @@
-import { Metadata } from "next";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { ComponentsInstallation } from "@/components/docs/components-installation";
+import { TailwindInstallation } from "@/components/docs/tailwind-installation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Copy, Github, Terminal } from "lucide-react";
-import { CodeBlock } from "@/components/home/code-block";
+import { Github } from "lucide-react";
+import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Components - Shadcn UI",
+  title: "Components - Winkty UI",
   description: "Beautiful and accessible components built with Tailwind CSS.",
 };
-
-const installationCode = `npx shadcn-ui@latest init
-npx shadcn-ui@latest add button`;
-
-const usageCode = `import { Button } from "@/components/ui/button"
-
-export default function Home() {
-  return (
-    <Button variant="default">
-      Click me
-    </Button>
-  )
-}`;
 
 export default function ComponentsPage() {
   return (
@@ -44,9 +27,11 @@ export default function ComponentsPage() {
             <span className="ml-2 text-sm text-muted">⌘+K</span>
           </Button>
 
-          <Button size="lg" variant="outline">
-            <Github className="mr-2" />
-            View on GitHub
+          <Button asChild size="lg" variant="outline">
+            <Link href="https://github.com/rabin97/nexus-ui/">
+              <Github className="mr-2" />
+              View on GitHub
+            </Link>
           </Button>
         </div>
       </div>
@@ -79,31 +64,18 @@ export default function ComponentsPage() {
         ))}
       </div>
 
-      {/* Installation Section */}
       <div className="mb-16">
-        <h2 className="text-2xl font-bold mb-4">Installation</h2>
-        <Card className="mb-4">
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Terminal className="h-5 w-5" />
-              <p className="font-semibold">Install using CLI</p>
-            </div>
-            <CodeBlock code={installationCode} language="bash" />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Copy className="h-5 w-5" />
-              <p className="font-semibold">Usage Example</p>
-            </div>
-            <CodeBlock code={usageCode} language="tsx" />
-          </CardContent>
-        </Card>
+        <TailwindInstallation />
+      </div>
+
+      {/* <ShadcnInstallation /> */}
+
+      <div className="mb-16">
+        <ComponentsInstallation />
       </div>
 
       {/* FAQ Section */}
-      <div className="mb-16">
+      {/* <div className="mb-16">
         <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
         <Accordion type="single" collapsible className="w-full">
           {[
@@ -134,10 +106,10 @@ export default function ComponentsPage() {
             </AccordionItem>
           ))}
         </Accordion>
-      </div>
+      </div> */}
 
       {/* Community Section */}
-      <div>
+      {/* <div>
         <h2 className="text-2xl font-bold mb-4">Join the Community</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <Card>
@@ -163,7 +135,7 @@ export default function ComponentsPage() {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

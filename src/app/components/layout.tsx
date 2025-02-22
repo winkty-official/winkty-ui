@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Scroll, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 interface ComponentGroup {
   name: string;
@@ -17,6 +17,12 @@ interface ComponentGroup {
 }
 
 const componentGroups: ComponentGroup[] = [
+  {
+    name: "Getting Started",
+    components: [
+      { name: "Installation", path: "" },
+    ],
+  },
   {
     name: "Layout",
     components: [

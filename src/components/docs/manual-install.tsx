@@ -1,9 +1,8 @@
 "use client";
 import { CodeBlock } from "@/components/home/code-block";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { RegistryType } from "@/types/registry";
 import Link from "next/link";
 import { Badge } from "../ui/badge";
-import { RegistryType } from "@/types/registry";
 
 export function ManualInstall({
   dependencies,
