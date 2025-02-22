@@ -155,7 +155,7 @@ const MouseRippleEffect: React.FC<MouseRippleEffectProps> = ({
       {ripples.map((ripple) => (
         <motion.div
           key={ripple.key}
-          className="absolute rounded-full pointer-events-none"
+          className="absolute rounded-full pointer-events-none text-primary"
           style={{
             left: ripple.x - rippleSize / 2,
             top: ripple.y - rippleSize / 2,
@@ -182,12 +182,12 @@ const TextRippleEffect: React.FC<TextHoverEffectProps> = ({
       {children.split("").map((char, index) => (
         <motion.span
           key={index}
-          className="inline-block"
+          className="inline-block text-primary"
           initial={{ y: 0 }}
           whileHover={{ y: -5 }}
           transition={{ type: "spring", stiffness: 500, damping: 10 }}
         >
-          {char}
+          {char == " " ? "\u00A0" : char}
         </motion.span>
       ))}
     </div>
