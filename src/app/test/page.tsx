@@ -1,7 +1,7 @@
 "use client";
 import { Dock, useDockStore } from "@/components/library/test/dock";
 import { AppWindow } from "@/components/library/test/dock/app-window";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Telegram from "@/components/icons/app-icons/telegram";
 import DockerIcon from "@/components/icons/app-icons/docker";
@@ -88,6 +88,11 @@ function App() {
     },
   ];
 
+  const dockRef = React.useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    dockRef.current = document.body as HTMLDivElement;
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
       <Dock>
@@ -98,35 +103,24 @@ function App() {
             appId={icon.id}
             className="max-h-96 overflow-auto"
             iconProperties={icon}
+            containerRef={dockRef}
           >
-            <div>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Veritatis pariatur quas minus magni consectetur consequuntur
-              tempora consequatur illum quam nesciunt!
+            <div className="p-4">
+              <h2 className="text-xl font-bold mb-2">{icon.name}</h2>
+              <p className="text-sm text-neutral-400">
+                This is a random UI content for {icon.name} application.
+              </p>
+              {Math.random() > 0.5 ? (
+                <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                  Click Me
+                </button>
+              ) : (
+                <input
+                  type="text"
+                  placeholder="Type something..."
+                  className="mt-4 px-4 py-2 border rounded"
+                />
+              )}
             </div>
           </AppWindow>
         ))}

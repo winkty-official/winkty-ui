@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { motion, MotionValue, useMotionValue } from "framer-motion";
-import React, { createContext, useLayoutEffect, useState } from "react";
+import React, { createContext, forwardRef, useLayoutEffect, useState } from "react";
 import { create } from "zustand";
 
 interface DockState {
@@ -48,49 +48,52 @@ interface DockProps {
   children: React.ReactNode;
 }
 
-export function Dock({ children }: DockProps) {
-  let mouseX = useMotionValue(Number.POSITIVE_INFINITY);
+export const Dock = forwardRef<HTMLDivElement, DockProps>(
+  ({ children }, ref) => {
+    let mouseX = useMotionValue(Number.POSITIVE_INFINITY);
 
-  const docRef = React.useRef<HTMLDivElement>(null);
-  const [dockWidth, setDockWidth] = useState(0);
+    const docRef = (ref as React.RefObject<HTMLDivElement>) || React.useRef<HTMLDivElement>(null);
+    const [dockWidth, setDockWidth] = useState(0);
 
-  useLayoutEffect(() => {
-    if (docRef.current) {
-      const width = docRef.current.offsetWidth;
-      setDockWidth(width);
-      docRef.current.style.setProperty("--dock-width", `${width}px`);
-    }
-  }, []);
+    useLayoutEffect(() => {
+      if (docRef.current) {
+        const width = docRef.current.offsetWidth;
+        setDockWidth(width);
+        docRef.current.style.setProperty("--dock-width", `${width}px`);
+      }
+    }, []);
 
-  return (
-    <DockContext.Provider value={mouseX}>
-      <div
-        ref={docRef}
-        className="fixed bottom-4"
-        style={{
-          left: `calc(50% - ${dockWidth / 2}px)`,
-          opacity: !!dockWidth ? 1 : 0,
-          transition: "opacity 0.3s",
-        }}
-      >
-        <motion.div
-          id="dock-main"
-          layoutId={`window-dock`}
-          onMouseMove={(e) => {
-            (e.target as HTMLElement).id === "dock-main" && mouseX.set(e.clientX);
-          }}
-          onMouseLeave={() => mouseX.set(Infinity)}
-          className={cn(
-            "mx-auto hidden md:flex h-14 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
-          )}
+    return (
+      <DockContext.Provider value={mouseX}>
+        <div
+          ref={docRef}
+          className="fixed bottom-4"
           style={{
-            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            left: `calc(50% - ${dockWidth / 2}px)`,
+            opacity: !!dockWidth ? 1 : 0,
+            transition: "opacity 0.3s",
           }}
         >
-          {children}
-        </motion.div>
-      </div>
-    </DockContext.Provider>
-  );
-}
+          <motion.div
+            id="dock-main"
+            layoutId={`window-dock`}
+            onMouseMove={(e) => {
+              (e.target as HTMLElement).id === "dock-main" &&
+                mouseX.set(e.clientX);
+            }}
+            onMouseLeave={() => mouseX.set(Infinity)}
+            className={cn(
+              "mx-auto hidden md:flex h-14 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
+            )}
+            style={{
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+            }}
+          >
+            {children}
+          </motion.div>
+        </div>
+      </DockContext.Provider>
+    );
+  },
+);

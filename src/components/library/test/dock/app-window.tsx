@@ -10,6 +10,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import { DockContext, useDockStore } from ".";
 import { cn } from "@/lib/utils";
 import { DockIcon } from "./dock-icons";
+import { create } from "zustand";
+
+// Store to manage z-index of windows
+interface ZIndexState {
+  highestZIndex: number;
+  bringToFront: () => number;
+}
+
+export const useZIndexStore = create<ZIndexState>((set, get) => ({
+  highestZIndex: 100, // Starting z-index (must be below dock)
+  bringToFront: () => {
+    set((state) => {
+      const newZIndex = state.highestZIndex + 1;
+      return { highestZIndex: newZIndex };
+    });
+    return get().highestZIndex;
+  },
+}));
 
 interface AppWindowProps {
   title: string;
@@ -21,6 +39,7 @@ interface AppWindowProps {
     name: string;
     icon: React.ReactNode;
   };
+  containerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 export function AppWindow({
@@ -29,10 +48,9 @@ export function AppWindow({
   appId,
   iconProperties,
   className,
+  containerRef,
 }: AppWindowProps) {
   const mouseX = useContext(DockContext);
-  console.log("🚀 ~ AppWindow ~ mouseX:", mouseX);
-
   const { openApps, minimizeApp, closeApp, openApp } = useDockStore();
   const isOpen = openApps.has(appId);
 
@@ -40,6 +58,10 @@ export function AppWindow({
   const [minimizeTarget, setMinimizeTarget] = useState({ x: 0, y: 0 });
   const [isMinimizing, setIsMinimizing] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
+  // Track zIndex of this window
+  const { highestZIndex, bringToFront } = useZIndexStore();
+  const [zIndex, setZIndex] = useState(highestZIndex);
 
   useEffect(() => {
     if (!isOpen) {
@@ -55,7 +77,7 @@ export function AppWindow({
       windowRef.current?.style.setProperty("--window-height", `${height}px`);
       windowRef.current?.style.setProperty("--window-width", `${width}px`);
     }
-  });
+  }, [isOpen]);
 
   useEffect(() => {
     const updateMinimizeTarget = () => {
@@ -102,6 +124,10 @@ export function AppWindow({
     }, 300);
   };
 
+  const handleClick = () => {
+    setZIndex(bringToFront());
+  };
+
   return (
     <>
       <DockIcon
@@ -116,6 +142,7 @@ export function AppWindow({
         {isOpen && (
           <motion.div
             ref={windowRef}
+            onMouseDown={handleClick} // Bring window to front when clicked
             initial={{
               opacity: 0,
               scale: 0.8,
@@ -160,33 +187,49 @@ export function AppWindow({
             style={{
               transformOrigin: "center center",
               pointerEvents: isMinimizing || isClosing ? "none" : "auto",
+              zIndex, // Apply dynamically updated z-index
             }}
             layoutId={`window-${title.toLowerCase()}`}
+            drag
+            whileDrag={{ scale: 0.95 }}
+            dragConstraints={containerRef || false}
+            dragMomentum={false}
+            dragElastic={0.2}
+            onDragEnd={(_, info) => {
+              windowRef.current?.style.setProperty(
+                "--window-x",
+                `${info.point.x}px`,
+              );
+              windowRef.current?.style.setProperty(
+                "--window-y",
+                `${info.point.y}px`,
+              );
+            }}
           >
             <motion.div
               className="flex items-center justify-between bg-gray-900 px-4 py-2 top-0 w-full z-10"
               layout
+              dragListener={true}
+              dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
             >
-              <div className="group flex gap-2 ">
+              <div className="group flex gap-2">
                 <button
                   onClick={() => handleClose(appId)}
                   className="p-[.5] rounded-full bg-red-500 transition-colors hover:bg-red-600"
                 >
-                  <X className="size-[0.625rem] opacity-0 transition-opacity group-hover:opacity-100 text-black" />
+                  <X className="size-[0.625rem] text-black" />
                 </button>
                 <button
                   onClick={() => handleMinimize(appId)}
                   className="p-[.5] rounded-full bg-yellow-500 transition-colors hover:bg-yellow-600"
                 >
-                  <Minus className="size-[0.625rem] opacity-0 transition-opacity group-hover:opacity-100 text-black" />
+                  <Minus className="size-[0.625rem] text-black" />
                 </button>
               </div>
               <span className="text-sm text-gray-400">{title}</span>
               <div className="w-16" />
             </motion.div>
-            <motion.div className="p-4 h-[calc(var(--window-height)-36px)] overflow-auto" layout>
-              {children}
-            </motion.div>
+            <motion.div className="p-4">{children}</motion.div>
           </motion.div>
         )}
       </AnimatePresence>
