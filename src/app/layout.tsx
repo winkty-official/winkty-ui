@@ -1,8 +1,8 @@
-import { ThemeToggle } from "@/components/home/theme-toggle";
+import Header from "@/components/home/header";
 import { ThemeProvider } from "@/provider/theme-provider";
-import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -40,7 +40,7 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
-          <ThemeToggle />
+          <Header />
           {children}
           <Toaster richColors closeButton />
         </ThemeProvider>

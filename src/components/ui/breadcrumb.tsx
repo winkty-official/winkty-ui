@@ -4,6 +4,7 @@ import * as React from "react";
 import { ChevronRight, MoreHorizontal } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const Breadcrumb = React.forwardRef<
   HTMLElement,
@@ -21,7 +22,7 @@ const BreadcrumbList = React.forwardRef<
     ref={ref}
     className={cn(
       "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground",
-      className
+      className,
     )}
     {...props}
   />
@@ -46,8 +47,9 @@ const BreadcrumbLink = React.forwardRef<
     asChild?: boolean;
   }
 >(({ className, ...props }, ref) => (
-  <a
+  <Link
     ref={ref}
+    href={props.href ?? "#"}
     className={cn("hover:text-foreground transition-colors", className)}
     {...props}
   />

@@ -1,11 +1,12 @@
 "use client";
 
-import Logo from "@/assets/icons/logo";
 import { motion } from "framer-motion";
 import { ArrowRight, Package, Scale, Zap } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 import { Button } from "../ui/button";
+import { TextRippleEffect } from "../ui/chromatic-ripple-effect";
 
 export function HeroSection() {
   const [ref] = useInView({
@@ -31,16 +32,15 @@ export function HeroSection() {
         transition={{ duration: 0.8 }}
         className="relative z-10 text-center px-4"
       >
-        <Logo />
         <motion.h1
           className="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/50 mb-6"
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          Animate
+          <TextRippleEffect>Animate</TextRippleEffect>
           <br />
-          Without Limits.
+          <TextRippleEffect>Without Limits.</TextRippleEffect>
         </motion.h1>
         <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8">
           A powerful animation library that combines the best of Framer Motion
@@ -51,8 +51,10 @@ export function HeroSection() {
             Get Started
             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
-          <Button size="lg" variant="outline">
-            View on GitHub
+          <Button asChild size="lg" variant="outline">
+            <Link href="https://dashboard-template-01.vercel.app/">
+              Free Templates
+            </Link>
           </Button>
         </div>
       </motion.div>

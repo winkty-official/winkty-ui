@@ -1,13 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PageSearch } from "@/components/docs/page-search";
+import { useState } from "react";
 
 interface ComponentGroup {
   name: string;
@@ -18,6 +15,10 @@ interface ComponentGroup {
 }
 
 const componentGroups: ComponentGroup[] = [
+  {
+    name: "Getting Started",
+    components: [{ name: "Installation", path: "" }],
+  },
   {
     name: "Layout",
     components: [
@@ -50,35 +51,23 @@ export default function ComponentsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [search, setSearch] = useState("");
+  const [search] = useState("");
   const pathname = usePathname();
 
   const filteredGroups = componentGroups
     .map((group) => ({
       ...group,
       components: group.components.filter((component) =>
-        component.name.toLowerCase().includes(search.toLowerCase())
+        component.name.toLowerCase().includes(search.toLowerCase()),
       ),
     }))
     .filter((group) => group.components.length > 0);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex">
       {/* Sidebar */}
-      <div className="w-64 border-r bg-[--sidebar-background]">
-      <PageSearch />
-        <div className="p-4 border-b">
-          <div className="relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search components..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-8"
-            />
-          </div>
-        </div>
-        <ScrollArea className="h-[calc(100vh-5rem)]">
+      <div className=" sticky top-[70px] h-[calc(100vh-70px)] w-64 border-r bg-[--sidebar-background]">
+        <ScrollArea className="h-full">
           <div className="p-4 space-y-6">
             {filteredGroups.map((group) => (
               <div key={group.name}>
