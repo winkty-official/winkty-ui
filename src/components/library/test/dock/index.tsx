@@ -1,10 +1,8 @@
 "use client";
-import React, { createContext } from "react";
 import { cn } from "@/lib/utils";
-import { useMotionValue, motion, MotionValue } from "framer-motion";
+import { motion, MotionValue, useMotionValue } from "framer-motion";
+import React, { createContext, useLayoutEffect, useState } from "react";
 import { create } from "zustand";
-import { AppWindow } from "./app-window";
-import { DockIcon } from "./dock-icons";
 
 interface DockState {
   openApps: Set<string>;
@@ -48,23 +46,39 @@ export const DockContext = createContext<MotionValue<number> | null>(null);
 
 interface DockProps {
   children: React.ReactNode;
-  iconProperties: {
-    id: string;
-    name: string;
-    icon: React.ReactNode;
-  }[];
 }
 
-export function Dock({ children, iconProperties }: DockProps) {
+export function Dock({ children }: DockProps) {
   let mouseX = useMotionValue(Number.POSITIVE_INFINITY);
 
-  const { openApp, openApps } = useDockStore();
+  const docRef = React.useRef<HTMLDivElement>(null);
+  const [dockWidth, setDockWidth] = useState(0);
+
+  useLayoutEffect(() => {
+    if (docRef.current) {
+      const width = docRef.current.offsetWidth;
+      setDockWidth(width);
+      docRef.current.style.setProperty("--dock-width", `${width}px`);
+    }
+  }, []);
 
   return (
     <DockContext.Provider value={mouseX}>
-      <div className="fixed bottom-4 left-1/2  -translate-x-1/2">
+      <div
+        ref={docRef}
+        className="fixed bottom-4"
+        style={{
+          left: `calc(50% - ${dockWidth / 2}px)`,
+          opacity: !!dockWidth ? 1 : 0,
+          transition: "opacity 0.3s",
+        }}
+      >
         <motion.div
-          onMouseMove={(e) => mouseX.set(e.pageX)}
+          id="dock-main"
+          layoutId={`window-dock`}
+          onMouseMove={(e) => {
+            (e.target as HTMLElement).id === "dock-main" && mouseX.set(e.clientX);
+          }}
           onMouseLeave={() => mouseX.set(Infinity)}
           className={cn(
             "mx-auto hidden md:flex h-14 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
@@ -74,23 +88,9 @@ export function Dock({ children, iconProperties }: DockProps) {
             border: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         >
-          {iconProperties?.map((icon) => (
-            <DockIcon
-              key={icon.id}
-              name={icon.name}
-              icon={icon.icon}
-              onOpen={() => openApp(icon.id)}
-              isOpen={openApps.has(icon.id)}
-              mouseX={mouseX}
-            />
-          ))}
+          {children}
         </motion.div>
       </div>
-      {iconProperties?.map((icon) => (
-        <AppWindow key={icon.id} title={icon.name} appId={icon.id} className="max-h-96 overflow-auto">
-          {children}
-        </AppWindow>
-      ))}
     </DockContext.Provider>
   );
 }

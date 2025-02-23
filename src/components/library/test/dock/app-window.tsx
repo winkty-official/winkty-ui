@@ -1,22 +1,39 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useContext,
+  useLayoutEffect,
+} from "react";
 import { X, Minus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { DockContext, useDockStore } from ".";
 import { cn } from "@/lib/utils";
+import { DockIcon } from "./dock-icons";
 
 interface AppWindowProps {
   title: string;
   children: React.ReactNode;
   appId: string;
   className?: string;
+  iconProperties: {
+    id: string;
+    name: string;
+    icon: React.ReactNode;
+  };
 }
 
-export function AppWindow({ title, children, appId,className }: AppWindowProps) {
-
+export function AppWindow({
+  title,
+  children,
+  appId,
+  iconProperties,
+  className,
+}: AppWindowProps) {
   const mouseX = useContext(DockContext);
-  console.log("🚀 ~ AppWindow ~ mouseX:", mouseX)
+  console.log("🚀 ~ AppWindow ~ mouseX:", mouseX);
 
-  const { openApps, minimizeApp, closeApp } = useDockStore();
+  const { openApps, minimizeApp, closeApp, openApp } = useDockStore();
   const isOpen = openApps.has(appId);
 
   const windowRef = useRef<HTMLDivElement>(null);
@@ -30,6 +47,15 @@ export function AppWindow({ title, children, appId,className }: AppWindowProps) 
       setIsClosing(false);
     }
   }, [isOpen]);
+
+  useLayoutEffect(() => {
+    if (isOpen) {
+      const height = windowRef.current?.offsetHeight;
+      const width = windowRef.current?.offsetWidth;
+      windowRef.current?.style.setProperty("--window-height", `${height}px`);
+      windowRef.current?.style.setProperty("--window-width", `${width}px`);
+    }
+  });
 
   useEffect(() => {
     const updateMinimizeTarget = () => {
@@ -76,9 +102,16 @@ export function AppWindow({ title, children, appId,className }: AppWindowProps) 
     }, 300);
   };
 
- 
   return (
-      
+    <>
+      <DockIcon
+        key={iconProperties.id}
+        name={iconProperties.name}
+        icon={iconProperties.icon}
+        onOpen={() => openApp(iconProperties.id)}
+        isOpen={openApps.has(iconProperties.id)}
+        mouseX={mouseX}
+      />
       <AnimatePresence mode="wait">
         {isOpen && (
           <motion.div
@@ -120,7 +153,10 @@ export function AppWindow({ title, children, appId,className }: AppWindowProps) 
                 duration: 0.2,
               },
             }}
-            className={cn("fixed inset-0 left-[30%] top-[30%] w-[600px] -translate-x-1/2 -translate-y-1/2  overflow-hidden rounded-lg bg-gray-800 shadow-2xl",className)}
+            className={cn(
+              "fixed inset-0 left-[30%] top-[30%] w-[600px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-lg bg-gray-800 shadow-2xl",
+              className,
+            )}
             style={{
               transformOrigin: "center center",
               pointerEvents: isMinimizing || isClosing ? "none" : "auto",
@@ -128,31 +164,32 @@ export function AppWindow({ title, children, appId,className }: AppWindowProps) 
             layoutId={`window-${title.toLowerCase()}`}
           >
             <motion.div
-              className="flex items-center justify-between bg-gray-900 px-4 py-2"
+              className="flex items-center justify-between bg-gray-900 px-4 py-2 top-0 w-full z-10"
               layout
             >
-              <div className="flex gap-2">
+              <div className="group flex gap-2 ">
                 <button
                   onClick={() => handleClose(appId)}
-                  className="group h-3 w-3 rounded-full bg-red-500 transition-colors hover:bg-red-600"
+                  className="p-[.5] rounded-full bg-red-500 transition-colors hover:bg-red-600"
                 >
-                  <X className="h-2 w-2 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <X className="size-[0.625rem] opacity-0 transition-opacity group-hover:opacity-100 text-black" />
                 </button>
                 <button
                   onClick={() => handleMinimize(appId)}
-                  className="group h-3 w-3 rounded-full bg-yellow-500 transition-colors hover:bg-yellow-600"
+                  className="p-[.5] rounded-full bg-yellow-500 transition-colors hover:bg-yellow-600"
                 >
-                  <Minus className="h-2 w-2 opacity-0 transition-opacity group-hover:opacity-100" />
+                  <Minus className="size-[0.625rem] opacity-0 transition-opacity group-hover:opacity-100 text-black" />
                 </button>
               </div>
               <span className="text-sm text-gray-400">{title}</span>
               <div className="w-16" />
             </motion.div>
-            <motion.div className="p-4" layout>
+            <motion.div className="p-4 h-[calc(var(--window-height)-36px)] overflow-auto" layout>
               {children}
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+    </>
   );
 }

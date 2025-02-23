@@ -9,7 +9,7 @@ const HomeSection = () => {
   return (
     <div>
       <MouseRippleEffect
-        rippleColor="#F98F3E"
+        rippleColor="#1D63ED"
         className="w-full h-full"
         rippleSize={150}
         rippleDuration={0.8}
