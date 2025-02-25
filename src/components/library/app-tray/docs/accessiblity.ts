@@ -1,0 +1,15 @@
+export const accessibilityFeatures = [
+  "ARIA label support via tooltip for app names",
+  "Keyboard navigation support (click handling via Enter/Space)",
+  "Focus management for interactive icons",
+  "Proper tab order for app tray icons",
+  "ARIA-hidden state for tooltips when not visible",
+  "Screen reader compatibility with dynamic app states (open/minimized)",
+  "High contrast visual indicators for open apps (dot indicator)",
+  "Clear focus indicators for keyboard navigation",
+  "Semantic HTML structure with motion divs",
+  "Proper color contrast for icons and tooltips",
+  "Support for reduced motion preferences via Framer Motion",
+  "Visual feedback for hover and click states",
+  "Motion-based animations with accessibility-friendly transitions",
+];

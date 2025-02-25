@@ -106,7 +106,7 @@ export const AppWindow = forwardRef<HTMLDivElement, AppWindowProps>(
         mergedRef.current?.style.setProperty("--window-height", `${height}px`);
         mergedRef.current?.style.setProperty("--window-width", `${width}px`);
       }
-    }, [isOpen]);
+    }, [isOpen, mergedRef]);
 
     useEffect(() => {
       const updateMinimizeTarget = () => {
@@ -135,7 +135,7 @@ export const AppWindow = forwardRef<HTMLDivElement, AppWindowProps>(
         window.addEventListener("resize", updateMinimizeTarget);
         return () => window.removeEventListener("resize", updateMinimizeTarget);
       }
-    }, [isOpen, isMinimizing, isClosing, title]);
+    }, [isOpen, isMinimizing, isClosing, title, mergedRef]);
 
     const handleClose = (appId: string) => {
       setIsClosing(true);
@@ -240,7 +240,9 @@ export const AppWindow = forwardRef<HTMLDivElement, AppWindowProps>(
                   <Minus className="size-[0.625rem] text-black" />
                 </button>
               </div>
-              <span className="select-none pointer-events-none text-sm text-gray-400">{title}</span>
+              <span className="pointer-events-none select-none text-sm text-gray-400">
+                {title}
+              </span>
               <div className="w-16" />
             </motion.div>
             <motion.div

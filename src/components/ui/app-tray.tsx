@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import  {
+import {
   createContext,
   forwardRef,
   useCallback,
@@ -50,13 +50,17 @@ const useAppTrayStore = create<APPTRAYState>((set) => ({
     set((state) => {
       const newMinimizeApps = new Set(state.minimizeApps);
       newMinimizeApps.add(appId);
-      return { minimizeApps: newMinimizeApps };
+      const newOpenApps = new Set(state.openApps);
+      newOpenApps.delete(appId);
+      return { minimizeApps: newMinimizeApps, openApps: newOpenApps };
     }),
   restoreApp: (appId: string) =>
     set((state) => {
       const newMinimizeApps = new Set(state.minimizeApps);
       newMinimizeApps.delete(appId);
-      return { minimizeApps: newMinimizeApps };
+      const newOpenApps = new Set(state.openApps);
+      newOpenApps.add(appId);
+      return { minimizeApps: newMinimizeApps, openApps: newOpenApps };
     }),
 }));
 
@@ -122,7 +126,7 @@ const AppTray = forwardRef<HTMLDivElement, APPTRAYProps>(
       <APPTRAYContext.Provider value={mouseX}>
         <div
           ref={resolvedRef}
-          className="fixed bottom-4 left-1/2 -translate-x-1/2"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2"
         >
           <motion.div
             id="appTray-main"
@@ -134,8 +138,8 @@ const AppTray = forwardRef<HTMLDivElement, APPTRAYProps>(
             }}
             onMouseLeave={() => mouseX.set(Infinity)}
             className={cn(
-              "mx-auto hidden md:flex h-14 gap-4 items-end rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
-              className
+              "mx-auto hidden h-14 items-end gap-4 rounded-2xl bg-gray-50 px-4 pb-3 md:flex dark:bg-neutral-900",
+              className,
             )}
             style={{
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
@@ -147,7 +151,7 @@ const AppTray = forwardRef<HTMLDivElement, APPTRAYProps>(
         </div>
       </APPTRAYContext.Provider>
     );
-  }
+  },
 );
 AppTray.displayName = "AppTray";
 
@@ -177,9 +181,15 @@ const AppTrayIcon = forwardRef<HTMLDivElement, APPTRAYIconProps>(
     const resolvedRef = (ref as RefObject<HTMLDivElement>) || iconRef;
     const { isLoading, handleClick } = useAPPTRAYAnimation(() => openApp(id));
     const mouseX = useContext(APPTRAYContext);
-    const { width, height, widthIcon, heightIcon } = mouseX
-      ? useAPPTRAYHover(mouseX, resolvedRef)
-      : { width: 0, height: 0, widthIcon: 0, heightIcon: 0 };
+
+    if (!mouseX) {
+      throw new Error(
+        "AppTrayIcon must be rendered within an AppTray component.",
+      );
+    }
+    
+    const { width, height, widthIcon, heightIcon } = useAPPTRAYHover( mouseX, resolvedRef,);
+
     const [hovered, setHovered] = useState(false);
 
     return (
@@ -192,15 +202,15 @@ const AppTrayIcon = forwardRef<HTMLDivElement, APPTRAYIconProps>(
         onMouseLeave={() => setHovered(false)}
         onClick={handleClick}
         className={cn(
-          "aspect-square rounded-sm bg-gray-200 dark:bg-neutral-800 flex items-center justify-center relative cursor-pointer",
-          className
+          "relative flex aspect-square cursor-pointer items-center justify-center rounded-sm bg-gray-200 dark:bg-neutral-800",
+          className,
         )}
       >
         <AnimatePresence>
           {hovered && (
             <motion.div
               {...APPTRAY_ANIMATION_CONFIG.tooltip}
-              className="px-2 py-0.5 whitespace-pre rounded-md bg-gray-100 border dark:bg-neutral-800 dark:border-neutral-900 dark:text-white border-gray-200 text-neutral-700 absolute left-1/2 -translate-x-1/2 -top-8 w-fit text-xs"
+              className="absolute -top-8 left-1/2 w-fit -translate-x-1/2 whitespace-pre rounded-md border border-gray-200 bg-gray-100 px-2 py-0.5 text-xs text-neutral-700 dark:border-neutral-900 dark:bg-neutral-800 dark:text-white"
               aria-label="tooltip"
               aria-hidden={!hovered}
             >
@@ -210,7 +220,7 @@ const AppTrayIcon = forwardRef<HTMLDivElement, APPTRAYIconProps>(
         </AnimatePresence>
         <motion.div
           style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center select-none"
+          className="flex select-none items-center justify-center"
         >
           {icon}
         </motion.div>
@@ -222,7 +232,7 @@ const AppTrayIcon = forwardRef<HTMLDivElement, APPTRAYIconProps>(
         )}
       </motion.div>
     );
-  }
+  },
 );
 AppTrayIcon.displayName = "AppTrayIcon";
 
@@ -234,7 +244,7 @@ AppTrayIcon.displayName = "AppTrayIcon";
  */
 function useAPPTRAYHover(
   mouseX: MotionValue<number>,
-  ref: RefObject<HTMLElement>
+  ref: RefObject<HTMLElement>,
 ) {
   const distance = useTransform(mouseX, (val) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
@@ -244,22 +254,22 @@ function useAPPTRAYHover(
   const widthTransform = useTransform(
     distance,
     [...APPTRAY_ANIMATION_CONFIG.distanceInput],
-    [...APPTRAY_ANIMATION_CONFIG.sizeOutput]
+    [...APPTRAY_ANIMATION_CONFIG.sizeOutput],
   ) as MotionValue<number>;
   const heightTransform = useTransform(
     distance,
     [...APPTRAY_ANIMATION_CONFIG.distanceInput],
-    [...APPTRAY_ANIMATION_CONFIG.sizeOutput]
+    [...APPTRAY_ANIMATION_CONFIG.sizeOutput],
   ) as MotionValue<number>;
   const widthTransformIcon = useTransform(
     distance,
     [...APPTRAY_ANIMATION_CONFIG.distanceInput],
-    [...APPTRAY_ANIMATION_CONFIG.iconSizeOutput]
+    [...APPTRAY_ANIMATION_CONFIG.iconSizeOutput],
   ) as MotionValue<number>;
   const heightTransformIcon = useTransform(
     distance,
     [...APPTRAY_ANIMATION_CONFIG.distanceInput],
-    [...APPTRAY_ANIMATION_CONFIG.iconSizeOutput]
+    [...APPTRAY_ANIMATION_CONFIG.iconSizeOutput],
   ) as MotionValue<number>;
 
   const width = useSpring(widthTransform as unknown as number, {
