@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -7,15 +7,15 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-
+import { DockContext, useDockStore } from ".";
 
 export const DOCK_ANIMATION_CONFIG = {
-  distanceInput: [-150, 0, 150],
-  sizeOutput: [35, 70, 35],
-  iconSizeOutput: [20, 40, 20],
+  distanceInput: [-200, -100, 0, 100, 200],
+  sizeOutput: [35, 50, 70, 50, 35],
+  iconSizeOutput: [20, 30, 40, 30, 20],
   spring: {
-    mass: 0.1,
-    stiffness: 150,
+    mass: 0.5,
+    stiffness: 100,
     damping: 5,
   },
   bounces: [
@@ -24,7 +24,7 @@ export const DOCK_ANIMATION_CONFIG = {
     { scale: 1.1, y: -5 },
     { scale: 1, y: 0 },
     { scale: 1.05, y: -2 },
-    { scale: 1, y: 0 }
+    { scale: 1, y: 0 },
   ],
   bounceDelay: 200,
   loading: {
@@ -44,22 +44,19 @@ export const DOCK_ANIMATION_CONFIG = {
 } as const;
 
 export interface DockIconProps {
+  id: string;
   name: string;
   icon?: React.ReactNode;
-  onOpen: () => void;
-  isOpen: boolean;
-  mouseX: MotionValue<number> | null;
 }
-export function DockIcon({
-  name,
-  icon,
-  onOpen,
-  isOpen,
-  mouseX,
-}: DockIconProps) {
+export function DockIcon({ id, name, icon }: DockIconProps) {
+  const { openApp, openApps } = useDockStore();
+  const isOpen = openApps.has(id);
   const ref = useRef<HTMLDivElement | null>(null);
-  const { isLoading, handleClick } = useDockAnimation(onOpen);
-  const { width, height, widthIcon, heightIcon } = mouseX ? useDockHover(mouseX, ref) : { width: 0, height: 0, widthIcon: 0, heightIcon: 0 };
+  const { isLoading, handleClick } = useDockAnimation(() => openApp(id));
+  const mouseX = useContext(DockContext);
+  const { width, height, widthIcon, heightIcon } = mouseX
+    ? useDockHover(mouseX, ref)
+    : { width: 0, height: 0, widthIcon: 0, heightIcon: 0 };
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -99,10 +96,10 @@ export function DockIcon({
   );
 }
 
-
-
-
-export function useDockHover(mouseX: MotionValue<number>, ref: React.RefObject<HTMLDivElement | null>) {
+export function useDockHover(
+  mouseX: MotionValue<number>,
+  ref: React.RefObject<HTMLDivElement | null>,
+) {
   const distance = useTransform(mouseX, (val) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
     return val - bounds.x - bounds.width / 2;
@@ -111,35 +108,41 @@ export function useDockHover(mouseX: MotionValue<number>, ref: React.RefObject<H
   const widthTransform = useTransform(
     distance,
     [...DOCK_ANIMATION_CONFIG.distanceInput],
-    [...DOCK_ANIMATION_CONFIG.sizeOutput]
+    [...DOCK_ANIMATION_CONFIG.sizeOutput],
   ) as MotionValue<number>;
   const heightTransform = useTransform(
     distance,
     [...DOCK_ANIMATION_CONFIG.distanceInput],
-    [...DOCK_ANIMATION_CONFIG.sizeOutput]
+    [...DOCK_ANIMATION_CONFIG.sizeOutput],
   ) as MotionValue<number>;
 
   const widthTransformIcon = useTransform(
     distance,
     [...DOCK_ANIMATION_CONFIG.distanceInput],
-    [...DOCK_ANIMATION_CONFIG.iconSizeOutput]
+    [...DOCK_ANIMATION_CONFIG.iconSizeOutput],
   ) as MotionValue<number>;
-  
+
   const heightTransformIcon = useTransform(
     distance,
     [...DOCK_ANIMATION_CONFIG.distanceInput],
-    [...DOCK_ANIMATION_CONFIG.iconSizeOutput]
+    [...DOCK_ANIMATION_CONFIG.iconSizeOutput],
   ) as MotionValue<number>;
- 
 
-  const width = useSpring(widthTransform as unknown as number, { ...DOCK_ANIMATION_CONFIG.spring });
-  const height = useSpring(heightTransform , { ...DOCK_ANIMATION_CONFIG.spring });
-  const widthIcon = useSpring(widthTransformIcon, { ...DOCK_ANIMATION_CONFIG.spring });
-  const heightIcon = useSpring(heightTransformIcon, { ...DOCK_ANIMATION_CONFIG.spring });
+  const width = useSpring(widthTransform as unknown as number, {
+    ...DOCK_ANIMATION_CONFIG.spring,
+  });
+  const height = useSpring(heightTransform, {
+    ...DOCK_ANIMATION_CONFIG.spring,
+  });
+  const widthIcon = useSpring(widthTransformIcon, {
+    ...DOCK_ANIMATION_CONFIG.spring,
+  });
+  const heightIcon = useSpring(heightTransformIcon, {
+    ...DOCK_ANIMATION_CONFIG.spring,
+  });
 
   return { width, height, widthIcon, heightIcon };
 }
-
 
 export function useDockAnimation(onOpen: () => void) {
   const [isLoading, setIsLoading] = useState(false);
@@ -147,7 +150,7 @@ export function useDockAnimation(onOpen: () => void) {
 
   const handleClick = useCallback(() => {
     setIsLoading(true);
-    
+
     if (bounceTimer.current) {
       clearTimeout(bounceTimer.current);
     }

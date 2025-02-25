@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { motion, MotionValue, useMotionValue } from "framer-motion";
-import React, { createContext, forwardRef, useLayoutEffect, useState } from "react";
+import React, { createContext, forwardRef } from "react";
 import { create } from "zustand";
 
 interface DockState {
@@ -53,26 +53,12 @@ export const Dock = forwardRef<HTMLDivElement, DockProps>(
     let mouseX = useMotionValue(Number.POSITIVE_INFINITY);
 
     const docRef = (ref as React.RefObject<HTMLDivElement>) || React.useRef<HTMLDivElement>(null);
-    const [dockWidth, setDockWidth] = useState(0);
-
-    useLayoutEffect(() => {
-      if (docRef.current) {
-        const width = docRef.current.offsetWidth;
-        setDockWidth(width);
-        docRef.current.style.setProperty("--dock-width", `${width}px`);
-      }
-    }, []);
 
     return (
       <DockContext.Provider value={mouseX}>
         <div
           ref={docRef}
-          className="fixed bottom-4"
-          style={{
-            left: `calc(50% - ${dockWidth / 2}px)`,
-            opacity: !!dockWidth ? 1 : 0,
-            transition: "opacity 0.3s",
-          }}
+          className="fixed bottom-4 left-1/2 -translate-x-1/2"
         >
           <motion.div
             id="dock-main"

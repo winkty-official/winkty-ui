@@ -1,16 +1,9 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  useContext,
-  useLayoutEffect,
-} from "react";
-import { X, Minus } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { DockContext, useDockStore } from ".";
 import { cn } from "@/lib/utils";
-import { DockIcon } from "./dock-icons";
+import { AnimatePresence, motion, useDragControls } from "framer-motion";
+import { Minus, X } from "lucide-react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { create } from "zustand";
+import { useDockStore } from ".";
 
 // Store to manage z-index of windows
 interface ZIndexState {
@@ -34,11 +27,6 @@ interface AppWindowProps {
   children: React.ReactNode;
   appId: string;
   className?: string;
-  iconProperties: {
-    id: string;
-    name: string;
-    icon: React.ReactNode;
-  };
   containerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
@@ -46,12 +34,11 @@ export function AppWindow({
   title,
   children,
   appId,
-  iconProperties,
   className,
   containerRef,
 }: AppWindowProps) {
-  const mouseX = useContext(DockContext);
-  const { openApps, minimizeApp, closeApp, openApp } = useDockStore();
+  // const mouseX = useContext(DockContext);
+  const { openApps, minimizeApp, closeApp } = useDockStore();
   const isOpen = openApps.has(appId);
 
   const windowRef = useRef<HTMLDivElement>(null);
@@ -128,16 +115,10 @@ export function AppWindow({
     setZIndex(bringToFront());
   };
 
+  const dragControls = useDragControls();
+
   return (
     <>
-      <DockIcon
-        key={iconProperties.id}
-        name={iconProperties.name}
-        icon={iconProperties.icon}
-        onOpen={() => openApp(iconProperties.id)}
-        isOpen={openApps.has(iconProperties.id)}
-        mouseX={mouseX}
-      />
       <AnimatePresence mode="wait">
         {isOpen && (
           <motion.div
@@ -191,26 +172,15 @@ export function AppWindow({
             }}
             layoutId={`window-${title.toLowerCase()}`}
             drag
-            whileDrag={{ scale: 0.95 }}
-            dragConstraints={containerRef || false}
+            dragListener={false}
+            dragControls={dragControls}
+            dragConstraints={containerRef}
             dragMomentum={false}
-            dragElastic={0.2}
-            onDragEnd={(_, info) => {
-              windowRef.current?.style.setProperty(
-                "--window-x",
-                `${info.point.x}px`,
-              );
-              windowRef.current?.style.setProperty(
-                "--window-y",
-                `${info.point.y}px`,
-              );
-            }}
           >
             <motion.div
-              className="flex items-center justify-between bg-gray-900 px-4 py-2 top-0 w-full z-10"
+              className="flex items-center justify-between bg-gray-900 px-4 py-2 top-0 w-full z-10 cursor-grab"
               layout
-              dragListener={true}
-              dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
+              onPointerDown={(e) => dragControls.start(e)}
             >
               <div className="group flex gap-2">
                 <button
@@ -229,7 +199,9 @@ export function AppWindow({
               <span className="text-sm text-gray-400">{title}</span>
               <div className="w-16" />
             </motion.div>
-            <motion.div className="p-4">{children}</motion.div>
+            <motion.div className="p-4">
+              {children}
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
