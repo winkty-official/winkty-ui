@@ -23,33 +23,33 @@ export function HeroSection() {
   return (
     <section
       ref={ref}
-      className="max-h-[54rem] flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-background to-background/50"
+      className="relative flex max-h-[54rem] flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-background to-background/50"
     >
-      <div className="absolute inset-0 bg-grid-white/10 bg-grid-pattern" />
+      <div className="bg-grid-white/10 bg-grid-pattern absolute inset-0" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="relative z-10 text-center px-4"
+        className="relative z-10 px-4 text-center"
       >
         <motion.h1
-          className="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/50 mb-6"
+          className="mb-6 bg-gradient-to-r from-primary to-primary/50 bg-clip-text pt-12 text-6xl font-bold text-transparent md:text-8xl"
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <TextRippleEffect>Animate</TextRippleEffect>
+          <TextRippleEffect>Install Configure</TextRippleEffect>
           <br />
-          <TextRippleEffect>Without Limits.</TextRippleEffect>
+          <TextRippleEffect>Use forever.</TextRippleEffect>
         </motion.h1>
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8">
-          A powerful animation library that combines the best of Framer Motion
+        <p className="mx-auto mb-8 max-w-2xl text-xl text-muted-foreground md:text-2xl">
+          A powerful animated react component library that combines the best of Framer Motion
           and GSAP for stunning web experiences.
         </p>
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex flex-wrap justify-center gap-4">
           <Button onClick={gandleGetStartedClick} size="lg" className="group">
             Get Started
-            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
           </Button>
           <Button asChild size="lg" variant="outline">
             <Link href="https://dashboard-template-01.vercel.app/">
@@ -59,7 +59,7 @@ export function HeroSection() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-6xl mx-auto px-4">
+      <div className="mx-auto mt-20 grid max-w-6xl grid-cols-1 gap-8 px-4 md:grid-cols-3">
         {[
           {
             icon: Package,
@@ -93,10 +93,10 @@ export function HeroSection() {
                 delay: index * 0.2,
               },
             }}
-            className="p-6 rounded-xl bg-card border shadow-lg"
+            className="rounded-xl border bg-card p-6 shadow-lg"
           >
-            <feature.icon className="h-12 w-12 mb-4 text-primary" />
-            <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+            <feature.icon className="mb-4 h-12 w-12 text-primary" />
+            <h3 className="mb-2 text-xl font-semibold">{feature.title}</h3>
             <p className="text-muted-foreground">{feature.description}</p>
           </motion.div>
         ))}
