@@ -11,7 +11,7 @@ import SafariIcon from "@/components/icons/app-icons/safari";
 import SlackIcon from "@/components/icons/app-icons/slack";
 import Telegram from "@/components/icons/app-icons/telegram";
 import trash from "@/components/icons/app-icons/trash.png";
-import { DockIcon } from "@/components/library/test/dock/dock-icons";
+import { DockIcon } from "@/components/library/test/dock";
 import Image from "next/image";
 
 function App() {
