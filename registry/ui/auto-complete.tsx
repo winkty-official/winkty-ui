@@ -171,7 +171,7 @@ export default function Autocomplete({
       onChange?.(null as unknown as Option & Option[]);
       setQuery("");
     },
-    [onChange, multiSelect],
+    [onChange],
   );
 
   const handleKeyDown = useCallback(

@@ -8,5 +8,7 @@ export const LIBRARY_COMPONENTS = [
   "chromatic-ripple-effect",
   "highlighted-article",
   "neon-pulse",
-  "particle-field"
+  "particle-field",
+  "app-tray",
+  "app-window",
 ];

@@ -91,6 +91,17 @@ export const ui: Registry = [
     ],
     files: ["ui/particle-field.tsx"],
   },
+  {
+    name: "app-tray",
+    type: "registry:ui",
+    registryDependencies: ["utils"],
+    dependencies: [
+      "framer-motion",
+      "zustand",
+      "lucide-react",
+    ],
+    files: ["ui/app-tray.tsx", "ui/app-window.tsx"],
+  },
   // {
   //   name: "hint",
   //   type: "registry:ui",
