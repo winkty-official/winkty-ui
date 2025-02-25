@@ -24,6 +24,7 @@ const componentGroups: ComponentGroup[] = [
     components: [
       { name: "Auth Form", path: "auth-form" },
       { name: "Payment Form", path: "payment-form" },
+      { name: "App Tray", path: "app-tray" },
     ],
   },
   {
@@ -66,12 +67,12 @@ export default function ComponentsLayout({
   return (
     <div className="flex">
       {/* Sidebar */}
-      <div className=" sticky top-[70px] h-[calc(100vh-70px)] w-64 border-r bg-[--sidebar-background]">
+      <div className="sticky top-[70px] h-[calc(100vh-70px)] w-64 border-r bg-[--sidebar-background]">
         <ScrollArea className="h-full">
-          <div className="p-4 space-y-6">
+          <div className="space-y-6 p-4">
             {filteredGroups.map((group) => (
               <div key={group.name}>
-                <h3 className="font-semibold text-sm text-muted-foreground mb-2">
+                <h3 className="mb-2 text-sm font-semibold text-muted-foreground">
                   {group.name}
                 </h3>
                 <div className="space-y-1">
@@ -80,7 +81,7 @@ export default function ComponentsLayout({
                       key={component.path}
                       href={`/components/${component.path}`}
                       className={cn(
-                        "block w-full text-left px-2 py-1.5 text-sm rounded-md",
+                        "block w-full rounded-md px-2 py-1.5 text-left text-sm",
                         "hover:bg-accent hover:text-accent-foreground",
                         pathname === `/components/${component.path}` &&
                           "bg-accent text-accent-foreground",

@@ -44,6 +44,11 @@ const pages = {
       icon: <CreditCard className="mr-2 h-4 w-4" />,
       path: "/components/payment-form",
     },
+    {
+      name: "App Tray",
+      icon: <LayoutDashboard className="mr-2 h-4 w-4" />,
+      path: "/components/app-tray",
+    },
   ],
   Basic: [
     {
@@ -145,26 +150,22 @@ export function PageSearch() {
 
   return (
     <>
-       <button
-      onClick={() => setIsOpen(true)}
-      className="inline-flex items-center gap-2 px-4 py-2.5 text-sm 
-        bg-background text-foreground hover:bg-accent hover:text-accent-foreground
-        border border-input rounded-lg shadow-sm transition-colors duration-200
-        focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 w-[220px]"
-    >
-      <Search className="h-4 w-4" />
-      <span>Search</span>
-      <kbd className="ml-auto inline-flex items-center gap-1 rounded border border-input 
-        bg-muted px-2 font-mono text-xs text-muted-foreground">
-        ⌘K
-      </kbd>
-    </button>
+      <button
+        onClick={() => setIsOpen(true)}
+        className="inline-flex w-[220px] items-center gap-2 rounded-lg border border-input bg-background px-4 py-2.5 text-sm text-foreground shadow-sm transition-colors duration-200 hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+      >
+        <Search className="h-4 w-4" />
+        <span>Search</span>
+        <kbd className="ml-auto inline-flex items-center gap-1 rounded border border-input bg-muted px-2 font-mono text-xs text-muted-foreground">
+          ⌘K
+        </kbd>
+      </button>
       {isOpen && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-[999999]"></div>
+          <div className="fixed inset-0 z-[999999] bg-black/50"></div>
           <Command
             ref={commandRef}
-            className="fixed h-fit top-1/4 left-1/2 transform -translate-x-1/2 rounded-lg border shadow-md w-full max-w-lg z-[999999] "
+            className="fixed left-1/2 top-1/4 z-[999999] h-fit w-full max-w-lg -translate-x-1/2 transform rounded-lg border shadow-md"
           >
             <CommandInput
               ref={commandInputRef}
