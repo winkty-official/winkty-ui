@@ -41,5 +41,6 @@ export const FileTreeMetaData: Metadata = {
     description:
       "A highly customizable file tree component for displaying hierarchical file and folder structures. Supports expandable nodes, selection modes, keyboard navigation, and dynamic content loading.",
     images: [`${process.env.BASE_URI}/components-img/file-tree-preview.png`],
+    creator: "@winkty-official",
   },
 };

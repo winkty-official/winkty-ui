@@ -1,7 +1,12 @@
 {
-  "name": "nexus-ui",
+  "name": "winkty-ui",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "winkty-official",
+    "email": "winkty.official@gmail.com",
+    "url": "https://ui.winkty.com"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",

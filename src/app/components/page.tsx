@@ -28,7 +28,7 @@ export default function ComponentsPage() {
           </Button>
 
           <Button asChild size="lg" variant="outline">
-            <Link href="https://github.com/rabin97/nexus-ui/">
+            <Link href="https://github.com/winkty-official/winkty-ui">
               <Github className="mr-2" />
               View on GitHub
             </Link>

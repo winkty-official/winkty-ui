@@ -1,6 +1,8 @@
 # Winkty UI
 
-A modern, accessible, and customizable React component library built with Next.js, Tailwind CSS, and Framer Motion.
+Created by Rabin and Avinash, Winkty UI is a cutting-edge React component library that combines enterprise-grade functionality with delightful user experiences. Built with modern web standards and a focus on developer experience, this library offers 150+ meticulously crafted components featuring fluid animations, pixel-perfect designs, and rock-solid accessibility. From basic form elements to advanced payment integrations, Winkty UI empowers developers to build beautiful, production-ready applications in record time.
+
+> "Bridging the gap between stunning design and technical excellence" - Rabin & Avinash
 
 ## Overview
 

@@ -1,6 +1,6 @@
 # Project Overview
 
-NexusIX is an enterprise-grade component library built on modern web technologies, combining the power of framer-motion 12+ + Popmotion with shadcn/ui with Next.js 15's advanced capabilities. Designed for developers who demand both aesthetic polish and technical excellence, this library provides:
+winktyIX is an enterprise-grade component library built on modern web technologies, combining the power of framer-motion 12+ + Popmotion with shadcn/ui with Next.js 15's advanced capabilities. Designed for developers who demand both aesthetic polish and technical excellence, this library provides:
 
 Production-Ready Components: 150+ accessible UI elements built with Radix UI primitives
 
