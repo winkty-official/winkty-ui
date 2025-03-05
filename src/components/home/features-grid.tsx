@@ -1,7 +1,7 @@
 "use client";
 
 import { Zap, Shield, Sparkles, Gauge, Palette, Code } from "lucide-react";
-import { FloatingFeature } from "./floating-feature";
+import { FloatingFeature } from "../ui/floating-feature";
 
 export function FeaturesGrid() {
   const features = [
@@ -59,7 +59,19 @@ export function FeaturesGrid() {
               key={feature.title}
               {...feature}
               delay={index * 0.1}
-            />
+            >
+              <div className="rounded-lg border bg-background p-2 shadow-sm">
+              <feature.icon
+                className="h-6 w-6 text-primary"
+                aria-hidden="true"
+                role="img"
+              />
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold">{feature?.title}</h3>
+              <p className="mt-2 text-muted-foreground">{feature?.description}</p>
+            </div>
+            </FloatingFeature>
           ))}
         </div>
       </div>

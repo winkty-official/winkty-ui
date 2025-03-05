@@ -157,7 +157,7 @@ export function PageSearch() {
         <Search className="h-4 w-4" />
         <span>Search</span>
         <kbd className="ml-auto inline-flex items-center gap-1 rounded border border-input bg-muted px-2 font-mono text-xs text-muted-foreground">
-          ⌘K
+         <span className="text-sm ">⌘</span>  <span className="text-xs">K</span>
         </kbd>
       </button>
       {isOpen && (
