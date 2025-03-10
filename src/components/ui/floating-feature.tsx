@@ -74,9 +74,6 @@ export const FloatingFeature = React.forwardRef<
 >(
   (
     {
-      title = "Default Title",
-      description = "Default Description",
-      icon: Icon,
       className,
       gradient = "from-primary/20 via-primary/10 to-transparent",
       delay = 0,
@@ -135,7 +132,7 @@ export const FloatingFeature = React.forwardRef<
         transition={{ duration: 0.6, delay }}
         style={{ perspective: 1000 }}
         className={cn("w-full max-w-sm", className)}
-        aria-label={ariaLabel || `${title} feature card`}
+        aria-label={ariaLabel || `${Date.now()} feature card`}
         {...props}
       >
         <motion.div
@@ -164,7 +161,6 @@ export const FloatingFeature = React.forwardRef<
               },
             }
           }
-          role="article"
           aria-disabled={disabled}
         >
           <motion.div

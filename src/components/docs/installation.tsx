@@ -22,7 +22,7 @@ export function Installation({ cli, manual }: Readonly<InstallationProps>) {
 
     const data = {
       ...values,
-      componentName: pathname.split("/").at(-1),
+      componentName: pathname && pathname.split("/").at(-1),
     };
 
     await fetch("/api/email", {
