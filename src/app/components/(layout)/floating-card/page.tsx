@@ -1,10 +1,10 @@
-import FloatingCardDocs from '@/components/library/floating-card/docs'
+import TiltCardDocs from '@/components/library/tilt-card/docs'
 import React from 'react'
 
 const page = () => {
     return (
         <div>
-            <FloatingCardDocs />
+            <TiltCardDocs />
         </div>
     )
 }

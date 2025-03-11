@@ -102,6 +102,16 @@ export const ui: Registry = [
     ],
     files: ["ui/app-tray.tsx", "ui/app-window.tsx"],
   },
+  {
+    name: "tilt-card",
+    type: "registry:ui",
+    registryDependencies: ["utils"],
+    dependencies: [
+      "framer-motion",
+      "react-intersection-observer",
+    ],
+    files: ["ui/tilt-card.tsx"],
+  },
   // {
   //   name: "hint",
   //   type: "registry:ui",

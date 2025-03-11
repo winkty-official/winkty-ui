@@ -93,7 +93,7 @@ const FileUploadPreview = memo(
         setPreviewUrls(defaultImage ? [defaultImage] : []);
         setFiles([]);
         return () => cleanupPreviewUrls(previewUrls);
-      }, [defaultImage, cleanupPreviewUrls]);
+      }, [defaultImage, cleanupPreviewUrls, previewUrls]);
 
       const reset = useCallback(() => {
         console.log("reset called");
@@ -105,7 +105,7 @@ const FileUploadPreview = memo(
         setError(null);
         setActiveTab("file");
         onFileChange({ files: null, url: null });
-      }, [previewUrls, onFileChange, disabled, defaultImage]);
+      }, [cleanupPreviewUrls, previewUrls, defaultImage, onFileChange]);
 
       useImperativeHandle(ref, () => ({
         reset,
@@ -219,7 +219,7 @@ const FileUploadPreview = memo(
             return newFiles;
           });
         },
-        [onFileChange]
+        []
       );
 
       // Effect to trigger onFileChange after files change

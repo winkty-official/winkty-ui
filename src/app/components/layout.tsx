@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -11,6 +12,7 @@ interface ComponentGroup {
   components: {
     name: string;
     path: string;
+    isNew?: boolean;
   }[];
 }
 
@@ -25,7 +27,7 @@ const componentGroups: ComponentGroup[] = [
       { name: "Auth Form", path: "auth-form" },
       { name: "Payment Form", path: "payment-form" },
       { name: "App Tray", path: "app-tray" },
-      { name: "Floating Card", path: "floating-card" },
+      { name: "Floating Card", path: "floating-card", isNew: true },
     ],
   },
   {
@@ -35,7 +37,6 @@ const componentGroups: ComponentGroup[] = [
       { name: "Input", path: "input" },
       { name: "Radio", path: "radio" },
       { name: "File Tree", path: "file-tree" },
-
     ],
   },
   {
@@ -83,13 +84,16 @@ export default function ComponentsLayout({
                       key={component.path}
                       href={`/components/${component.path}`}
                       className={cn(
-                        "block w-full rounded-md px-2 py-1.5 text-left text-sm",
+                        "relative block w-full rounded-md px-2 py-1.5 text-left text-sm",
                         "hover:bg-accent hover:text-accent-foreground",
                         pathname === `/components/${component.path}` &&
-                        "bg-accent text-accent-foreground",
+                          "bg-accent text-accent-foreground",
                       )}
                     >
                       {component.name}
+                      {component?.isNew ? (
+                        <Badge className="absolute right-2 top-1/2 -translate-y-1/2 text-white">New</Badge>
+                      ) : null}
                     </Link>
                   ))}
                 </div>

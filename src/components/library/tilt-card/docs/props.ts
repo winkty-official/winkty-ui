@@ -1,23 +1,5 @@
 export const propDefinitions = [
   {
-    prop: "title",
-    type: "string",
-    default: "undefined",
-    description: "The title of the feature card",
-  },
-  {
-    prop: "description",
-    type: "string",
-    default: "undefined",
-    description: "A brief description of the feature",
-  },
-  {
-    prop: "icon",
-    type: "React.ElementType",
-    default: "undefined",
-    description: "Icon component to display",
-  },
-  {
     prop: "className",
     type: "string",
     default: "undefined",

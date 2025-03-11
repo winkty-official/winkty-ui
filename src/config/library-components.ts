@@ -11,4 +11,5 @@ export const LIBRARY_COMPONENTS = [
   "particle-field",
   "app-tray",
   "app-window",
+  "tilt-card"
 ];

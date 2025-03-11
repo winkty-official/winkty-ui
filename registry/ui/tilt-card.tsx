@@ -6,13 +6,7 @@ import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
 
 // Define prop types
-interface FloatingCardProps {
-  /** The title of the feature */
-  title?: string;
-  /** A brief description of the feature */
-  description?: string;
-  /** Icon component to display (e.g., from lucide-react) */
-  icon?: React.ElementType;
+interface TiltCardProps {
   /** Additional classes to apply to the outer container */
   className?: string;
   /** Gradient background class (Tailwind format) */
@@ -36,10 +30,10 @@ interface FloatingCardProps {
  * @example
  * Basic usage with custom content:
  * ```tsx
- * import { FloatingCard } from "@/components/ui/floating-feature";
+ * import { TiltCard } from "@/components/ui/floating-feature";
  * import { Zap } from "lucide-react";
  *
- * <FloatingCard
+ * <TiltCard
  *   title="Fast Performance"
  *   gradient="from-blue-500/20 to-transparent"
  * >
@@ -52,25 +46,25 @@ interface FloatingCardProps {
  *       </p>
  *     </div>
  *   </div>
- * </FloatingCard>
+ * </TiltCard>
  * ```
  *
  * @example
  * Usage with multiple elements:
  * ```tsx
- * <FloatingCard delay={0.2}>
+ * <TiltCard delay={0.2}>
  *   <div className="space-y-4">
  *     <img src="/feature-icon.png" alt="Feature" className="h-8 w-8" />
  *     <h3 className="text-xl font-bold">Custom Feature</h3>
  *     <p>Some description here</p>
  *     <button className="btn">Learn More</button>
  *   </div>
- * </FloatingCard>
+ * </TiltCard>
  * ```
  */
-export const FloatingCard = React.forwardRef<
+const TiltCard = React.forwardRef<
   HTMLDivElement,
-  FloatingCardProps
+  TiltCardProps
 >(
   (
     {
@@ -174,6 +168,6 @@ export const FloatingCard = React.forwardRef<
   }
 );
 
-FloatingCard.displayName = "FloatingCard";
+TiltCard.displayName = "TiltCard";
 
-export default FloatingCard;
+export default TiltCard;

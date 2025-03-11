@@ -1,6 +1,6 @@
 "use client";
 
-import FloatingCard from "@/components/ui/floating-card";
+import FloatingCard from "@/components/ui/tilt-card";
 import { Zap, Shield, Sparkles, Gauge, Palette, Code } from "lucide-react";
 
 export function FeaturesGrid() {

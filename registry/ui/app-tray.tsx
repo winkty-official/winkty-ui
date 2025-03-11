@@ -181,9 +181,15 @@ const AppTrayIcon = forwardRef<HTMLDivElement, APPTRAYIconProps>(
     const resolvedRef = (ref as RefObject<HTMLDivElement>) || iconRef;
     const { isLoading, handleClick } = useAPPTRAYAnimation(() => openApp(id));
     const mouseX = useContext(APPTRAYContext);
-    const { width, height, widthIcon, heightIcon } = mouseX
-      ? useAPPTRAYHover(mouseX, resolvedRef)
-      : { width: 0, height: 0, widthIcon: 0, heightIcon: 0 };
+
+    if (!mouseX) {
+      throw new Error(
+        "AppTrayIcon must be rendered within an AppTray component.",
+      );
+    }
+    
+    const { width, height, widthIcon, heightIcon } = useAPPTRAYHover( mouseX, resolvedRef,);
+
     const [hovered, setHovered] = useState(false);
 
     return (
