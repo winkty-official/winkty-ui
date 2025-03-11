@@ -1,7 +1,7 @@
 "use client";
 
 import { Zap, Shield, Sparkles, Gauge, Palette, Code } from "lucide-react";
-import { FloatingFeature } from "../ui/floating-feature";
+import { FloatingCard } from "../ui/floating-card";
 
 export function FeaturesGrid() {
   const features = [
@@ -55,23 +55,23 @@ export function FeaturesGrid() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <FloatingFeature
+            <FloatingCard
               key={feature.title}
               {...feature}
               delay={index * 0.1}
             >
               <div className="rounded-lg border bg-background p-2 shadow-sm">
-              <feature.icon
-                className="h-6 w-6 text-primary"
-                aria-hidden="true"
-                role="img"
-              />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold">{feature?.title}</h3>
-              <p className="mt-2 text-muted-foreground">{feature?.description}</p>
-            </div>
-            </FloatingFeature>
+                <feature.icon
+                  className="h-6 w-6 text-primary"
+                  aria-hidden="true"
+                  role="img"
+                />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold">{feature?.title}</h3>
+                <p className="mt-2 text-muted-foreground">{feature?.description}</p>
+              </div>
+            </FloatingCard>
           ))}
         </div>
       </div>

@@ -6,7 +6,7 @@ import { useInView } from "react-intersection-observer";
 import { cn } from "@/lib/utils";
 
 // Define prop types
-interface FloatingFeatureProps {
+interface FloatingCardProps {
   /** The title of the feature */
   title?: string;
   /** A brief description of the feature */
@@ -28,7 +28,7 @@ interface FloatingFeatureProps {
 }
 
 /**
- * A floating feature card component with 3D hover effects and smooth animations.
+ * A floating  card component with 3D hover effects and smooth animations.
  * This component provides a flexible container for custom content while maintaining
  * an engaging floating effect and accessibility features.
  *
@@ -36,10 +36,10 @@ interface FloatingFeatureProps {
  * @example
  * Basic usage with custom content:
  * ```tsx
- * import { FloatingFeature } from "@/components/ui/floating-feature";
+ * import { FloatingCard } from "@/components/ui/floating-feature";
  * import { Zap } from "lucide-react";
  *
- * <FloatingFeature
+ * <FloatingCard
  *   title="Fast Performance"
  *   gradient="from-blue-500/20 to-transparent"
  * >
@@ -52,25 +52,25 @@ interface FloatingFeatureProps {
  *       </p>
  *     </div>
  *   </div>
- * </FloatingFeature>
+ * </FloatingCard>
  * ```
  *
  * @example
  * Usage with multiple elements:
  * ```tsx
- * <FloatingFeature delay={0.2}>
+ * <FloatingCard delay={0.2}>
  *   <div className="space-y-4">
  *     <img src="/feature-icon.png" alt="Feature" className="h-8 w-8" />
  *     <h3 className="text-xl font-bold">Custom Feature</h3>
  *     <p>Some description here</p>
  *     <button className="btn">Learn More</button>
  *   </div>
- * </FloatingFeature>
+ * </FloatingCard>
  * ```
  */
-export const FloatingFeature = React.forwardRef<
+export const FloatingCard = React.forwardRef<
   HTMLDivElement,
-  FloatingFeatureProps
+  FloatingCardProps
 >(
   (
     {
@@ -132,7 +132,7 @@ export const FloatingFeature = React.forwardRef<
         transition={{ duration: 0.6, delay }}
         style={{ perspective: 1000 }}
         className={cn("w-full max-w-sm", className)}
-        aria-label={ariaLabel || `${Date.now()} feature card`}
+        aria-label={ariaLabel ?? `${Date.now()} feature card`}
         {...props}
       >
         <motion.div
@@ -152,7 +152,7 @@ export const FloatingFeature = React.forwardRef<
           onMouseLeave={handleMouseLeave}
           animate={
             !disabled && {
-              y: [0, -12, 0],
+              // y: [0, -12, 0],
               transition: {
                 duration: 4,
                 repeat: Infinity,
@@ -164,8 +164,7 @@ export const FloatingFeature = React.forwardRef<
           aria-disabled={disabled}
         >
           <motion.div
-            className="relative z-10 flex flex-col items-start gap-4"
-            style={{ transform: "translateZ(50px)" }}
+            className="relative z-10 flex flex-col items-start gap-4 "
           >
             {children}
           </motion.div>
@@ -175,6 +174,6 @@ export const FloatingFeature = React.forwardRef<
   }
 );
 
-FloatingFeature.displayName = "FloatingFeature";
+FloatingCard.displayName = "FloatingCard";
 
-export default FloatingFeature;
+export default FloatingCard;

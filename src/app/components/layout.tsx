@@ -25,6 +25,7 @@ const componentGroups: ComponentGroup[] = [
       { name: "Auth Form", path: "auth-form" },
       { name: "Payment Form", path: "payment-form" },
       { name: "App Tray", path: "app-tray" },
+      { name: "Floating Card", path: "floating-card" },
     ],
   },
   {
@@ -34,6 +35,7 @@ const componentGroups: ComponentGroup[] = [
       { name: "Input", path: "input" },
       { name: "Radio", path: "radio" },
       { name: "File Tree", path: "file-tree" },
+
     ],
   },
   {
@@ -84,7 +86,7 @@ export default function ComponentsLayout({
                         "block w-full rounded-md px-2 py-1.5 text-left text-sm",
                         "hover:bg-accent hover:text-accent-foreground",
                         pathname === `/components/${component.path}` &&
-                          "bg-accent text-accent-foreground",
+                        "bg-accent text-accent-foreground",
                       )}
                     >
                       {component.name}
