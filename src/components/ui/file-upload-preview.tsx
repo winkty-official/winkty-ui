@@ -19,11 +19,11 @@ interface AriaProps {
   "aria-describedby"?: string;
 }
 
-export interface ImageUploadPremiumHandle {
+export interface FileUploadPreviewHandle {
   reset: () => void;
 }
 
-interface ImageUploadPremiumProps {
+interface FileUploadPreviewProps {
   label?: string;
   defaultImage?: string | null;
   onFileChange: (data: { files: File[] | null; url: string | null }) => void;
@@ -54,8 +54,8 @@ const dragBorderVariants = {
   },
 };
 
-const ImageUploadPremium = memo(
-  forwardRef<ImageUploadPremiumHandle, ImageUploadPremiumProps>(
+const FileUploadPreview = memo(
+  forwardRef<FileUploadPreviewHandle, FileUploadPreviewProps>(
     (
       {
         label,
@@ -501,6 +501,6 @@ const ImageUploadPremium = memo(
   )
 );
 
-ImageUploadPremium.displayName = "ImageUploadPremium";
+FileUploadPreview.displayName = "FileUploadPreview";
 
-export default ImageUploadPremium;
+export default FileUploadPreview;
