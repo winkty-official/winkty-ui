@@ -93,7 +93,8 @@ const FileUploadPreview = memo(
         setPreviewUrls(defaultImage ? [defaultImage] : []);
         setFiles([]);
         return () => cleanupPreviewUrls(previewUrls);
-      }, [defaultImage, cleanupPreviewUrls, previewUrls]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [defaultImage, cleanupPreviewUrls]);
 
       const reset = useCallback(() => {
         console.log("reset called");
@@ -111,24 +112,45 @@ const FileUploadPreview = memo(
         reset,
       }));
 
+      const isDuplicateFile = useCallback(
+        (newFile: File, existingFiles: File[]) => {
+          return existingFiles.some(
+            (file) =>
+              file.name === newFile.name &&
+              file.size === newFile.size &&
+              file.lastModified === newFile.lastModified
+          );
+        },
+        []
+      );
+
       const handleFileChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
           const newFiles = event.target.files ? Array.from(event.target.files) : [];
           if (!newFiles.length || disabled) return;
 
-          const newPreviewUrls = newFiles.map((file) => URL.createObjectURL(file));
-          setPreviewUrls((prev) => (multiple ? [...prev, ...newPreviewUrls] : [newPreviewUrls[0]]));
-          setFiles((prev) => (multiple ? [...prev, ...newFiles] : [newFiles[0]]));
+          // Filter out duplicates
+          const uniqueNewFiles = newFiles.filter((file) => !isDuplicateFile(file, files));
+          if (uniqueNewFiles.length === 0) {
+            setError("All selected files are already added.");
+            return;
+          }
+
+          const newPreviewUrls = uniqueNewFiles.map((file) => URL.createObjectURL(file));
+          setPreviewUrls((prev) =>
+            multiple ? [...prev, ...newPreviewUrls] : [newPreviewUrls[0]]
+          );
+          setFiles((prev) => (multiple ? [...prev, ...uniqueNewFiles] : [uniqueNewFiles[0]]));
           setError(null);
           setActiveTab("file");
 
           const returnData = {
-            files: returnFormat === "url" ? null : newFiles,
+            files: returnFormat === "url" ? null : uniqueNewFiles,
             url: returnFormat === "file" ? null : multiple ? null : newPreviewUrls[0],
           };
           onFileChange(returnData);
         },
-        [disabled, onFileChange, returnFormat, multiple]
+        [disabled, onFileChange, returnFormat, multiple, files, isDuplicateFile]
       );
 
       const handleUrlSubmit = useCallback(async () => {
@@ -212,23 +234,27 @@ const FileUploadPreview = memo(
           setFiles((prev) => {
             const newFiles = [...prev];
             newFiles.splice(index, 1);
-            // onFileChange({
-            //   files: newFiles.length > 0 ? newFiles : null,
-            //   url: null,
-            // });
             return newFiles;
           });
+
+          if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+          }
+
+          onFileChange({
+            files: files.length > 1 ? files.slice(0, index).concat(files.slice(index + 1)) : null,
+            url: null,
+          });
         },
-        []
+        [files, onFileChange]
       );
 
-      // Effect to trigger onFileChange after files change
       useEffect(() => {
         onFileChange({
           files: files.length > 0 ? files : null,
           url: null,
         });
-      }, [files, onFileChange]);
+      }, [files, onFileChange])
 
       const isImageFile = (file: File) => {
         return file.type.startsWith("image/");
@@ -241,17 +267,23 @@ const FileUploadPreview = memo(
         disabled: disabled || activeTab !== "file",
         multiple,
         onDropAccepted: (acceptedFiles) => {
-          const newFiles = acceptedFiles;
-          if (!newFiles.length) return;
+          // Filter out duplicates
+          const uniqueNewFiles = acceptedFiles.filter((file) => !isDuplicateFile(file, files));
+          if (uniqueNewFiles.length === 0) {
+            setError("All dropped files are already added.");
+            return;
+          }
 
-          const newPreviewUrls = newFiles.map((file) => URL.createObjectURL(file));
-          setPreviewUrls((prev) => (multiple ? [...prev, ...newPreviewUrls] : [newPreviewUrls[0]]));
-          setFiles((prev) => (multiple ? [...prev, ...newFiles] : [newFiles[0]]));
+          const newPreviewUrls = uniqueNewFiles.map((file) => URL.createObjectURL(file));
+          setPreviewUrls((prev) =>
+            multiple ? [...prev, ...newPreviewUrls] : [newPreviewUrls[0]]
+          );
+          setFiles((prev) => (multiple ? [...prev, ...uniqueNewFiles] : [uniqueNewFiles[0]]));
           setError(null);
           setActiveTab("file");
 
           const returnData = {
-            files: returnFormat === "url" ? null : newFiles,
+            files: returnFormat === "url" ? null : uniqueNewFiles,
             url: returnFormat === "file" ? null : multiple ? null : newPreviewUrls[0],
           };
           onFileChange(returnData);
@@ -410,6 +442,7 @@ const FileUploadPreview = memo(
                               )}
                               {!disabled && (
                                 <Button
+                                  type="button"
                                   variant="ghost"
                                   size="icon"
                                   className="absolute top-1 right-1 bg-black/50 text-white hover:bg-black/70"
