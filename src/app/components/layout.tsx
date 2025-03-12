@@ -27,7 +27,7 @@ const componentGroups: ComponentGroup[] = [
       { name: "Auth Form", path: "auth-form" },
       { name: "Payment Form", path: "payment-form" },
       { name: "App Tray", path: "app-tray" },
-      { name: "Floating Card", path: "floating-card", isNew: true },
+      { name: "Tilt Card", path: "tilt-card", isNew: true },
     ],
   },
   {

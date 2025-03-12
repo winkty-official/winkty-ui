@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
-export const FloatingCardMetaData: Metadata = {
-  title: "Floating Card - UI Components",
+export const TiltCardMetaData: Metadata = {
+  title: "Tilt Card - UI Components",
   description:
-    "A floating card component with 3D hover effects, smooth spring animations, and flexible content structure.",
+    "A Tilt Card component with 3D hover effects, smooth spring animations, and flexible content structure.",
 };

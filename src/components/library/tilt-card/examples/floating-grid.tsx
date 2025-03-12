@@ -1,6 +1,6 @@
 "use client";
 
-import FloatingCard from "@/components/ui/tilt-card";
+import TiltCard from "@/components/ui/tilt-card";
 import { Zap, Shield, Sparkles, Gauge, Palette, Code } from "lucide-react";
 
 export function FeaturesGrid() {
@@ -55,7 +55,7 @@ export function FeaturesGrid() {
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {features.map((feature, index) => (
-                        <FloatingCard
+                        <TiltCard
                             key={feature.title}
                             {...feature}
                             delay={index * 0.1}
@@ -71,7 +71,7 @@ export function FeaturesGrid() {
                                 <h3 className="text-xl font-semibold">{feature?.title}</h3>
                                 <p className="mt-2 text-muted-foreground">{feature?.description}</p>
                             </div>
-                        </FloatingCard>
+                        </TiltCard>
                     ))}
                 </div>
             </div>
