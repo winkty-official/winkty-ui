@@ -19,12 +19,7 @@ interface CustomOption extends Option {
 }
 
 const customFormSchema = z.object({
-  programming_language: z
-    .object({
-      value: z.string(),
-      label: z.string(),
-      icon: z.string(),
-    })
+  programming_language: z.array(z.string())
     .nullable(),
 });
 
@@ -71,6 +66,7 @@ export function CustomAutocompleteExample() {
                   onChange={field.onChange}
                   placeholder="Select a programming language"
                   renderOption={renderOption as (option: Option) => ReactNode}
+                  multiSelect={true}
                 />
               </FormControl>
               <FormDescription>

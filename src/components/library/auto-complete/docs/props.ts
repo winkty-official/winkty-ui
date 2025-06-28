@@ -13,13 +13,13 @@ export const asyncAutocompleteProps: PropsDefinition[] = [
   },
   {
     prop: "value",
-    type: "Option | Option[] | null",
-    description: "Currently selected option(s)",
+    type: "string | string[] | null",
+    description: "Currently selected option(s) value(s)",
   },
   {
     prop: "onChange",
-    type: "(option: Option | Option[] | null) => void",
-    description: "Callback fired when selection changes",
+    type: "(option: string | string[] | null) => void",
+    description: "Callback fired when selection changes, with arguments of the selected option(s)",
   },
   {
     prop: "placeholder",

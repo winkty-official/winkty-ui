@@ -1,9 +1,9 @@
 import { searchCountries } from "@/components/library/auto-complete/data/api";
-import Autocomplete, { Option } from "@/components/ui/auto-complete";
+import Autocomplete from "@/components/ui/auto-complete";
 import { useState } from "react";
 
 export function AsyncAutocompleteExample() {
-  const [selectedCountry, setSelectedCountry] = useState<Option | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   return (
     <div className="space-y-4">
@@ -12,11 +12,11 @@ export function AsyncAutocompleteExample() {
         loadOptions={searchCountries}
         value={selectedCountry}
         onChange={
-          setSelectedCountry as (value: Option | Option[] | null) => void
+          setSelectedCountry as (value: string | string[] | null) => void
         }
         placeholder="Search for a country..."
       />
-      <p>Selected country: {selectedCountry?.label ?? "None"}</p>
+      <p>Selected country: {selectedCountry ?? "None"}</p>
     </div>
   );
 }
