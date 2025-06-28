@@ -20,12 +20,7 @@ const formSchema = z.object({
       label: z.string(),
     })
     .nullable(),
-  multipleCountries: z.array(
-    z.object({
-      value: z.string(),
-      label: z.string(),
-    })
-  ),
+  multipleCountries: z.array(z.string()),
 });
 
 export function AutoCompleteFormExample() {

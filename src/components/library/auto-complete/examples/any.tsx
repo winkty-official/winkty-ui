@@ -1,10 +1,10 @@
 "use client";
-import Autocomplete, { Option } from "@/components/ui/auto-complete";
+import Autocomplete from "@/components/ui/auto-complete";
 import { useState } from "react";
 import predefinedSkills from "../data/allSkills.json";
 
 export function SkillsInputExample() {
-  const [skills, setSkills] = useState<Option[]>([]);
+  const [skills, setSkills] = useState<string[]>([]);
 
   return (
     <div className="space-y-4">
@@ -13,14 +13,14 @@ export function SkillsInputExample() {
         multiSelect
         options={predefinedSkills}
         value={skills}
-        onChange={setSkills as (value: Option | Option[] | null) => void}
+        onChange={setSkills as (value: string | string[] | null) => void}
         placeholder="Select or type your skills..."
         any={true} // Allow custom skill input
       />
       <p>
         Selected skills:{" "}
         {skills.length > 0
-          ? skills.map((skill) => skill.label).join(", ")
+          ? skills.map((skill) => skill).join(", ")
           : "None"}
       </p>
     </div>
