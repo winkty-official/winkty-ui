@@ -1,8 +1,11 @@
 "use client";
 
-import ImageUpload from "@/components/library/file-upload-preview/exmples/simple-file-upload-and-preview";
+import SimpleFileUpload from "@/components/library/file-upload-preview/exmples/simple-file-upload-and-preview";
+import ImageUpload from "@/components/library/file-upload-preview/exmples/simple-image-uplaod-crop-preview";
 import { Button } from "@/components/ui/button";
-import FileUploadPreview, { FileUploadPreviewHandle } from "@/components/ui/file-upload-preview";
+import FileUploadPreview, {
+  FileUploadPreviewHandle,
+} from "@/components/ui/file-upload-preview";
 import {
   Form,
   FormControl,
@@ -128,7 +131,7 @@ const TestImageUploadPremiumPage = () => {
                       onFileChange={handleFileChange}
                       containerClassName="w-full"
                       disabled={form.formState.isSubmitting}
-                      returnFormat="url"
+                      // returnFormat="url"
                       multiple={false}
                       acceptedFileTypes="image/*,application/pdf,application/vnd.ms-excel" // Allow images, PDFs, and XLS
                     />
@@ -146,15 +149,29 @@ const TestImageUploadPremiumPage = () => {
                     Profile Files
                   </FormLabel>
                   <FormControl>
-                    {/* <FileUploadPreview
+                    <SimpleFileUpload
                       ref={imageUploadRef}
                       onFileChange={handleFileChange}
                       containerClassName="w-full"
                       disabled={form.formState.isSubmitting}
-                      returnFormat="url"
+                      // returnFormat="url"
                       multiple={true}
-                      acceptedFileTypes="image/*,application/pdf,application/vnd.ms-excel" // Allow images, PDFs, and XLS
-                    /> */}
+                      // acceptedFileTypes="image/*,application/pdf,application/vnd.ms-excel" // Allow images, PDFs, and XLS
+                    />
+                  </FormControl>
+                  <FormMessage className="text-destructive" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="images"
+              render={() => (
+                <FormItem>
+                  <FormLabel className="text-sm font-medium text-foreground">
+                    Profile Files
+                  </FormLabel>
+                  <FormControl>
                     <ImageUpload
                       ref={imageUploadRef}
                       onFileChange={handleFileChange}

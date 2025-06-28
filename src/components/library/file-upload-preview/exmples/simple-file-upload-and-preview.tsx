@@ -41,7 +41,7 @@ const dragBorderVariants = {
   },
 };
 
-const ImageUpload = memo(
+const SimpleFileUpload = memo(
   forwardRef<FileUploadPreviewHandle, ImageUploadProps>(
     (
       {
@@ -301,6 +301,6 @@ const ImageUpload = memo(
   )
 );
 
-ImageUpload.displayName = "ImageUpload";
+SimpleFileUpload.displayName = "SimpleFileUpload";
 
-export default ImageUpload;
+export default SimpleFileUpload;
