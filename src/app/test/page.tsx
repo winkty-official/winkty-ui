@@ -1,7 +1,6 @@
 "use client";
 
 import SimpleFileUpload from "@/components/library/file-upload-preview/exmples/simple-file-upload-and-preview";
-import ImageUpload from "@/components/library/file-upload-preview/exmples/simple-image-uplaod-crop-preview";
 import { Button } from "@/components/ui/button";
 import FileUploadPreview, {
   FileUploadPreviewHandle,
@@ -40,32 +39,42 @@ const TestImageUploadPremiumPage = () => {
 
   const imageUploadRef = useRef<FileUploadPreviewHandle>(null);
 
-  const handleSubmit = useCallback<SubmitHandler<FormData>>(async (data) => {
-    console.log("Form submitted:", {
-      files: data.images.files
-        ? data.images.files.map((file) => file.name)
-        : "No files selected",
-      url: data.images.url || "No URL provided",
-    });
+  const handleReset = useCallback(() => {
+    if (imageUploadRef.current) {
+      imageUploadRef.current.reset(); // Reset the component
+    }
+    form.reset({ images: { files: null, url: null } }); // Reset form state
+  }, [form]);
 
-    // Example: Send to backend
-    const formData = new FormData();
-    if (data.images.files) {
-      data.images.files.forEach((file, index) => {
-        formData.append(`files[${index}]`, file);
+  const handleSubmit = useCallback<SubmitHandler<FormData>>(
+    async (data) => {
+      console.log("Form submitted:", {
+        files: data.images.files
+          ? data.images.files.map((file) => file.name)
+          : "No files selected",
+        url: data.images.url || "No URL provided",
       });
-    }
-    if (data.images.url) formData.append("url", data.images.url);
 
-    try {
-      // Simulated API call
-      // await fetch("/api/upload", { method: "POST", body: formData });
-      console.log("Upload successful");
-      handleReset(); // Reset after successful submission
-    } catch (error) {
-      console.error("Upload failed:", error);
-    }
-  }, []);
+      // Example: Send to backend
+      const formData = new FormData();
+      if (data.images.files) {
+        data.images.files.forEach((file, index) => {
+          formData.append(`files[${index}]`, file);
+        });
+      }
+      if (data.images.url) formData.append("url", data.images.url);
+
+      try {
+        // Simulated API call
+        // await fetch("/api/upload", { method: "POST", body: formData });
+        console.log("Upload successful");
+        handleReset(); // Reset after successful submission
+      } catch (error) {
+        console.error("Upload failed:", error);
+      }
+    },
+    [handleReset],
+  );
 
   const handleFileChange = useCallback(
     (data: { files: File[] | null; url: string | null }) => {
@@ -91,13 +100,6 @@ const TestImageUploadPremiumPage = () => {
     },
     [form],
   );
-
-  const handleReset = useCallback(() => {
-    if (imageUploadRef.current) {
-      imageUploadRef.current.reset(); // Reset the component
-    }
-    form.reset({ images: { files: null, url: null } }); // Reset form state
-  }, [form]);
 
   return (
     <div
@@ -163,7 +165,7 @@ const TestImageUploadPremiumPage = () => {
                 </FormItem>
               )}
             />
-            <FormField
+            {/*    <FormField
               control={form.control}
               name="images"
               render={() => (
@@ -185,7 +187,7 @@ const TestImageUploadPremiumPage = () => {
                   <FormMessage className="text-destructive" />
                 </FormItem>
               )}
-            />
+            /> */}
             <div className="flex gap-4">
               <Button
                 type="submit"

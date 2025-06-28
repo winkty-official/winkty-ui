@@ -229,6 +229,7 @@ const ImageUpload = memo(
           onFileChange({ file: croppedFile, url: newPreviewUrl });
         } catch (err) {
           setError("Failed to crop image.");
+          console.error("Failed to crop image:", err);
         }
       }, [imageRef, crop, file, previewUrl, cleanupPreviewUrl, onFileChange, getCroppedImage]);
 
@@ -349,7 +350,7 @@ const ImageUpload = memo(
                   aspect={
                     selectedAspectRatio === "original" && originalAspectRatio
                       ? originalAspectRatio
-                      : aspectRatios.find((ar) => ar.value === selectedAspectRatio)?.ratio
+                      : Number(aspectRatios.find((ar) => ar.value === selectedAspectRatio)?.ratio)
                   }
                   className="max-h-[70vh]"
                 >
