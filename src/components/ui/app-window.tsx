@@ -174,26 +174,26 @@ export const AppWindow = forwardRef<HTMLDivElement, AppWindowProps>(
             animate={
               isMinimizing || isClosing
                 ? {
-                    scale: 0.5,
-                    opacity: 0,
-                    x: minimizeTarget.x,
-                    y: minimizeTarget.y,
-                    transition: {
-                      duration: 0.3,
-                      ease: [0.4, 0, 0.2, 1],
-                    },
-                  }
+                  scale: 0.5,
+                  opacity: 0,
+                  x: minimizeTarget.x,
+                  y: minimizeTarget.y,
+                  transition: {
+                    duration: 0.3,
+                    ease: [0.4, 0, 0.2, 1],
+                  },
+                }
                 : {
-                    scale: 1,
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    transition: {
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 25,
-                    },
-                  }
+                  scale: 1,
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  transition: {
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25,
+                  },
+                }
             }
             exit={{
               scale: 0.8,

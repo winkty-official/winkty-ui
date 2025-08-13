@@ -58,10 +58,8 @@ type CommonProps = {
 
 type AutocompleteProps = CommonProps & (SingleSelectProps | MultiSelectProps);
 
-const __intialOptions: Option[] = [];
-
 export default function Autocomplete({
-  options: initialOptions = __intialOptions,
+  options: initialOptions = [],
   value, // Now string | null or string[] | null
   onChange, // Now (string | null)=>void or (string[])=>void
   loadOptions,
