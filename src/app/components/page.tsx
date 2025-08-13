@@ -109,7 +109,7 @@ export default function ComponentsPage() {
       </div> */}
 
       {/* Community Section */}
-      {/* <div>
+      {/* <div>a
         <h2 className="text-2xl font-bold mb-4">Join the Community</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <Card>
